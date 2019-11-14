@@ -82,37 +82,57 @@ router.post("/login", (req, res) => {
       if (!user) {
         return res.status(400).json({ username: "Username doesnot exist" });
       } else {
-        bcrypt
-          .compare(password, user.password)
-          .then(isMatch => {
-            if (isMatch) {
-              console.log("match found");
-              //res.json({ msg: "match found" });
+        if (user.active != "Active") {
+          return res.status(400).json({ active: "User has been deactivated" });
+        } else {
+          bcrypt
+            .compare(password, user.password)
+            .then(isMatch => {
+              if (isMatch) {
+                console.log("match found");
+                //res.json({ msg: "match found" });
 
-              let payload = {
-                id: user.id,
-                username: user.username
-              };
-              console.log("payload is ", payload);
-              //sign token
-              jwt.sign(
-                payload,
-                keys.secretOrKey,
-                { expiresIn: 3600 },
-                (err, token) => {
-                  res.json({
-                    success: true,
-                    token: "Bearer " + token
-                  });
-                }
-              );
-            } else {
-              return res.status(400).json({ msg: "Password incorrect" });
-            }
-          })
-          .catch(err => console.log("err is ", err));
+                let payload = {
+                  id: user.id,
+                  username: user.username
+                };
+                console.log("payload is ", payload);
+                //sign token
+                jwt.sign(
+                  payload,
+                  keys.secretOrKey,
+                  { expiresIn: 3600 },
+                  (err, token) => {
+                    res.json({
+                      success: true,
+                      token: "Bearer " + token
+                    });
+                  }
+                );
+              } else {
+                return res.status(400).json({ msg: "Password incorrect" });
+              }
+            })
+            .catch(err => console.log("err is ", err));
+        }
       }
     })
     .catch(err => console.log("err is ", err));
+});
+
+router.post("/deactivate", (req, res) => {
+  var username = req.body.username;
+  console.log("inside deactivate api of backend. username is..", username);
+  let userField = {};
+  userField.active = "Deactivated";
+  console.log("new status is ", userField.active);
+  User.findOneAndUpdate(
+    { username: username },
+    { $set: userField },
+    { new: true }
+  ).then(user => {
+    console.log("user has been deactivared. updated user is ", user);
+    res.json(user);
+  });
 });
 module.exports = router;
