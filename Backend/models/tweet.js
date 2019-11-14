@@ -4,28 +4,52 @@ const Schema = mongoose.Schema;
 // Create Schema
 
 const TweetSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "users"
+  },
   tweet_content: {
-    String
+    type: String
   },
-  tweet_owner: {
-    username: String
+  username: {
+    type: String
   },
-  tweet_parent: {
-    parent_id: String,
-    parent_owner: String,
-    parent_content: String
+  avatar: {
+    type: String
   },
   replies: [
     {
-      reply_owner: String,
-      reply_msg: String
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      },
+      text: {
+        type: String
+      },
+      username: {
+        type: String
+      },
+      avatar: {
+        type: String
+      },
+      date: {
+        type: Date,
+        default: Date.now
+      }
     }
   ],
-  Likes: [
+  likes: [
     {
-      username: String
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+      }
     }
-  ]
+  ],
+  date: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = Tweet = mongoose.model("tweets", TweetSchema);
