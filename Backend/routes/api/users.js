@@ -175,7 +175,7 @@ module.exports = router;
 // modifying get-profile api with redis 
 
 
-router.post("get_profile_redis",(req,res)=>{
+router.post("/get_profile_redis",(req,res)=>{
   var username = req.body.username;
   console.log("inside get_profile api of backend. username is..", username);
 
