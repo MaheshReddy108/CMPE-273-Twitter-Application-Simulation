@@ -37,9 +37,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Mongoose DB config
 const db = require("./config/keys").mongoURI;
 // Connect to MongoDB
-mongoose
+/*mongoose
   .connect(db)
   .then(() => console.log("MongoDB Connected from Mongoose"))
+  .catch(err => console.log(err));*/
+
+//MongoDB connection pooling
+
+mongoose
+  .connect(db, { poolSize: 10 })
+  .then(() => console.log("MongoDB Connected from Mongoose(pooling)"))
   .catch(err => console.log(err));
 
 //defining routes

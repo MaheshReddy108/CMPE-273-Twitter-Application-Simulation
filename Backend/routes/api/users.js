@@ -135,4 +135,24 @@ router.post("/deactivate", (req, res) => {
     res.json(user);
   });
 });
+
+router.post("/get_profile", (req, res) => {
+  var username = req.body.username;
+  console.log("inside get_profile api of backend. username is..", username);
+  User.findOne({ username })
+    .then(user => {
+      if (!user) {
+        console.log("no user");
+
+        return res.status(404).json({ msg: "no user with this username" });
+      } else {
+        console.log("profile is....", user);
+        res.json(user);
+      }
+    })
+    .catch(err => {
+      console.log("err is.....", err);
+      res.status(404).json(err);
+    });
+});
 module.exports = router;
