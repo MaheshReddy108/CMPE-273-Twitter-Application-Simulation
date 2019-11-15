@@ -11,19 +11,13 @@ const redis = require("redis");
 const redisHmapMax = 4;
 const app = express();
 
-
-
-// creating redis client 
-var client = redis.createClient(
-  6379,
-);
+// creating redis client
+var client = redis.createClient(6379);
 
 // Testing redis connection
 client.on("connect", function() {
   console.log("Connected to Redis...");
 });
-
-
 router.get("/test", (req, res) => res.json({ msg: "works" }));
 
 router.post("/register", (req, res) => {
@@ -171,58 +165,47 @@ router.post("/get_profile", (req, res) => {
 });
 module.exports = router;
 
+// modifying get-profile api with redis
 
-// modifying get-profile api with redis 
-
-
-router.post("/get_profile_redis",(req,res)=>{
+router.post("/get_profile_redis", (req, res) => {
   var username = req.body.username;
   console.log("inside get_profile api of backend. username is..", username);
 
-  client.hget("get_profile",username,(err,reply)=>{
-
-     if(err){
+  client.hget("get_profile", username, (err, reply) => {
+    if (err) {
       console.log(err);
       res.status(422).send(err);
-     }
-     else {
-      client.hlen("get_profile",(err,length)=>{
-          if(length>=redisHmapMax){
-              client.hkeys("get_profile",(err,keys)=>{
-                  console.log(keys[0])
-                  client.hdel("get_profile",keys[0])
-              })
-          }
-      })
-        if (reply) {
-          res.status(200).send(JSON.parse(reply));
+    } else {
+      client.hlen("get_profile", (err, length) => {
+        if (length >= redisHmapMax) {
+          client.hkeys("get_profile", (err, keys) => {
+            console.log(keys[0]);
+            client.hdel("get_profile", keys[0]);
+          });
+        }
+      });
+      if (reply) {
+        res.status(200).send(JSON.parse(reply));
       } else {
-              
         User.findOne({ username })
-        .then(user => {
-          if (!user) {
-            console.log("no user");
-    
-            return res.status(404).json({ msg: "no user with this username" });
-          } else {
-            console.log("profile is....", user);
-            res.json(user);
-            client.hset(
-              "get_profile",
-              username,
-              JSON.stringify(user)
-          );
-          }
-        })
-        .catch(err => {
-          console.log("err is.....", err);
-          res.status(404).json(err);
-        });
+          .then(user => {
+            if (!user) {
+              console.log("no user");
+
+              return res
+                .status(404)
+                .json({ msg: "no user with this username" });
+            } else {
+              console.log("profile is....", user);
+              res.json(user);
+              client.hset("get_profile", username, JSON.stringify(user));
+            }
+          })
+          .catch(err => {
+            console.log("err is.....", err);
+            res.status(404).json(err);
+          });
       }
     }
-  })
-  
-
-
-
-})
+  });
+});

@@ -45,7 +45,7 @@ const db = require("./config/keys").mongoURI;
 //MongoDB connection pooling
 
 mongoose
-  .connect(db, { poolSize: 10 })
+  .connect(db, { poolSize: 50 })
   .then(() => console.log("MongoDB Connected from Mongoose(pooling)"))
   .catch(err => console.log(err));
 
