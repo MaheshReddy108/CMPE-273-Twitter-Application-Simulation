@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Twitter DB Schema" id="Project_5cea0b1" template="Default" database="MongoDb" >
+	<comment><![CDATA[Database Design for Twitter Application Simulation]]></comment>
+	<schema name="Twitter DB Schema" >
+		<table name="lists" >
+			<column name="user_id" type="oid" jt="-8" />
+			<column name="list_title" type="string" jt="12" />
+			<column name="members" type="list" jt="4999545" >
+				<column name="user_id" type="oid" jt="-8" />
+			</column>
+			<column name="subscribers" type="list" jt="4999545" >
+				<column name="user_id" type="oid" jt="-8" />
+			</column>
+			<column name="created_date" type="date" jt="91" />
+		</table>
+		<table name="messages" >
+			<column name="_id" type="oid" jt="-8" />
+			<column name="sender_id" type="oid" jt="-8" />
+			<column name="receiver_id" type="oid" jt="-8" />
+			<column name="message" type="string" jt="12" />
+		</table>
+		<table name="tweets" >
+			<column name="_id" type="oid" jt="-8" />
+			<column name="user_id" type="oid" jt="-8" />
+			<column name="tweet_content" type="string" jt="12" />
+			<column name="username" type="string" jt="12" />
+			<column name="profile_image" type="string" jt="12" />
+			<column name="tweeted_date" type="date" jt="91" />
+			<column name="likes" type="list" jt="4999545" >
+				<column name="user_id" type="oid" jt="-8" />
+			</column>
+			<column name="likes_count" type="integer" jt="4" />
+			<column name="replies" type="list" jt="4999545" >
+				<column name="user_id" type="oid" jt="-8" />
+				<column name="text" type="string" jt="12" />
+				<column name="username" type="string" jt="12" />
+				<column name="reply_date" type="date" jt="91" />
+			</column>
+			<column name="replies_count" type="integer" jt="4" />
+			<column name="entities" type="map" jt="4999544" >
+				<column name="hashtags" type="list" jt="4999545" />
+				<column name="imageList" type="list" jt="4999545" />
+				<column name="bookmarks" type="list" jt="4999545" />
+			</column>
+			<column name="retweeted" type="boolean" jt="16" />
+			<column name="retweets_count" type="integer" jt="4" />
+			<column name="retweeted_status" type="map" jt="4999544" >
+				<column name="user_id" type="oid" jt="-8" />
+				<column name="tweet_content" type="string" jt="12" />
+				<column name="entities" type="map" jt="4999544" />
+			</column>
+		</table>
+		<table name="users" >
+			<comment><![CDATA[Collection to store User profile details]]></comment>
+			<column name="_id" type="oid" jt="-8" />
+			<column name="first_name" type="string" jt="12" />
+			<column name="last_name" type="string" jt="12" />
+			<column name="user_name" type="string" jt="12" />
+			<column name="email" type="string" jt="12" />
+			<column name="password" type="string" jt="12" />
+			<column name="profile_image" type="string" jt="12" />
+			<column name="city" type="string" jt="12" />
+			<column name="state" type="string" jt="12" />
+			<column name="zipcode" type="integer" jt="4" />
+			<column name="followers" type="list" jt="4999545" >
+				<column name="follower_id" type="string" jt="12" />
+				<column name="follower_name" type="string" jt="12" />
+			</column>
+			<column name="follower_count" type="integer" jt="4" />
+			<column name="following" type="list" jt="4999545" >
+				<column name="following_id" type="string" jt="12" />
+				<column name="following_name" type="string" jt="12" />
+			</column>
+			<column name="following_count" type="integer" jt="4" />
+			<column name="active" type="boolean" jt="16" />
+			<column name="account_created_date" type="date" jt="91" />
+			<index name="Idx_users" unique="UNIQUE" >
+				<column name="_id" />
+			</index>
+			<fk name="fk_users_tweets" virtual="y" to_schema="Twitter DB Schema" to_table="tweets" >
+				<fk_column name="_id" pk="user_id" />
+			</fk>
+			<fk name="fk_users_lists" virtual="y" to_schema="Twitter DB Schema" to_table="lists" >
+				<fk_column name="_id" pk="user_id" />
+			</fk>
+			<fk name="fk_users_messages" virtual="y" to_schema="Twitter DB Schema" to_table="messages" >
+				<fk_column name="_id" pk="sender_id" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout_597e9a7" joined_routing="y" show_relation="columns" >
+		<entity schema="Twitter DB Schema" name="users" column="followers" color="3986C1" x="48" y="304" />
+		<entity schema="Twitter DB Schema" name="users" column="following" color="3986C1" x="48" y="480" />
+		<entity schema="Twitter DB Schema" name="lists" color="C1D8EE" x="288" y="48" />
+		<entity schema="Twitter DB Schema" name="lists" column="subscribers" color="3986C1" x="464" y="144" />
+		<entity schema="Twitter DB Schema" name="lists" column="members" color="3986C1" x="464" y="64" />
+		<entity schema="Twitter DB Schema" name="tweets" color="C1D8EE" x="576" y="224" />
+		<entity schema="Twitter DB Schema" name="tweets" column="replies" color="3986C1" x="768" y="352" />
+		<entity schema="Twitter DB Schema" name="tweets" column="likes" color="3986C1" x="768" y="224" />
+		<entity schema="Twitter DB Schema" name="tweets" column="entities" color="3986C1" x="784" y="480" />
+		<entity schema="Twitter DB Schema" name="users" color="C1D8EE" x="256" y="192" />
+		<entity schema="Twitter DB Schema" name="messages" color="C1D8EE" x="320" y="560" />
+		<entity schema="Twitter DB Schema" name="tweets" column="retweeted_status" color="3986C1" x="656" y="576" />
+	</layout>
+</project>
