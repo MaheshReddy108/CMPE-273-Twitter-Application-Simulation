@@ -7,9 +7,11 @@
 			<column name="list_title" type="string" jt="12" />
 			<column name="members" type="list" jt="4999545" >
 				<column name="user_id" type="oid" jt="-8" />
+				<column name="username" type="string" jt="12" />
 			</column>
 			<column name="subscribers" type="list" jt="4999545" >
 				<column name="user_id" type="oid" jt="-8" />
+				<column name="username" type="string" jt="12" />
 			</column>
 			<column name="created_date" type="date" jt="91" />
 		</table>
@@ -28,6 +30,7 @@
 			<column name="tweeted_date" type="date" jt="91" />
 			<column name="likes" type="list" jt="4999545" >
 				<column name="user_id" type="oid" jt="-8" />
+				<column name="username" type="string" jt="12" />
 			</column>
 			<column name="likes_count" type="integer" jt="4" />
 			<column name="replies" type="list" jt="4999545" >
@@ -40,7 +43,6 @@
 			<column name="entities" type="map" jt="4999544" >
 				<column name="hashtags" type="list" jt="4999545" />
 				<column name="imageList" type="list" jt="4999545" />
-				<column name="bookmarks" type="list" jt="4999545" />
 			</column>
 			<column name="retweeted" type="boolean" jt="16" />
 			<column name="retweets_count" type="integer" jt="4" />
@@ -49,6 +51,7 @@
 				<column name="tweet_content" type="string" jt="12" />
 				<column name="entities" type="map" jt="4999544" />
 			</column>
+			<column name="view_count" type="integer" jt="4" />
 		</table>
 		<table name="users" >
 			<comment><![CDATA[Collection to store User profile details]]></comment>
@@ -62,6 +65,7 @@
 			<column name="city" type="string" jt="12" />
 			<column name="state" type="string" jt="12" />
 			<column name="zipcode" type="integer" jt="4" />
+			<column name="description" type="integer" jt="4" />
 			<column name="followers" type="list" jt="4999545" >
 				<column name="follower_id" type="string" jt="12" />
 				<column name="follower_name" type="string" jt="12" />
@@ -74,6 +78,9 @@
 			<column name="following_count" type="integer" jt="4" />
 			<column name="active" type="boolean" jt="16" />
 			<column name="account_created_date" type="date" jt="91" />
+			<column name="bookmarked_tweets" type="list" jt="4999545" >
+				<column name="tweet_id" type="integer" jt="4" />
+			</column>
 			<index name="Idx_users" unique="UNIQUE" >
 				<column name="_id" />
 			</index>
@@ -89,17 +96,18 @@
 		</table>
 	</schema>
 	<layout name="Default Layout" id="Layout_597e9a7" joined_routing="y" show_relation="columns" >
-		<entity schema="Twitter DB Schema" name="users" column="followers" color="3986C1" x="48" y="304" />
-		<entity schema="Twitter DB Schema" name="users" column="following" color="3986C1" x="48" y="480" />
-		<entity schema="Twitter DB Schema" name="lists" color="C1D8EE" x="288" y="48" />
-		<entity schema="Twitter DB Schema" name="lists" column="subscribers" color="3986C1" x="464" y="144" />
-		<entity schema="Twitter DB Schema" name="lists" column="members" color="3986C1" x="464" y="64" />
-		<entity schema="Twitter DB Schema" name="tweets" color="C1D8EE" x="576" y="224" />
-		<entity schema="Twitter DB Schema" name="tweets" column="replies" color="3986C1" x="768" y="352" />
-		<entity schema="Twitter DB Schema" name="tweets" column="likes" color="3986C1" x="768" y="224" />
-		<entity schema="Twitter DB Schema" name="tweets" column="entities" color="3986C1" x="784" y="480" />
-		<entity schema="Twitter DB Schema" name="users" color="C1D8EE" x="256" y="192" />
-		<entity schema="Twitter DB Schema" name="messages" color="C1D8EE" x="320" y="560" />
-		<entity schema="Twitter DB Schema" name="tweets" column="retweeted_status" color="3986C1" x="656" y="576" />
+		<entity schema="Twitter DB Schema" name="lists" color="C1D8EE" x="288" y="64" />
+		<entity schema="Twitter DB Schema" name="tweets" column="replies" color="3986C1" x="768" y="368" />
+		<entity schema="Twitter DB Schema" name="tweets" column="likes" color="3986C1" x="800" y="224" />
+		<entity schema="Twitter DB Schema" name="lists" column="subscribers" color="3986C1" x="480" y="144" />
+		<entity schema="Twitter DB Schema" name="lists" column="members" color="3986C1" x="480" y="48" />
+		<entity schema="Twitter DB Schema" name="tweets" column="entities" color="3986C1" x="848" y="512" />
+		<entity schema="Twitter DB Schema" name="tweets" color="C1D8EE" x="576" y="240" />
+		<entity schema="Twitter DB Schema" name="users" column="followers" color="3986C1" x="48" y="368" />
+		<entity schema="Twitter DB Schema" name="users" column="following" color="3986C1" x="48" y="464" />
+		<entity schema="Twitter DB Schema" name="users" column="bookmarked_tweets" color="3986C1" x="48" y="576" />
+		<entity schema="Twitter DB Schema" name="tweets" column="retweeted_status" color="3986C1" x="624" y="576" />
+		<entity schema="Twitter DB Schema" name="messages" color="C1D8EE" x="384" y="576" />
+		<entity schema="Twitter DB Schema" name="users" color="C1D8EE" x="256" y="208" />
 	</layout>
 </project>
