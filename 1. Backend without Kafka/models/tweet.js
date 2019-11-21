@@ -38,17 +38,55 @@ const TweetSchema = new Schema({
       }
     }
   ],
+  replies_count: {
+    type: Number
+  },
   likes: [
     {
       user: {
         type: Schema.Types.ObjectId,
         ref: "users"
+      },
+      username: {
+        type: String
       }
     }
   ],
-  date: {
+  likes_count: {
+    type: Number
+  },
+  tweeted_date: {
     type: Date,
     default: Date.now
+  },
+  entities: {
+    hashtags: [],
+    imageList: []
+  },
+  retweeted_status: {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users"
+    },
+    username: {
+      type: String
+    },
+    tweet_content: {
+      type: String
+    },
+    entities: {
+      hashtags: [],
+      imageList: []
+    }
+  },
+  retweets_count: {
+    type: Number
+  },
+  retweeted: {
+    type: Boolean
+  },
+  view_count: {
+    type: Number
   }
 });
 

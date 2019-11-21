@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 //const passport = require("passport");
 
 // Tweet Model
-const Tweet = require("../../models/tweet");
+const Tweet = require("../../models/Tweet");
 // User Model
 
 // Validation

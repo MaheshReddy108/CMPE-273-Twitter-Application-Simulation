@@ -81,6 +81,10 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  bookmarked_tweets: {
+    type: Schema.Types.ObjectId,
+    ref: "tweets"
   }
 });
 
