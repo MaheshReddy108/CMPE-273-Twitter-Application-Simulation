@@ -12,15 +12,15 @@ app.use(passport.initialize());
 require("./config/passport.js")(passport);
 
 // eslint-disable-next-line func-names
-app.use(function(err, req, res) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+// app.use(function(err, req, res) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render("error");
+// });
 // eslint-disable-next-line func-names
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");

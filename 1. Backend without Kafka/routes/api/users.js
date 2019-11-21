@@ -4,19 +4,19 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const redis = require("redis");
+// const redis = require("redis");
 const keys = require("../../config/keys");
 const User = require("../../models/User");
 
-const redisHmapMax = 4;
+// const redisHmapMax = 4;
 
 // creating redis client
-const client = redis.createClient(6379);
+// const client = redis.createClient(6379);
 
 // Testing redis connection
-client.on("connect", function() {
-  console.log("Connected to Redis...");
-});
+// client.on("connect", function() {
+//   console.log("Connected to Redis...");
+// });
 router.get("/test", (req, res) => res.json({ msg: "works" }));
 
 router.post("/register", (req, res) => {
@@ -159,44 +159,44 @@ module.exports = router;
 
 // modifying get-profile api with redis
 
-router.post("/get_profile_redis", (req, res) => {
-  const { username } = req.body;
-  console.log("inside get_profile api of backend. username is..", username);
+// router.post("/get_profile_redis", (req, res) => {
+//   const { username } = req.body;
+//   console.log("inside get_profile api of backend. username is..", username);
 
-  client.hget("get_profile", username, (err, reply) => {
-    if (err) {
-      console.log(err);
-      res.status(422).send(err);
-    } else {
-      client.hlen("get_profile", (err, length) => {
-        if (length >= redisHmapMax) {
-          client.hkeys("get_profile", (err, keys) => {
-            console.log(keys[0]);
-            client.hdel("get_profile", keys[0]);
-          });
-        }
-      });
-      if (reply) {
-        res.status(200).send(JSON.parse(reply));
-      } else {
-        User.findOne({ username })
-          .then(user => {
-            if (!user) {
-              console.log("no user");
+//   client.hget("get_profile", username, (err, reply) => {
+//     if (err) {
+//       console.log(err);
+//       res.status(422).send(err);
+//     } else {
+//       client.hlen("get_profile", (err, length) => {
+//         if (length >= redisHmapMax) {
+//           client.hkeys("get_profile", (err, keys) => {
+//             console.log(keys[0]);
+//             client.hdel("get_profile", keys[0]);
+//           });
+//         }
+//       });
+//       if (reply) {
+//         res.status(200).send(JSON.parse(reply));
+//       } else {
+//         User.findOne({ username })
+//           .then(user => {
+//             if (!user) {
+//               console.log("no user");
 
-              return res
-                .status(404)
-                .json({ msg: "no user with this username" });
-            }
-            console.log("profile is....", user);
-            res.json(user);
-            client.hset("get_profile", username, JSON.stringify(user));
-          })
-          .catch(err => {
-            console.log("err is.....", err);
-            res.status(404).json(err);
-          });
-      }
-    }
-  });
-});
+//               return res
+//                 .status(404)
+//                 .json({ msg: "no user with this username" });
+//             }
+//             console.log("profile is....", user);
+//             res.json(user);
+//             client.hset("get_profile", username, JSON.stringify(user));
+//           })
+//           .catch(err => {
+//             console.log("err is.....", err);
+//             res.status(404).json(err);
+//           });
+//       }
+//     }
+//   });
+// });
