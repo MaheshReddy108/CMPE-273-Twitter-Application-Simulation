@@ -1,7 +1,7 @@
 const express = require("express");
+
 const router = express.Router();
-const mongoose = require("mongoose");
-//const passport = require("passport");
+// const passport = require("passport");
 
 // Tweet Model
 const Tweet = require("../../models/Tweet");
@@ -10,7 +10,7 @@ const Tweet = require("../../models/Tweet");
 // Validation
 const validateTweetInput = require("../../validation/tweet");
 
-//@route GET api/tweets/test
+// @route GET api/tweets/test
 // @desc Test Tweet route
 // @access Public
 router.get("/test", (req, res) =>
@@ -19,28 +19,28 @@ router.get("/test", (req, res) =>
   })
 );
 
-//@route GET api/tweets/get_tweets
+// @route GET api/tweets/get_tweets
 // @desc Get Tweets
 // @access Public
 router.get("/get_tweets", (req, res) => {
   Tweet.find()
     .sort({ date: -1 })
     .then(tweets => res.status(200).json(tweets))
-    .catch(err => res.status(404).json({ error: "No Tweets found" }));
+    .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
 });
 
-//@route GET api/tweets/get_tweet/:id
+// @route GET api/tweets/get_tweet/:id
 // @desc Get Tweets by id
 // @access Public
 router.get("/get_tweet/:id", (req, res) => {
   Tweet.findById(req.params.id)
     .then(tweet => res.status(200).json(tweet))
     .catch(err =>
-      res.status(404).json({ error: "No tweet found with that id" })
+      res.status(404).json({ error: `No tweet found with that id ${err}` })
     );
 });
 
-//@route POST api/tweets/create_tweet
+// @route POST api/tweets/create_tweet
 // @desc Create Tweet
 // @access Private
 router.post("/create_tweet", (req, res) => {
@@ -67,7 +67,7 @@ router.post("/delete_tweet/:id", (req, res) => {
     .then(res => {
       res.status(200).json({ success: true });
     })
-    .catch(err => res.status(404).json({ error: "Tweet not found" }));
+    .catch(err => res.status(404).json({ error: `Tweet not found ${err}` }));
 });
 
 module.exports = router;

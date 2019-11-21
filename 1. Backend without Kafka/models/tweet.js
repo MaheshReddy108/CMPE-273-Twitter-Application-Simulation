@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 // Create Schema
 
@@ -90,4 +91,5 @@ const TweetSchema = new Schema({
   }
 });
 
+// eslint-disable-next-line no-multi-assign
 module.exports = Tweet = mongoose.model("tweets", TweetSchema);

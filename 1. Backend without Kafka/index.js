@@ -1,13 +1,18 @@
+/* eslint-disable func-names */
+/* eslint-disable no-console */
 const express = require("express");
 const mongoose = require("mongoose");
-var bodyParser = require("body-parser");
-var passport = require("passport");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+
 const app = express();
 app.use(express.json());
 
 app.use(passport.initialize());
 require("./config/passport.js")(passport);
-app.use(function(err, req, res, next) {
+
+// eslint-disable-next-line func-names
+app.use(function(err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
@@ -16,6 +21,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+// eslint-disable-next-line func-names
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -34,22 +40,22 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Mongoose DB config
+// Mongoose DB config
 const db = require("./config/keys").mongoURI;
 // Connect to MongoDB
-/*mongoose
+/* mongoose
   .connect(db)
   .then(() => console.log("MongoDB Connected from Mongoose"))
-  .catch(err => console.log(err));*/
+  .catch(err => console.log(err)); */
 
-//MongoDB connection pooling
+// MongoDB connection pooling
 
 mongoose
   .connect(db, { poolSize: 50 })
   .then(() => console.log("MongoDB Connected from Mongoose(pooling)"))
   .catch(err => console.log(err));
 
-//defining routes
+// defining routes
 const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
 
@@ -58,7 +64,7 @@ app.get("/", function(request, response) {
   response.send("Node Backend is working");
 });
 
-//use routes
+// use routes
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
 
