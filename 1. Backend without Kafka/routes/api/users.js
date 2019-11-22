@@ -206,8 +206,8 @@ router.post("/get_profile", (req, res) => {
 
 router.post("/search_people",(req,res)=>{
   console.log("req for search_people",req.body);
-  
-  User.find({'first_name':req.body.first_name},(err,result)=>{
+   var name = req.body.first_name
+  User.find({'first_name': new RegExp(name,'i')},(err,result)=>{
       if(err){
         res.status(404).json({ error: `user not found ${err}` })
       }

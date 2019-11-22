@@ -76,8 +76,8 @@ router.post("/delete_tweet/:id", (req, res) => {
 
 router.post("/search_topic",(req,res)=>{
   console.log("req for search_topic",req);
-  
-  Tweet.find({'hashtags':req.body.hashtags},(err,result)=>{
+   topic = req.body.hashtags
+  Tweet.find({'hashtags':new RegExp(topic,'i')},(err,result)=>{
       if(err){
         res.status(404).json({ error: `Tweet not found ${err}` })
       }
