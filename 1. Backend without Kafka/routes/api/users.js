@@ -155,7 +155,7 @@ router.post("/get_profile", (req, res) => {
       res.status(404).json(err);
     });
 });
-module.exports = router;
+
 
 // modifying get-profile api with redis
 
@@ -200,3 +200,30 @@ module.exports = router;
 //     }
 //   });
 // });
+
+
+
+
+router.post("/search_people",(req,res)=>{
+  console.log("req for search_people",req.body);
+  
+  User.find({'first_name':req.body.first_name},(err,result)=>{
+      if(err){
+        res.status(404).json({ error: `user not found ${err}` })
+      }
+      else {
+        console.log(result);
+        
+        res.status(200).json(result);
+      }
+  })
+})
+
+
+
+
+
+
+
+
+module.exports = router;

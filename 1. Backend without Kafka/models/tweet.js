@@ -60,9 +60,11 @@ const TweetSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  entities: {
-    hashtags: [],
-    imageList: []
+  hashtags: {
+      type: Array
+  },
+  imageList: {
+      type: Array
   },
   retweeted_status: {
     user: {
@@ -75,9 +77,11 @@ const TweetSchema = new Schema({
     tweet_content: {
       type: String
     },
-    entities: {
-      hashtags: [],
-      imageList: []
+    hashtags: {
+      type: Array
+    },
+    imageList: {
+      type: Array
     }
   },
   retweets_count: {

@@ -53,7 +53,8 @@ router.post("/create_tweet", (req, res) => {
     user: req.body.user_id,
     tweet_content: req.body.tweet_content,
     username: req.body.username,
-    avatar: req.body.avatar
+    avatar: req.body.avatar,
+    hashtags:req.body.hashtags
   });
   newTweet.save().then(tweet => res.status(200).json(tweet));
 });
@@ -70,7 +71,29 @@ router.post("/delete_tweet/:id", (req, res) => {
     .catch(err => res.status(404).json({ error: `Tweet not found ${err}` }));
 });
 
+
+
+
+router.post("/search_topic",(req,res)=>{
+  console.log("req for search_topic",req);
+  
+  Tweet.find({'hashtags':req.body.hashtags},(err,result)=>{
+      if(err){
+        res.status(404).json({ error: `Tweet not found ${err}` })
+      }
+      else {
+        console.log(result);
+        
+        res.status(200).json(result);
+      }
+  })
+})
+
+
+
+
+
+
+
+
 module.exports = router;
-
-
-// router.post()
