@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import HomeTimeline from "../Timeline/HomeTimeline";
+import SearchBar from "../Explore/SearchBar";
 
 class SideBarHome extends Component {
   constructor(props) {
@@ -123,25 +124,36 @@ class SideBarHome extends Component {
                 Profile
               </div>
             </div>
-            </div>
+          </div>
 
-            <div className="col-11">
-              <div className="tab-content" id="nav-tabContent">
-                <div
-                  className={`tab-pane fade ${
-                    this.state.activeSection === "list-home"
-                      ? "show active"
-                      : ""
-                  }`}
-                  id="list-home"
-                  role="tabpanel"
-                  aria-labelledby="list-home-list"
-                >
-                  <HomeTimeline />
-                </div>
+          <div className="col-9">
+            <div className="tab-content" id="nav-tabContent">
+              <div
+                className={`tab-pane fade ${
+                  this.state.activeSection === "list-home" ? "show active" : ""
+                }`}
+                id="list-home"
+                role="tabpanel"
+                aria-labelledby="list-home-list"
+              >
+                <HomeTimeline />
               </div>
             </div>
-          
+            <div className="tab-content" id="nav-tabContent">
+              <div
+                className={`tab-pane fade ${
+                  this.state.activeSection === "list-explore"
+                    ? "show active"
+                    : ""
+                }`}
+                id="list-explore"
+                role="tabpanel"
+                aria-labelledby="list-explore-list"
+              >
+                <SearchBar />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

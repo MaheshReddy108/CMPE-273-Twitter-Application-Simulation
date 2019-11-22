@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import Feed from "../Feed/Feed";
 
 class HomeTimeline extends Component {
   render() {
-    return <div> <p> Welcome User </p></div>;
+    return (
+      <div className="container">
+        <Feed />
+      </div>
+    );
   }
 }
 
