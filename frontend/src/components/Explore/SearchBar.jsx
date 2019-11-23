@@ -27,7 +27,7 @@ class SearchBar extends Component {
     // Get people Data
     // this.props.searchPeople(data);
 
-    if(this.state.searchPeople){
+    
        axios.defaults.withCredentials = true;
        axios.post('http://localhost:4500/api/users/search_people', )
         .then(response => {
@@ -36,7 +36,7 @@ class SearchBar extends Component {
                 peopleResult: response.data
             });
           })
-        }
+        
   }
    
 
