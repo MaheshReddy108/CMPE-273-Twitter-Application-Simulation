@@ -16,7 +16,7 @@ router.post("/create/" , (req, res) => {
     try {
       const loggedInUser = req.user;
       const newList = new lists({
-        ownerID: 3489584568945,
+        ownerID: loggedInUser.userID,
         listName: listName,
         listDesc: listDesc,
         isPrivate: isPrivate
