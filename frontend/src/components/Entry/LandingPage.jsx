@@ -1,19 +1,19 @@
 import React, { Component } from "react";
-// import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-// import { logoutUser } from "../actions/authActions";
+import { loginUser } from "../_actions/authActions";
 
 class LandingPage extends Component {
   render() {
     console.log("at landing page");
-    // const { isAuthenticated } = this.props.auth;
-    // let redirectVar = null;
-    // if (isAuthenticated) {
-    //   redirectVar = <Redirect to="/home" />;
-    // }
+    const { isAuthenticated } = this.props.auth;
+    let redirectVar = null;
+    if (isAuthenticated) {
+      redirectVar = <Redirect to="/welcomePage" />;
+    }
     return (
       <div>
-        {/*     redirectVar */}
+        {redirectVar}
         <table>
           <tr>
             <td>
@@ -43,7 +43,7 @@ class LandingPage extends Component {
                   <br />
                   <br />
 
-                  <a href="/signup">
+                  <a href="/register">
                     <button style={style3}>Sign Up</button>
                   </a>
                 </div>
@@ -56,7 +56,6 @@ class LandingPage extends Component {
     );
   }
 }
-//export default LandingPage;
 
 var button = {
   textAlign: "center"
