@@ -14,7 +14,20 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "classnames": "^2.2.6",
+    "client-sessions": "^0.8.0",
+    "email-validator": "^2.0.4",
+    "express-session": "^1.16.2",
+    "jwt-decode": "^2.2.0",
+    "material-ui": "^0.20.2",
+    "mdbreact": "^4.20.0",
+    "react-bootstrap": "^1.0.0-beta.12",
+    "react-dropdown": "^1.6.4",
+    "react-native": "^0.60.6",
+    "react-tap-event-plugin": "^3.0.3",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
