@@ -15,7 +15,7 @@ class SearchBar extends Component {
        topicsResult : [],
        peopleResult:[],
        searchTopic:'',
-       searchPeople:'Kanika'   
+       searchPeople:''   
     };
   
     //Bind the handlers to this className
