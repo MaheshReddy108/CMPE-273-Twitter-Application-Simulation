@@ -7,7 +7,7 @@ const path = require("path");
 
 const lists = require("../../models/Lists");
 
-router.post("/create/" , (req, res) => {
+router.post("/create", passport.authenticate("jwt", { session: false }) , (req, res) => {
     const { listName, listDesc, isPrivate } = req.body;
     if (!(listName && listDesc)) {
       console.error("Required Details Missing");
