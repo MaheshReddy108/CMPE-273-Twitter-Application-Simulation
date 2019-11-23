@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const ListSchema = new Schema(
   {
    listID:String,
-   listName :String,
+   list_Name :String,
    ownerID:String,
    subscribers:Array,
    members:Array,
-   isPrivate:String,
-   listDesc:String
+   make_Private:String,
+   list_Desc:String
   },
   { timestamps: true } 
 );
