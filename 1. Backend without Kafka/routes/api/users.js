@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 // const redis = require("redis");
 const keys = require("../../config/keys");
 const User = require("../../models/User");
+var mongooseTypes = require('mongoose').Types;
 
 // const redisHmapMax = 4;
 
@@ -207,13 +208,15 @@ router.post("/get_profile", (req, res) => {
 router.post("/search_people",(req,res)=>{
   console.log("req for search_people",req.body);
    var name = req.body.first_name
+   id = mongooseTypes.ObjectId();
   User.find({'first_name': new RegExp(name,'i')},(err,result)=>{
       if(err){
         res.status(404).json({ error: `user not found ${err}` })
       }
       else {
-        console.log(result);
-        
+        // console.log(result);
+        console.log('id',result[0].id);
+        console.log('name',result[0].first_name);
         res.status(200).json(result);
       }
   })

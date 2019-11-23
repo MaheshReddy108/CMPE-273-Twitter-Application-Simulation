@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import WelcomePage from "./components/WelcomePage";
 import LandingPage from "./components/Entry/LandingPage";
+import SearchBar from "./components/Explore/SearchBar"
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -15,7 +16,9 @@ class App extends Component {
           <BrowserRouter>
             <Switch>
               <Route exact path="/" component={LandingPage} />
+              <Route exact path="/search" component={SearchBar} />
               <Route component={WelcomePage} />
+
             </Switch>
           </BrowserRouter>
         </div>
