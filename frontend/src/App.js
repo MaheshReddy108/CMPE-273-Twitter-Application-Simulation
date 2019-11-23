@@ -7,6 +7,7 @@ import WelcomePage from "./components/WelcomePage";
 import LandingPage from "./components/Entry/LandingPage";
 import Login from "./components/Entry/Login";
 import Register from "./components/Entry/Register";
+import SearchBar from "./components/Explore/SearchBar"
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
               <Route exact path="/" component={LandingPage} />
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
+              <Route path="/search" component={SearchBar} />
               <Route path="/welcomePage" component={WelcomePage} />
             </Switch>
           </BrowserRouter>
