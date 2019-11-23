@@ -24,7 +24,7 @@ router.get("/test", (req, res) =>
 // @access Public
 router.get("/get_tweets", (req, res) => {
   Tweet.find()
-    .sort({ date: -1 })
+    .sort({ tweeted_date: -1 })
     .then(tweets => res.status(200).json(tweets))
     .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
 });
@@ -54,7 +54,7 @@ router.post("/create_tweet", (req, res) => {
     tweet_content: req.body.tweet_content,
     username: req.body.username,
     avatar: req.body.avatar,
-    hashtags:req.body.hashtags
+    hashtags: req.body.hashtags
   });
   newTweet.save().then(tweet => res.status(200).json(tweet));
 });
@@ -71,29 +71,18 @@ router.post("/delete_tweet/:id", (req, res) => {
     .catch(err => res.status(404).json({ error: `Tweet not found ${err}` }));
 });
 
+router.post("/search_topic", (req, res) => {
+  console.log("req for search_topic", req);
+  topic = req.body.hashtags;
+  Tweet.find({ hashtags: new RegExp(topic, "i") }, (err, result) => {
+    if (err) {
+      res.status(404).json({ error: `Tweet not found ${err}` });
+    } else {
+      console.log(result);
 
-
-
-router.post("/search_topic",(req,res)=>{
-  console.log("req for search_topic",req);
-   topic = req.body.hashtags
-  Tweet.find({'hashtags':new RegExp(topic,'i')},(err,result)=>{
-      if(err){
-        res.status(404).json({ error: `Tweet not found ${err}` })
-      }
-      else {
-        console.log(result);
-        
-        res.status(200).json(result);
-      }
-  })
-})
-
-
-
-
-
-
-
+      res.status(200).json(result);
+    }
+  });
+});
 
 module.exports = router;

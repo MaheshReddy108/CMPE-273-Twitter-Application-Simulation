@@ -1,4 +1,4 @@
-import { GET_TWEETS } from "../_actions/types";
+import { ADD_TWEET, GET_TWEETS } from "../_actions/types";
 
 const initialState = {
   tweets: [],
@@ -12,6 +12,11 @@ export const tweetReducer = (state = { ...initialState }, action) => {
       return {
         ...state,
         tweets: action.payload
+      };
+    case ADD_TWEET:
+      return {
+        ...state,
+        tweet: action.payload
       };
     default:
       return { ...state };

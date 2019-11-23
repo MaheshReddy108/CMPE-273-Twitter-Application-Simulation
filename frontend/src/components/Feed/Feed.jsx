@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getTweets } from "../_actions/tweetAction";
 import IsEmpty from "../validation/is.empty.js";
@@ -16,10 +15,10 @@ class Feed extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.tweetState !== prevProps.tweetState) {
       let newTweets = [];
-      console.log("Printing Initial State" + newTweets);
+      // console.log("Printing Initial State" + newTweets);
       if (!IsEmpty(this.props.tweetState.tweets)) {
         let tweetData = this.props.tweetState.tweets;
-        console.log("Tweet Data is " + JSON.stringify(tweetData));
+        // console.log("Tweet Data is " + JSON.stringify(tweetData));
         tweetData.map((tweet, tweet_index) => {
           var itemObj = {};
           itemObj.username = tweet.username;
@@ -38,19 +37,23 @@ class Feed extends Component {
     return (
       <div>
         <div>
-          <h5 className="text-center">{`Welcome to your Feed`}</h5>
+          <br />
+          <h5
+            className="text-center p-3 mb-2 bg-secondary text-white"
+            font-family="-apple-system"
+          >{`Here is your feed`}</h5>
         </div>
         <div>
-          {tweets.map((tweet, Index) => {
+          {tweets.map((tweet, tweetIndex) => {
             return (
-              <div className="card card-body mb-3">
+              <div className="card card-body mb-3" key={tweetIndex}>
                 <div className="row">
                   <div className="col-md-2">
                     <a href="profile.html">
                       <img
                         className="rounded-circle d-none d-md-block"
                         src={tweet.avatar}
-                        alt=""
+                        alt="avt"
                       />
                     </a>
                     <br />
@@ -61,7 +64,7 @@ class Feed extends Component {
                     {/* {showActions ? (
                       <span>
                         <button
-                          onClick={this.onLikeClick.bind(this, tweet._id)}
+                          onClick={this.onLik eClick.bind(this, tweet._id)}
                           type="button"
                           className="btn btn-light mr-1"
                         >
