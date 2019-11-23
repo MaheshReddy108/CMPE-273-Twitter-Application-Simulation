@@ -1,8 +1,6 @@
 var express = require("express");
 var router = express.Router();
-//const uuidv4 = require("uuid/v4");
 var passport = require("passport");
-const multer = require("multer");
 const path = require("path");
 
 const lists = require("../../models/Lists");
