@@ -58,6 +58,7 @@ mongoose
 // defining routes
 const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
+const lists = require("./routes/api/lists");
 
 app.get("/", function(request, response) {
   console.log("Inside Node Home");
@@ -67,6 +68,7 @@ app.get("/", function(request, response) {
 // use routes
 app.use("/api/users", users);
 app.use("/api/tweets", tweets);
+app.use("/api/lists", lists);
 
 const port = process.env.PORT || 4500;
 app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTweets } from "../_actions/tweetAction";
 import IsEmpty from "../validation/is.empty.js";
+import Spinner from "../common/Spinner";
 
 class Feed extends Component {
   state = {
