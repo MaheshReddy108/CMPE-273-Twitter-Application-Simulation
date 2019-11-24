@@ -157,6 +157,87 @@ router.post("/get_profile", (req, res) => {
     });
 });
 
+router.post("/get_followers", (req, res) => {
+  const { username } = req.body;
+  console.log("inside get_followers api of backend. username is..", username);
+  User.findOne({ username })
+    .then(user => {
+      if (!user) {
+        console.log("no user");
+
+        return res.status(404).json({ msg: "no user with this username" });
+      }
+      console.log("profile is....", user);
+      res.json(user.followers);
+    })
+    .catch(err => {
+      console.log("err is.....", err);
+      res.status(404).json(err);
+    });
+});
+
+router.post("/add_following", (req, res) => {
+  const { username, following_id, following_name } = req.body;
+  var user_id = "";
+  console.log("inside add_following api of backend. username is..", username);
+  User.findOne({ username })
+    .then(user => {
+      const { _id } = user;
+      user_id = _id;
+      if (!user) {
+        console.log("no user");
+
+        return res.status(404).json({ msg: "no user with this username" });
+      }
+      const newFollowing = {
+        following_id: following_id,
+        following_name: following_name
+      };
+      user.following.unshift(newFollowing);
+      user.save().then(user => res.json(user));
+      console.log("profile is....", user);
+    })
+    .catch(err => {
+      console.log("err is.....", err);
+      res.status(404).json(err);
+    });
+
+    User.findOne({ username: following_name })
+    .then(user => {
+      if (!user) {
+        console.log("no user");
+
+        return res.status(404).json({ msg: "no user with this username2" });
+      }
+      const newFollower = {
+        follower_id: user_id,
+        follower_name: req.body.username
+      };
+      user.followers.unshift(newFollower);
+      user.save().then(user => res.json(user));
+      console.log("profile is....", user);
+    })
+});
+
+router.post("/get_following", (req, res) => {
+  const { username } = req.body;
+  console.log("inside get_following api of backend. username is..", username);
+  User.findOne({ username })
+    .then(user => {
+      if (!user) {
+        console.log("no user");
+
+        return res.status(404).json({ msg: "no user with this username" });
+      }
+      console.log("profile is....", user);
+      res.json(user.following);
+    })
+    .catch(err => {
+      console.log("err is.....", err);
+      res.status(404).json(err);
+    });
+});
+
 
 // modifying get-profile api with redis
 
