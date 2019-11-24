@@ -248,7 +248,7 @@ router.post("/add_following", (req, res) => {
   const { username, following_id, following_name } = req.body;
   var user_id = "";
   console.log("inside add_following api of backend. username is..", username);
-  User.findOne({ username })
+  User.findOne({ username, "following.following_name": { $ne: following_name } })
     .then(user => {
       const { _id } = user;
       user_id = _id;
@@ -257,7 +257,8 @@ router.post("/add_following", (req, res) => {
 
         return res.status(404).json({ msg: "no user with this username" });
       }
-      const newFollowing = {
+      else {
+        const newFollowing = {
         following_id: following_id,
         following_name: following_name
       };
@@ -266,14 +267,8 @@ router.post("/add_following", (req, res) => {
       user.following_count = user.following_count + 1;
       user.save();
       console.log("profile is....", user);
-    })
-    .catch(err => {
-      console.log("err is.....", err);
-      res.status(404).json(err);
-    });
-
-    User.findOne({ username: following_name })
-    .then(user => {
+      User.findOne({ username: following_name })
+      .then(user => {
       if (!user) {
         console.log("no user");
 
@@ -287,8 +282,15 @@ router.post("/add_following", (req, res) => {
       user.follower_count = user.follower_count + 1;
       user.save();
       console.log("profile is....", user);
+      })
+     }
     })
+    .catch(err => {
+      console.log("err is.....", err);
+      res.status(404).json(err);
+    });
 });
+
 router.post("/get_following", (req, res) => {
   const { username } = req.body;
   console.log("inside get_following api of backend. username is..", username);
