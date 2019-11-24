@@ -8,8 +8,8 @@ import { getTweets } from "../_actions/tweetAction";
 class TweetItem extends Component {
   render() {
     return (
-         <div className="card card-body mb-3" key={tweetIndex}>
-                <div className="row">
+      <div className="card card-body mb-3" key={tweetIndex}>
+        <div className="row">
                   <div className="col-md-2">
                     <a href="profile.html">
                       <img

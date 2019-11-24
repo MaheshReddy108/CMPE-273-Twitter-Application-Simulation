@@ -7,7 +7,10 @@ const path = require("path");
 
 const lists = require("../../models/Lists");
 
-router.post("/create", passport.authenticate("jwt", { session: false }) , (req, res) => {
+router.post(
+  "/create",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
     const { l_Name, l_Desc, is_Private } = req.body;
     if (!(l_Name && l_Desc)) {
       console.error("Required Details Missing");
@@ -23,9 +26,9 @@ router.post("/create", passport.authenticate("jwt", { session: false }) , (req, 
       });
       newList.save().then(list => res.status(200).json(list));
     } catch (e) {
-        res.status(500).send(e.message || e);
+      res.status(500).send(e.message || e);
     }
-  });
+  }
+);
 
-  
 module.exports = router;

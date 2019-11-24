@@ -1,5 +1,3 @@
-/* eslint-disable func-names */
-/* eslint-disable no-console */
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -10,6 +8,9 @@ app.use(express.json());
 
 app.use(passport.initialize());
 require("./config/passport.js")(passport);
+
+//use cors to allow cross origin resource sharing
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 // eslint-disable-next-line func-names
 // app.use(function(err, req, res) {

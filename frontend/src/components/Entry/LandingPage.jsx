@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { loginUser } from "../_actions/authActions";
 
 class LandingPage extends Component {
   render() {
@@ -19,7 +18,7 @@ class LandingPage extends Component {
             <td>
               <img alt="img" src={require("./twitter.png")} width={770} />
             </td>{" "}
-            <td width="10%"></td>
+            <td width="10%" />
             <td>
               <tr>
                 <td>
@@ -60,6 +59,7 @@ class LandingPage extends Component {
 var button = {
   textAlign: "center"
 };
+
 var style = {
   fontWeight: "bold",
   fontSize: 35,
@@ -70,6 +70,7 @@ var style = {
   margin: 10,
   display: "inline-block"
 };
+
 var style1 = {
   fontWeight: "bold",
   fontSize: 25,

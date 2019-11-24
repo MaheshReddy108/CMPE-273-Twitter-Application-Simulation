@@ -23,6 +23,7 @@ router.get("/test", (req, res) =>
 // @desc Get Tweets
 // @access Public
 router.get("/get_tweets", (req, res) => {
+  console.log("inside tweet");
   Tweet.find()
     .sort({ tweeted_date: -1 })
     .then(tweets => res.status(200).json(tweets))

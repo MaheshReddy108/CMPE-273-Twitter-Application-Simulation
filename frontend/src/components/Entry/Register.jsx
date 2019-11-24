@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import classnames from "classnames";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { registerUser } from "../_actions/authActions";
 
 class Register extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class Register extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
+
   componentDidMount() {
     if (localStorage.getItem("jwtToken") != null) {
       this.setState({
@@ -28,18 +30,23 @@ class Register extends Component {
       });
     }
   }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
     });
-    //console.log("changes");
-    // console.log("new value ", e.target.value);
   }
+
   handleClick(event) {
     console.log("inside handleclick");
-    //console.log("event is..", event);
-    var url = "http://localhost:4500/api/users/register";
-    var data = {
+
+    const data = {
       username: this.state.username,
       first_name: this.state.first_name,
       last_name: this.state.last_name,
@@ -47,34 +54,14 @@ class Register extends Component {
       password: this.state.password
     };
     console.log("data is..", data);
-    axios
-      .post(url, data)
-      .then(res => {
-        console.log("response is.....", res.data);
-        this.setState({ signup: true });
-      })
-      .catch(err => {
-        console.log("its an error.....", err);
-        this.setState({ errors: err.response.data });
-        console.log("errors are......", this.state.errors);
-      });
+
+    this.props.registerUser(data, this.props.history);
   }
+
   render() {
     const { errors } = this.state;
-    let signup = this.state.signup;
-    let isLogin = this.state.isLogin;
-    let redirect = null;
-    if (isLogin == true) {
-      redirect = <Redirect to="/welcomePage" />;
-    } else {
-      if (signup == true) {
-        redirect = <Redirect to="/login" />;
-      }
-    }
-
     return (
       <div>
-        {redirect}
         <table>
           <tbody>
             <tr>
@@ -169,7 +156,7 @@ class Register extends Component {
                       <div className="invalid-feedback">{errors.password}</div>
                     )}
                   </Form.Group>
-                  <br></br>
+                  <br />
 
                   <Button
                     style={style2}
@@ -187,10 +174,12 @@ class Register extends Component {
     );
   }
 }
-var style1 = {
+
+const style1 = {
   fontSize: 20,
   fontFamily: "Gotham Narrow SSm"
 };
+
 const style2 = {
   backgroundColor: "#00acee",
   color: "white",
@@ -203,8 +192,15 @@ const style2 = {
   borderRadius: 100
 };
 
-/*let mapStateToProps = state => ({
-  auth: state.auth
-});*/
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
 
-export default Register;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errorState
+});
+
+export default connect(mapStateToProps, { registerUser })(Register);

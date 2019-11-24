@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import React, { Component } from "react";
 
 import Form from "react-bootstrap/Form";
@@ -12,12 +11,9 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../_actions/authActions";
 
-//import setAuthToken from "../utils/setAuthToken";
-//import jwt_decode from "jwt-decode";
-
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       username: "",
       password: "",
@@ -27,32 +23,30 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  handleChange(e) {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
-  componentDidMount() {
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/welcomePage");
-    }
-  }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
+      console.log("Login done");
       this.props.history.push("/welcomePage");
     }
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
   }
+
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
   handleLogin(e) {
     e.preventDefault();
 
-    var data = {
+    const data = {
       username: this.state.username,
       password: this.state.password
     };
+
     console.log(data);
     this.props.loginUser(data);
   }
@@ -63,18 +57,18 @@ class Login extends Component {
     return (
       <div>
         <table>
-          <tr>
-            <td>
-              <img
-                src={require("./twitter.png")}
-                width={770}
-                class="rounded"
-                alt="avatar"
-              />
-            </td>
-            <td width="10%"></td>
-            <td width="50%">
-              <form>
+          <tbody>
+            <tr>
+              <td>
+                <img
+                  src={require("./twitter.png")}
+                  width={770}
+                  className="rounded"
+                  alt="avatar"
+                />
+              </td>
+              <td width="10%"></td>
+              <td width="50%">
                 <Form>
                   <Form.Group controlId="username">
                     <Form.Label style={style1}>Username</Form.Label>
@@ -126,14 +120,15 @@ class Login extends Component {
                     </Button>
                   </a>
                 </Form>
-              </form>
-              <br />
-              <p style={para}>
-                <a href="./register">Join</a> Twitter today.
-              </p>
-            </td>
-            <td width="10%"></td>
-          </tr>
+
+                <br />
+                <p style={para}>
+                  <a href="./register">Join</a> Twitter today.
+                </p>
+              </td>
+              <td width="10%"></td>
+            </tr>
+          </tbody>
         </table>
         <br />
         <br />
@@ -169,6 +164,6 @@ Login.propTypes = {
 };
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errorState
 });
 export default connect(mapStateToProps, { loginUser })(Login);
