@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import HomeTimeline from "../Timeline/HomeTimeline";
 import SearchBar from "../Explore/SearchBar";
+import ProfileTimeline from "../Profile/ProfileTimeline";
+import Logout from "./Logout";
 
 class SideBarHome extends Component {
   constructor(props) {
@@ -123,6 +125,22 @@ class SideBarHome extends Component {
               >
                 Profile
               </div>
+              <div
+                className={`list-group-item list-group-item-action list-group-item-primary
+                        ${
+                          this.state.activeSection === "list-logout"
+                            ? "active"
+                            : ""
+                        }`}
+                id="list-logout-list"
+                data-toggle="list"
+                href="#list-logout"
+                role="tab"
+                aria-controls="logout"
+                onClick={() => this.onSectionClick("list-logout")}
+              >
+                Logout
+              </div>
             </div>
           </div>
 
@@ -151,6 +169,34 @@ class SideBarHome extends Component {
                 aria-labelledby="list-explore-list"
               >
                 <SearchBar />
+              </div>
+            </div>
+            <div className="tab-content" id="nav-tabContent">
+              <div
+                className={`tab-pane fade ${
+                  this.state.activeSection === "list-profile"
+                    ? "show active"
+                    : ""
+                }`}
+                id="list-profile"
+                role="tabpanel"
+                aria-labelledby="list-profile-list"
+              >
+                <ProfileTimeline />
+              </div>
+            </div>
+            <div className="tab-content" id="nav-tabContent">
+              <div
+                className={`tab-pane fade ${
+                  this.state.activeSection === "list-logout"
+                    ? "show active"
+                    : ""
+                }`}
+                id="list-logout"
+                role="tabpanel"
+                aria-labelledby="list-logout-list"
+              >
+                <Logout />
               </div>
             </div>
           </div>

@@ -5,11 +5,9 @@ import { connect } from "react-redux";
 class LandingPage extends Component {
   render() {
     console.log("at landing page");
-    const { isAuthenticated } = this.props.auth;
     let redirectVar = null;
-    if (isAuthenticated) {
+    if (localStorage.getItem("jwtToken") != null)
       redirectVar = <Redirect to="/welcomePage" />;
-    }
     return (
       <div>
         {redirectVar}

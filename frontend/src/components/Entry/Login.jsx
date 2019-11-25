@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-
+import { Redirect } from "react-router-dom";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -26,6 +25,10 @@ class Login extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       console.log("Login done");
+      let user_details = nextProps.auth.user;
+      console.log("user details are....", user_details);
+      localStorage.setItem("username", user_details.username);
+      localStorage.setItem("user_id", user_details.id);
       this.props.history.push("/welcomePage");
     }
     if (nextProps.errors) {
@@ -53,9 +56,13 @@ class Login extends Component {
 
   render() {
     const { errors } = this.state;
-
+    let redirectVar = null;
+    if (localStorage.getItem("jwtToken") != null) {
+      redirectVar = <Redirect to="/welcomePage" />;
+    }
     return (
       <div>
+        {redirectVar}
         <table>
           <tbody>
             <tr>

@@ -29,7 +29,17 @@ router.get("/get_tweets", (req, res) => {
     .then(tweets => res.status(200).json(tweets))
     .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
 });
-
+// @route POST api/tweets/getTweets by username
+// @desc Get Tweets
+// @access Public
+router.post("/getTweets", (req, res) => {
+  console.log("inside getTweet. Username is..", req.body.username);
+  let username = req.body.username;
+  Tweet.find({ username: username })
+    .sort({ tweeted_date: -1 })
+    .then(tweets => res.status(200).json(tweets))
+    .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
+});
 // @route GET api/tweets/get_tweet/:id
 // @desc Get Tweets by id
 // @access Public

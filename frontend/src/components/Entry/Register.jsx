@@ -5,6 +5,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { registerUser } from "../_actions/authActions";
+import { Redirect } from "react-router-dom";
 
 class Register extends Component {
   constructor(props) {
@@ -60,8 +61,12 @@ class Register extends Component {
 
   render() {
     const { errors } = this.state;
+    let redirectVar = null;
+    if (localStorage.getItem("jwtToken") != null)
+      redirectVar = <Redirect to="/welcomePage" />;
     return (
       <div>
+        {redirectVar}
         <table>
           <tbody>
             <tr>
