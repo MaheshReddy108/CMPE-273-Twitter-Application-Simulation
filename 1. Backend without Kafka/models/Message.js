@@ -6,16 +6,18 @@ const { Schema } = mongoose;
 
 const MessageSchema = new Schema({
   sender_id: {
-    type: Schema.Types.ObjectId,
-    ref: "users"
+    type: String,
   },
   receiver_id: {
-    type: Schema.Types.ObjectId,
-    ref: "users"
+    type: String,
   },
   message: {
     type: String
-  }
+  },
+  date: {
+    type: Date,
+    default: Date.now
+  },
 });
 
 module.exports = Message = mongoose.model("messages", MessageSchema);
