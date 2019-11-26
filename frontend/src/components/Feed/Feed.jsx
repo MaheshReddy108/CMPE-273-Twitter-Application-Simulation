@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getTweets } from "../_actions/tweetAction";
 import IsEmpty from "../validation/is.empty.js";
+import TweetItem from "./TweetItem";
 import Spinner from "../common/Spinner";
 
 class Feed extends Component {
@@ -13,95 +14,25 @@ class Feed extends Component {
     this.props.getTweets();
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.tweetState !== prevProps.tweetState) {
-      let newTweets = [];
-      // console.log("Printing Initial State" + newTweets);
-      if (!IsEmpty(this.props.tweetState.tweets)) {
-        let tweetData = this.props.tweetState.tweets;
-        // console.log("Tweet Data is " + JSON.stringify(tweetData));
-        tweetData.map((tweet, tweet_index) => {
-          var itemObj = {};
-          itemObj.username = tweet.username;
-          itemObj.tweet_content = tweet.tweet_content;
-          newTweets.push(itemObj);
-        });
-        this.setState({
-          tweets: newTweets
-        });
-      }
-    }
-  }
-
   render() {
-    const tweets = this.state.tweets;
+    const { tweets, loading } = this.props.tweetState;
+    let tweetContent;
+
+    if (tweets === null || loading) {
+      tweetContent = <Spinner />;
+    } else {
+      tweetContent = tweets.map(tweet => (
+        <TweetItem key={tweet._id} tweet={tweet} />
+      ));
+    }
+
     return (
-      <div>
-        <div>
-          <br />
-          <h5
-            className="text-center p-3 mb-2 bg-secondary text-white"
-            font-family="-apple-system"
-          >{`Here is your feed`}</h5>
-        </div>
-        <div>
-          {tweets.map((tweet, tweetIndex) => {
-            return (
-              <div className="card card-body mb-3" key={tweetIndex}>
-                <div className="row">
-                  <div className="col-md-2">
-                    <a href="profile.html">
-                      <img
-                        className="rounded-circle d-none d-md-block"
-                        src={tweet.avatar}
-                        alt="avt"
-                      />
-                    </a>
-                    <br />
-                    <p className="text-center">{tweet.username}</p>
-                  </div>
-                  <div className="col-md-10">
-                    <p className="lead">{tweet.tweet_content}</p>
-                    {/* {showActions ? (
-                      <span>
-                        <button
-                          onClick={this.onLik eClick.bind(this, tweet._id)}
-                          type="button"
-                          className="btn btn-light mr-1"
-                        >
-                          <i
-                            className={classnames('fas fa-thumbs-up', {
-                              'text-info': this.findUserLike(tweet.likes_count)
-                            })}
-                          />
-                          <span className="badge badge-light">{tweet.likes.length}</span>
-                        </button>
-                        <button
-                          onClick={this.onUnlikeClick.bind(this, tweet._id)}
-                          type="button"
-                          className="btn btn-light mr-1"
-                        >
-                          <i className="text-secondary fas fa-thumbs-down" />
-                        </button>
-                        <Link to={`/post/${tweet._id}`} className="btn btn-info mr-1">
-                          Comments
-                        </Link>
-                        {tweet.user === auth.user.id ? (
-                          <button
-                            onClick={this.onDeleteClick.bind(this, tweet._id)}
-                            type="button"
-                            className="btn btn-danger mr-1"
-                          >
-                            <i className="fas fa-times" />
-                          </button>
-                        ) : null}
-                      </span>
-                    ) : null} */}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+      <div className="feed">
+        <br />
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">{tweetContent}</div>
+          </div>
         </div>
       </div>
     );
