@@ -70,28 +70,23 @@ router.post("/create_tweet", (req, res) => {
     .catch(err => res.status(404).json({ error: "Tweet not found" }));
 });*/
 
-router.post(
-  "/reply/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const { errors, isValid } = validatePostInput(req.body);
+router.post("/reply", (req, res) => {
+    //const { errors, isValid } = validatePostInput(req.body);
 
-    if (!isValid) {
+    /* if (!isValid) {
       return res.status(400).json(errors);
-    }
-
-    Post.findById(req.params.id)
-      .then(post => {
+    } */
+    const { _id } = req.body
+    Tweet.find({ _id })
+      .then(tweet => {
         const newReply = {
           text: req.body.text,
-          name: req.body.name,
+          username: req.body.name,
           avatar: req.body.avatar,
           user: req.user.id
         };
-
-        post.replies.unshift(newReply);
-
-        post.save().then(post => res.json(post));
+        tweet.replies.unshift(newReply);
+        tweet.save().then(tweet => res.json(tweet));
       })
       .catch(err => res.status(404).json({ postnotfound: "No post found" }));
   }
