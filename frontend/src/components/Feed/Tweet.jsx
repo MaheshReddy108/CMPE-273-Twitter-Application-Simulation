@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import TweetItem from "./TweetItem";
 import Spinner from "../common/Spinner";
 import { getTweet } from "../_actions/tweetAction";
+import ReplyForm from "../Replies/ReplyForm";
+import ReplyFeed from "../Replies/ReplyFeed";
 
 class Tweet extends Component {
   componentDidMount() {
@@ -24,6 +26,8 @@ class Tweet extends Component {
       tweetContent = (
         <div>
           <TweetItem tweet={tweet} showActions={false} />
+          <ReplyForm tweetId={tweet._id} />
+          <ReplyFeed tweetId={tweet._id} replies={tweet.replies} />
         </div>
       );
     }

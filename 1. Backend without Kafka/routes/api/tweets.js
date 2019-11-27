@@ -10,6 +10,7 @@ const Tweet = require("../../models/Tweet");
 
 // Validation
 const validateTweetInput = require("../../validation/tweet");
+const validateTextInput = require("../../validation/text");
 
 // @route GET api/tweets/test
 // @desc Test Tweet route
@@ -48,7 +49,7 @@ router.get("/get_tweet/:id", (req, res) => {
   console.log("Inside get tweet route");
   Tweet.findById(req.params.id)
     .then(tweet => {
-      console.log("the tweet is" + tweet);
+      // console.log("the tweet is" + tweet);
       res.status(200).json(tweet);
     })
     .catch(err =>
@@ -169,6 +170,41 @@ router.post(
           res.status(404).json({ tweetnotfound: "No tweet found" })
         );
     });
+  }
+);
+
+// @route   POST api/tweets/reply/:id
+// @desc   Reply to a tweet
+// @access  Private
+router.post(
+  "/reply/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateTextInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+      // If any errors, send 400 with errors object
+      return res.status(400).json(errors);
+    }
+
+    Tweet.findById(req.params.id)
+      .then(tweet => {
+        const newReply = {
+          text: req.body.textContent,
+          username: req.body.username,
+          avatar: req.body.avatar,
+          user: req.user.id
+        };
+
+        // Add to comments array
+        tweet.replies.unshift(newReply);
+        tweet.replies_count += 1;
+
+        // Save
+        tweet.save().then(tweet => res.json(tweet));
+      })
+      .catch(err => res.status(404).json({ tweetnotfound: "No tweet found" }));
   }
 );
 
