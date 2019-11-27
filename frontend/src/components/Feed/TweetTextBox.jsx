@@ -31,6 +31,7 @@ class TweetTextBox extends Component {
     };
 
     this.props.addTweet(newTweet);
+    this.setState({ text: "" });
   };
 
   render() {

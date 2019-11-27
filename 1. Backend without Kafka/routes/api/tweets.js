@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require("passport");
 
 const router = express.Router();
 // const passport = require("passport");
@@ -33,7 +34,7 @@ router.get("/get_tweets", (req, res) => {
 // @desc Get Tweets
 // @access Public
 router.post("/getTweets", (req, res) => {
-  console.log("inside getTweet. Username is..", req.body.username);
+  // console.log("inside getTweet. Username is..", req.body.username);
   let username = req.body.username;
   Tweet.find({ username: username })
     .sort({ tweeted_date: -1 })
@@ -44,8 +45,12 @@ router.post("/getTweets", (req, res) => {
 // @desc Get Tweets by id
 // @access Public
 router.get("/get_tweet/:id", (req, res) => {
+  console.log("Inside get tweet route");
   Tweet.findById(req.params.id)
-    .then(tweet => res.status(200).json(tweet))
+    .then(tweet => {
+      console.log("the tweet is" + tweet);
+      res.status(200).json(tweet);
+    })
     .catch(err =>
       res.status(404).json({ error: `No tweet found with that id ${err}` })
     );
@@ -95,5 +100,76 @@ router.post("/search_topic", (req, res) => {
     }
   });
 });
+
+// @route   Like tweet api/tweets/like/:id
+// @desc    Like tweet
+// @access  Private
+router.post(
+  "/like/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("inside like request");
+    User.findOne({ user: req.user.id }).then(user => {
+      Tweet.findById(req.params.id)
+        .then(tweet => {
+          if (
+            tweet.likes.filter(like => like.user.toString() === req.user.id)
+              .length > 0
+          ) {
+            return res
+              .status(400)
+              .json({ alreadyliked: "User already liked this Tweet" });
+          }
+
+          // Add user id to likes array
+          tweet.likes.unshift({ user: req.user.id });
+          tweet.likes_count += 1;
+
+          tweet.save().then(tweet => res.json(tweet));
+        })
+        .catch(err =>
+          res.status(404).json({ Tweetnotfound: "No Tweet found" })
+        );
+    });
+  }
+);
+
+// @route   POST api/tweets/unlike/:id
+// @desc    Unlike Tweet
+// @access  Private
+router.post(
+  "/unlike/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findOne({ user: req.user.id }).then(user => {
+      Tweet.findById(req.params.id)
+        .then(tweet => {
+          if (
+            tweet.likes.filter(like => like.user.toString() === req.user.id)
+              .length === 0
+          ) {
+            return res
+              .status(400)
+              .json({ notliked: "You have not yet liked this tweet" });
+          }
+
+          // Get remove index
+          const removeIndex = tweet.likes
+            .map(item => item.user.toString())
+            .indexOf(req.user.id);
+
+          // Splice out of array
+          tweet.likes.splice(removeIndex, 1);
+          tweet.likes_count -= 1;
+
+          // Save
+          tweet.save().then(tweet => res.json(tweet));
+        })
+        .catch(err =>
+          res.status(404).json({ tweetnotfound: "No tweet found" })
+        );
+    });
+  }
+);
 
 module.exports = router;

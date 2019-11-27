@@ -36,13 +36,12 @@ export const tweetReducer = (state = { ...initialState }, action) => {
       return {
         ...state,
         tweet: action.payload,
-        post: action.payload,
         loading: false
       };
     case DELETE_TWEET:
       return {
         ...state,
-        posts: state.tweets.filter(tweet => tweet._id !== action.payload)
+        tweets: state.tweets.filter(tweet => tweet._id !== action.payload)
       };
     default:
       return { ...state };
