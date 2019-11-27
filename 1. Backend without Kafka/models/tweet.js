@@ -54,17 +54,18 @@ const TweetSchema = new Schema({
     }
   ],
   likes_count: {
-    type: Number
+    type: Number,
+    default: 0
   },
   tweeted_date: {
     type: Date,
     default: Date.now
   },
   hashtags: {
-      type: Array
+    type: Array
   },
   imageList: {
-      type: Array
+    type: Array
   },
   retweeted_status: {
     user: {

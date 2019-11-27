@@ -172,7 +172,7 @@ router.post("/get_profile", (req, res) => {
 
         return res.status(404).json({ msg: "no user with this username" });
       }
-      console.log("profile is....", user);
+      // console.log("profile is....", user);
       res.json(user);
     })
     .catch(err => {
@@ -235,7 +235,7 @@ router.post("/get_followers", (req, res) => {
 
         return res.status(404).json({ msg: "no user with this username" });
       }
-      console.log("profile is....", user);
+      // console.log("profile is....", user);
       res.json(user.followers);
     })
     .catch(err => {
@@ -294,7 +294,7 @@ router.post("/add_following", (req, res) => {
         user.save().then(user => res.json(user));
         user.following_count = user.following_count + 1;
         user.save();
-        console.log("profile is....", user);
+        // console.log("profile is....", user);
         User.findOne({ username: following_name }).then(user => {
           if (!user) {
             console.log("no user");
@@ -308,7 +308,7 @@ router.post("/add_following", (req, res) => {
           user.followers.unshift(newFollower);
           user.follower_count = user.follower_count + 1;
           user.save();
-          console.log("profile is....", user);
+          // console.log("profile is....", user);
         });
       }
     })
@@ -328,7 +328,7 @@ router.post("/unfollow", (req, res) => {
     user.following_count = user.following_count - 1;
     user.save();
 
-    console.log("new user profile is..", user);
+    // console.log("new user profile is..", user);
   });
 });
 router.post("/get_following", (req, res) => {
@@ -341,7 +341,7 @@ router.post("/get_following", (req, res) => {
 
         return res.status(404).json({ msg: "no user with this username" });
       }
-      console.log("profile is....", user);
+      // console.log("profile is....", user);
       res.json(user.following);
     })
     .catch(err => {

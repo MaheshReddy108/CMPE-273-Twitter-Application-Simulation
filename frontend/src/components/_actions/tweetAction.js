@@ -17,26 +17,6 @@ export const setTweetLoading = () => {
   };
 };
 
-// Add Tweet
-export const addTweet = newTweet => dispatch => {
-  dispatch(clearErrors());
-  console.log("Inside create tweet axios call");
-  axios
-    .post(`http://${rooturl}:4500/api/tweets/create_tweet`, newTweet)
-    .then(response => {
-      dispatch({
-        type: ADD_TWEET,
-        payload: response.data
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: GET_ERRORS,
-        payload: error.response.data
-      });
-    });
-};
-
 // Get Tweets
 export const getTweets = () => dispatch => {
   dispatch(setTweetLoading());
@@ -56,11 +36,33 @@ export const getTweets = () => dispatch => {
     });
 };
 
+// Add Tweet
+export const addTweet = newTweet => dispatch => {
+  dispatch(clearErrors());
+  console.log("Inside create tweet axios call");
+  axios
+    .post(`http://${rooturl}:4500/api/tweets/create_tweet`, newTweet)
+    .then(response => {
+      dispatch({
+        type: ADD_TWEET,
+        payload: response.data
+      });
+      dispatch(getTweets());
+    })
+    .catch(error => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: error.response.data
+      });
+    });
+};
+
 // Get Tweet
 export const getTweet = id => dispatch => {
+  console.log("inside gettweet action");
   dispatch(setTweetLoading());
   axios
-    .get(`http://${rooturl}:4500/api/tweets/get_tweet`)
+    .get(`http://${rooturl}:4500/api/tweets/get_tweet/${id}`)
     .then(res =>
       dispatch({
         type: GET_TWEET,
@@ -96,7 +98,7 @@ export const deleteTweet = id => dispatch => {
 // Add Like
 export const addLike = id => dispatch => {
   axios
-    .post(`/api/posts/like/${id}`)
+    .post(`http://${rooturl}:4500/api/tweets/like/${id}`)
     .then(res => dispatch(getTweets()))
     .catch(err =>
       dispatch({
@@ -109,7 +111,7 @@ export const addLike = id => dispatch => {
 // Remove Like
 export const removeLike = id => dispatch => {
   axios
-    .post(`/api/posts/unlike/${id}`)
+    .post(`http://${rooturl}:4500/api/tweets/unlike/${id}`)
     .then(res => dispatch(getTweets()))
     .catch(err =>
       dispatch({

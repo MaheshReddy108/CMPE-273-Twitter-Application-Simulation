@@ -41,6 +41,7 @@ class TweetItem extends Component {
             <a href="profile.html">
               <img
                 className="rounded-circle d-none d-md-block"
+                width={50}
                 src={tweet.avatar}
                 alt="avt"
               />
@@ -63,9 +64,7 @@ class TweetItem extends Component {
                       "text-info": this.findUserLike(tweet.likes)
                     })}
                   />
-                  <span className="badge badge-light">
-                    {tweet.likes.length}
-                  </span>
+                  <span className="badge badge-light">{tweet.likes_count}</span>
                 </button>
                 <button
                   onClick={this.onUnlikeClick.bind(this, tweet._id)}
@@ -77,6 +76,7 @@ class TweetItem extends Component {
                 <Link to={`/tweet/${tweet._id}`} className="btn btn-info mr-1">
                   Comments
                 </Link>
+
                 {tweet.user === auth.user.id ? (
                   <button
                     onClick={this.onDeleteClick.bind(this, tweet._id)}
