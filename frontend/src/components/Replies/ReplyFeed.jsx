@@ -4,7 +4,7 @@ import ReplyItem from "./ReplyItem";
 
 class ReplyFeed extends Component {
   render() {
-    console.log("enters reply");
+    console.log("enters reply test");
     const { replies, tweetId } = this.props;
 
     return replies.map(reply => (
