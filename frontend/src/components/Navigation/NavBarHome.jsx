@@ -6,9 +6,9 @@ import { logoutUser } from "../_actions/authActions";
 
 class NavBarHome extends Component {
   logout = e => {
-    //this.props.logoutUser();
-    localStorage.clear();
-    window.location.href = "/";
+    this.props.logoutUser();
+    // localStorage.clear();
+    //  window.location.href = "/";
   };
 
   render() {

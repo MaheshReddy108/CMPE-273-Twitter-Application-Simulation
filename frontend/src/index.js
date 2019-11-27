@@ -11,6 +11,7 @@ import "font-awesome/css/font-awesome.css";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./components/_utils/setAuthToken";
 import { setCurrentUser } from "./components/_actions/authActions";
+import { logoutUser } from "./components/_actions/authActions";
 
 // check for token
 if (localStorage.jwtToken) {
