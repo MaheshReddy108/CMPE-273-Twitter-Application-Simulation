@@ -40,7 +40,8 @@ const TweetSchema = new Schema({
     }
   ],
   replies_count: {
-    type: Number
+    type: Number,
+    default: 0
   },
   likes: [
     {
@@ -86,7 +87,8 @@ const TweetSchema = new Schema({
     }
   },
   retweets_count: {
-    type: Number
+    type: Number,
+    default: 0
   },
   retweeted: {
     type: Boolean

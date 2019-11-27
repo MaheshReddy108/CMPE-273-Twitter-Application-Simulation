@@ -122,10 +122,10 @@ export const removeLike = id => dispatch => {
 };
 
 // Add Comment
-export const addComment = (postId, commentData) => dispatch => {
+export const addReply = (tweetId, ReplyData) => dispatch => {
   dispatch(clearErrors());
   axios
-    .post(`/api/posts/comment/${postId}`, commentData)
+    .post(`http://${rooturl}:4500/api/tweets/reply/${tweetId}`, ReplyData)
     .then(res =>
       dispatch({
         type: GET_TWEET,
@@ -141,9 +141,9 @@ export const addComment = (postId, commentData) => dispatch => {
 };
 
 // Delete Comment
-export const deleteComment = (postId, commentId) => dispatch => {
+export const deleteReply = (tweetId, replyId) => dispatch => {
   axios
-    .delete(`/api/posts/comment/${postId}/${commentId}`)
+    .delete(`/api/tweets/replies/${tweetId}/${replyId}`)
     .then(res =>
       dispatch({
         type: GET_TWEET,
