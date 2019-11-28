@@ -8,7 +8,7 @@ class Logout extends Component {
     return (
       <div>
         {" "}
-        <p> User will be logged out.hii </p>{" "}
+        <p> User will be logged out.hii. how are you </p>{" "}
       </div>
     );
   }
