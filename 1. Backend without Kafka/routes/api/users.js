@@ -318,17 +318,44 @@ router.post("/add_following", (req, res) => {
     });
 });
 router.post("/unfollow", (req, res) => {
-  const { username, following_name } = req.body;
+  const { following_name, username } = req.body;
+  console.log("req is ", req.body);
+  console.log("following id is..", following_name);
+  console.log("username is..", username);
   User.findOne({ username }).then(user => {
     if (!user) {
       console.log("no user");
       return res.status(404).json({ msg: "no user with this username" });
     }
-    user.update({ $pull: { following: { following_name: following_name } } });
-    user.following_count = user.following_count - 1;
-    user.save();
+    let removeIndex = user.following
+      .map(item => item.following_name)
+      .indexOf(following_name);
+    console.log("remove index is..", removeIndex);
 
-    // console.log("new user profile is..", user);
+    user.following.splice(removeIndex, 1);
+    user.following_count -= 1;
+    user.save().then(user => {
+      console.log("user new profile is ", user);
+      res.json(user);
+    });
+  });
+
+  User.findOne({ username: following_name }).then(user => {
+    if (!user) {
+      console.log("no user");
+      return res.status(404).json({ msg: "no user with this username" });
+    }
+    let removeIndex = user.followers
+      .map(item => item.follower_name)
+      .indexOf(username);
+    console.log("remove index is..", removeIndex);
+
+    user.followers.splice(removeIndex, 1);
+    user.follower_count -= 1;
+    user.save().then(user => {
+      console.log("user new profile is ", user);
+      res.json(user);
+    });
   });
 });
 router.post("/get_following", (req, res) => {
@@ -341,7 +368,7 @@ router.post("/get_following", (req, res) => {
 
         return res.status(404).json({ msg: "no user with this username" });
       }
-      // console.log("profile is....", user);
+      console.log("profile is....", user);
       res.json(user.following);
     })
     .catch(err => {
