@@ -159,6 +159,25 @@ export const deleteReply = (tweetId, replyId) => dispatch => {
     );
 };
 
+// Retweet
+export const Retweet = newTweet => dispatch => {
+  axios
+    .post(`http://${rooturl}:4500/api/tweets/retweet`, newTweet)
+    .then(res => {
+      dispatch({
+        type: GET_TWEET,
+        payload: res.data
+      });
+      dispatch(getTweets());
+    })
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Clear errors
 export const clearErrors = () => {
   return {

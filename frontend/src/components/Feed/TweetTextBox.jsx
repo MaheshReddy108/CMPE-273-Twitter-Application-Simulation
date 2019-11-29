@@ -27,6 +27,8 @@ class TweetTextBox extends Component {
       tweet_content: this.state.text,
       user_id: user.id,
       username: user.username,
+      firstname: user.first_name,
+      lastname: user.last_name,
       avatar: user.avatar
     };
 

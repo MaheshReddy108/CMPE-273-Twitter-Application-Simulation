@@ -121,7 +121,10 @@ router.post("/login", (req, res) => {
                 console.log("match found");
                 const payload = {
                   id: user.id,
-                  username: user.username
+                  first_name: user.first_name,
+                  last_name: user.last_name,
+                  username: user.username,
+                  avatar: user.avatar
                 };
                 console.log("payload is ", payload);
                 // sign token
@@ -266,7 +269,7 @@ router.post("/update_profile", (req, res) => {
     user.state = state;
     user.zipcode = zipcode;
     user.save();
-    console.log("new profile is....", user);
+    // console.log("new profile is....", user);
     res.status(200).json(user);
   });
 });
@@ -335,7 +338,7 @@ router.post("/unfollow", (req, res) => {
     user.following.splice(removeIndex, 1);
     user.following_count -= 1;
     user.save().then(user => {
-      console.log("user new profile is ", user);
+      // console.log("user new profile is ", user);
       res.json(user);
     });
   });
@@ -353,7 +356,7 @@ router.post("/unfollow", (req, res) => {
     user.followers.splice(removeIndex, 1);
     user.follower_count -= 1;
     user.save().then(user => {
-      console.log("user new profile is ", user);
+      //  console.log("user new profile is ", user);
       res.json(user);
     });
   });
@@ -368,7 +371,7 @@ router.post("/get_following", (req, res) => {
 
         return res.status(404).json({ msg: "no user with this username" });
       }
-      console.log("profile is....", user);
+      // console.log("profile is....", user);
       res.json(user.following);
     })
     .catch(err => {
