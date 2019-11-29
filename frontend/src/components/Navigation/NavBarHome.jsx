@@ -17,7 +17,8 @@ class NavBarHome extends Component {
       <div className="container">
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
           <Navbar.Brand className="active" href="#">
-            Twitter<span className="sr-only active">(current)</span>
+            <img alt="Twitter" src={require("../Entry/bird.png")} width={40} />
+            <span className="sr-only active">(current)</span>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">

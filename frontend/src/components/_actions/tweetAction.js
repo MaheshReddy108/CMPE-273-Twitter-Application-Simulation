@@ -79,8 +79,9 @@ export const getTweet = id => dispatch => {
 
 // Delete Post
 export const deleteTweet = id => dispatch => {
+  console.log("inside delete tweet action");
   axios
-    .delete(`/api/posts/${id}`)
+    .delete(`http://${rooturl}:4500/api/tweets/delete_tweet/${id}`)
     .then(res =>
       dispatch({
         type: DELETE_TWEET,
@@ -143,7 +144,7 @@ export const addReply = (tweetId, ReplyData) => dispatch => {
 // Delete Comment
 export const deleteReply = (tweetId, replyId) => dispatch => {
   axios
-    .delete(`/api/tweets/replies/${tweetId}/${replyId}`)
+    .delete(`http://${rooturl}:4500/api/tweets/replies/${tweetId}/${replyId}`)
     .then(res =>
       dispatch({
         type: GET_TWEET,
