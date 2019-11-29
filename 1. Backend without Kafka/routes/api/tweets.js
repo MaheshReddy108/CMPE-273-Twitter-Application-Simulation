@@ -51,6 +51,7 @@ router.get("/get_tweet/:id", (req, res) => {
     .then(tweet => {
       // console.log("the tweet is" + tweet);
       res.status(200).json(tweet);
+      // tweet.view_count += 1;
     })
     .catch(err =>
       res.status(404).json({ error: `No tweet found with that id ${err}` })
@@ -70,6 +71,8 @@ router.post("/create_tweet", (req, res) => {
     user: req.body.user_id,
     tweet_content: req.body.tweet_content,
     username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     avatar: req.body.avatar,
     hashtags: req.body.hashtags
   });
@@ -255,6 +258,57 @@ router.delete(
         tweet.save().then(tweet => res.json(tweet));
       })
       .catch(err => res.status(404).json({ tweetnotfound: "No tweet found" }));
+  }
+);
+
+// @route   RETWEET api/tweets/retweet/:id
+// @desc    Retweet
+// @access  Private
+router.post(
+  "/retweet",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const {
+      user_id,
+      username,
+      firstname,
+      lastname,
+      tweet_content,
+      avatar,
+      hashtags,
+      tweet_id
+    } = req.body;
+    console.log("check values", req.body);
+
+    Tweet.findById(tweet_id)
+      .then(tweet => {
+        // Check to see if comment exists
+        const org_tweet = tweet;
+        console.log(`the orginal tweet${tweet}`);
+
+        const newTweet = new Tweet({
+          user: user_id,
+          tweet_content,
+          firstname,
+          lastname,
+          username,
+          avatar,
+          hashtags,
+          retweeted_status: org_tweet,
+          retweeted: true
+        });
+        newTweet.save().then(tweet => {
+          console.log("the retweeted tweet is", { tweet });
+          res.status(200).json(tweet);
+        });
+
+        tweet.retweets_count += 1;
+        // Save
+        tweet.save().then(console.log("Updated retweet count"));
+      })
+      .catch(err =>
+        res.status(404).json({ tweetnotfound: `No tweet found${err}` })
+      );
   }
 );
 

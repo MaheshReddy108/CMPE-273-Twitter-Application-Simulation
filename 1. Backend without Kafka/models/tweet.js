@@ -15,6 +15,12 @@ const TweetSchema = new Schema({
   username: {
     type: String
   },
+  firstname: {
+    type: String
+  },
+  lastname: {
+    type: String
+  },
   avatar: {
     type: String
   },
@@ -74,6 +80,15 @@ const TweetSchema = new Schema({
       ref: "users"
     },
     username: {
+      type: String
+    },
+    firstname: {
+      type: String
+    },
+    lastname: {
+      type: String
+    },
+    avatar: {
       type: String
     },
     tweet_content: {

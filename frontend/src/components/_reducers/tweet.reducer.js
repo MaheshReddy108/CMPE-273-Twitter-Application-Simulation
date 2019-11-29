@@ -3,7 +3,8 @@ import {
   GET_TWEETS,
   GET_TWEET,
   DELETE_TWEET,
-  TWEET_LOADING
+  TWEET_LOADING,
+  RETWEET
 } from "../_actions/types";
 
 const initialState = {
@@ -33,6 +34,12 @@ export const tweetReducer = (state = { ...initialState }, action) => {
         loading: false
       };
     case ADD_TWEET:
+      return {
+        ...state,
+        tweet: action.payload,
+        loading: false
+      };
+    case RETWEET:
       return {
         ...state,
         tweet: action.payload,
