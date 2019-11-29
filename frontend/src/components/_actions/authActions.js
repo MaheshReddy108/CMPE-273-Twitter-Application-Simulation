@@ -53,6 +53,8 @@ export const loginUser = userData => dispatch => {
 
 export const logoutUser = () => dispatch => {
   localStorage.removeItem("jwtToken");
+  localStorage.removeItem("user_id");
+  localStorage.removeItem("username");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
   window.location.href = "/login";

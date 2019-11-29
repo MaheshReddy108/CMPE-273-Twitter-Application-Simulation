@@ -21,13 +21,13 @@ class TweetTextBox extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    //const { user } = this.props.auth;
+    const { user } = this.props.auth;
 
     const newTweet = {
       tweet_content: this.state.text,
-      user_id: "5dcde47b914b4b8ea83a0072",
-      username: "Kanika",
-      avatar: ""
+      user_id: user.id,
+      username: user.username,
+      avatar: user.avatar
     };
 
     this.props.addTweet(newTweet);
@@ -78,6 +78,7 @@ class TweetTextBox extends Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   tweetState: state.tweetState,
   errors: state.errorState
 });

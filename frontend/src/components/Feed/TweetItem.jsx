@@ -74,7 +74,7 @@ class TweetItem extends Component {
                   <i className="text-secondary fas fa-thumbs-down" />
                 </button>
                 <Link to={`/tweet/${tweet._id}`} className="btn btn-info mr-1">
-                  Comments
+                  Replies
                 </Link>
 
                 {tweet.user === auth.user.id ? (
