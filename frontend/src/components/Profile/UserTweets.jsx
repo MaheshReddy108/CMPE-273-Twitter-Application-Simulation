@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import TweetItem from "../Feed/TweetItem";
 
 class UserTweets extends Component {
   constructor(props) {
@@ -31,32 +32,18 @@ class UserTweets extends Component {
   }
   render() {
     const tweets = this.state.tweets;
+    let tweetContent;
+    tweetContent = tweets.map(tweet => (
+      <TweetItem key={tweet._id} tweet={tweet} />
+    ));
     return (
-      <div>
+      <div className="feed">
         <br />
-        {tweets.map((tweet, tweetIndex) => {
-          let avatar = tweet.avatar;
-          return (
-            <div className="card card-body mb-3" key={tweetIndex}>
-              <div className="row">
-                <div className="col-md-2">
-                  <img
-                    src={avatar}
-                    width={50}
-                    className="rounded-circle"
-                    alt="avatar"
-                  />
-
-                  <br />
-                  <p className="text-center">{tweet.username}</p>
-                </div>
-                <div className="col-md-10">
-                  <p className="lead">{tweet.tweet_content}</p>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">{tweetContent}</div>
+          </div>
+        </div>
       </div>
     );
   }
