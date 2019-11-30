@@ -9,7 +9,64 @@ class UserFollowers extends Component {
       username: "",
       followers: []
     };
+    this.addFollower = this.addFollower.bind(this);
+    this.checkFollower = this.checkFollower.bind(this);
   }
+
+  checkFollower = followers => {
+    console.log("follower is..", followers);
+    let data = {
+      username: localStorage.getItem("username"),
+      follower_name: followers.follower_name
+    };
+    const msg = "";
+    let url = "http://localhost:4500/api/users/check_follower";
+    axios
+      .post(url, data)
+      .then(function(response) {
+        console.log("response from check_follower is..", response.data.msg);
+        msg = response.data.msg;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    console.log("msg is ", msg);
+    if (msg == "not exists")
+      return (
+        <Button style={style1} onClick={() => this.addFollower(followers)}>
+          Follow
+        </Button>
+      );
+    else {
+      return <Button style={style1}>Unfollow</Button>;
+    }
+    /* return (
+      <Button style={style1} onClick={() => this.addFollower(followers)}>
+        Follow
+      </Button>
+    );*/
+  };
+  addFollower = followers => {
+    //console.log("followers are..", followers);
+    let username = localStorage.getItem("username");
+    let following_id = followers.follower_id;
+    let following_name = followers.follower_name;
+    let data = {
+      username: username,
+      following_id: following_id,
+      following_name: following_name
+    };
+    //console.log("data is..", data);
+    var url = "http://localhost:4500/api/users/add_following";
+    axios
+      .post(url, data)
+      .then(function(response) {
+        console.log("response from add_following is..", response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
   componentDidMount() {
     let username = localStorage.getItem("username");
     axios
@@ -39,10 +96,13 @@ class UserFollowers extends Component {
                 <div className="row">
                   <div className="col-md-8" style={style}>
                     @ {followers.follower_name}
+                    <br />
+                    {followers.follower_id}
                   </div>
                   <div className="col-md-4">
                     <br />
-                    <Button style={style1}>Follow</Button>
+
+                    {this.checkFollower(followers)}
                   </div>
                 </div>
               </div>

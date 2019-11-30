@@ -270,6 +270,31 @@ router.post("/update_profile", (req, res) => {
     res.status(200).json(user);
   });
 });
+
+router.post("/check_follower", (req, res) => {
+  const { username, follower_name } = req.body;
+  console.log("inside check_follower api of backend. username is..", username);
+  console.log(
+    "inside check_follower api of backend. follower_name is..",
+    follower_name
+  );
+  User.findOne({
+    username,
+    "following.following_name": { $eq: follower_name }
+  })
+    .then(user => {
+      if (user) {
+        res.status(200).json({ msg: "exists" });
+      } else {
+        res.status(200).json({ msg: "not exists " });
+      }
+    })
+    .catch(err => {
+      console.log("user does not exist");
+      res.status(200).json({ msg: "not exists " });
+    });
+});
+
 router.post("/add_following", (req, res) => {
   const { username, following_id, following_name } = req.body;
   var user_id = "";
@@ -284,7 +309,9 @@ router.post("/add_following", (req, res) => {
       if (!user) {
         console.log("no user");
 
-        return res.status(404).json({ msg: "no user with this username" });
+        return res
+          .status(404)
+          .json({ msg: "no user with this username or already following" });
       } else {
         const newFollowing = {
           following_id: following_id,
