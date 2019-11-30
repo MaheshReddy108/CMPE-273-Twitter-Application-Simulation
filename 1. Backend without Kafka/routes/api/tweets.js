@@ -108,9 +108,9 @@ router.delete(
 );
 
 router.post("/search_topic", (req, res) => {
-  console.log("req for search_topic", req);
-  topic = req.body.hashtags;
-  Tweet.find({ hashtags: new RegExp(topic, "i") }, (err, result) => {
+  console.log("req for search_topic", req.body);
+  topic = req.body.searchText;
+  Tweet.find({ hashtags: new RegExp('^'+topic, "i") }, (err, result) => {
     if (err) {
       res.status(404).json({ error: `Tweet not found ${err}` });
     } else {
