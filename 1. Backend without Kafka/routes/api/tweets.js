@@ -51,6 +51,7 @@ router.get("/get_tweet/:id", (req, res) => {
     .then(tweet => {
       // console.log("the tweet is" + tweet);
       res.status(200).json(tweet);
+      // tweet.view_count += 1;
     })
     .catch(err =>
       res.status(404).json({ error: `No tweet found with that id ${err}` })
@@ -70,6 +71,8 @@ router.post("/create_tweet", (req, res) => {
     user: req.body.user_id,
     tweet_content: req.body.tweet_content,
     username: req.body.username,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
     avatar: req.body.avatar,
     hashtags: req.body.hashtags
   });
@@ -80,13 +83,29 @@ router.post("/create_tweet", (req, res) => {
 //@route DELETE api/tweets/delete_tweet/:id
 // @desc Delete Tweet
 // @access Private */
-router.post("/delete_tweet/:id", (req, res) => {
-  Tweet.findByIdAndRemove({ _id: req.params.id })
-    .then(res => {
-      res.status(200).json({ success: true });
-    })
-    .catch(err => res.status(404).json({ error: `Tweet not found ${err}` }));
-});
+router.delete(
+  "/delete_tweet/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    User.findOne({ user: req.user.id }).then(user => {
+      Tweet.findById(req.params.id)
+        .then(tweet => {
+          // Check for tweet owner
+          if (tweet.user.toString() !== req.user.id) {
+            return res
+              .status(401)
+              .json({ notauthorized: "User not authorized" });
+          }
+
+          // Delete
+          tweet.remove().then(() => res.json({ success: true }));
+        })
+        .catch(err =>
+          res.status(404).json({ tweetnotfound: "No tweet found" })
+        );
+    });
+  }
+);
 
 router.post("/search_topic", (req, res) => {
   console.log("req for search_topic", req);
@@ -205,6 +224,91 @@ router.post(
         tweet.save().then(tweet => res.json(tweet));
       })
       .catch(err => res.status(404).json({ tweetnotfound: "No tweet found" }));
+  }
+);
+
+// @route   DELETE api/tweets/reply/:id/:reply_id
+// @desc    Remove Reply from tweet
+// @access  Private
+router.delete(
+  "/replies/:id/:reply_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Tweet.findById(req.params.id)
+      .then(tweet => {
+        // Check to see if comment exists
+        if (
+          tweet.replies.filter(
+            reply => reply._id.toString() === req.params.reply_id
+          ).length === 0
+        ) {
+          return res
+            .status(404)
+            .json({ commentnotexists: "Comment does not exist" });
+        }
+
+        // Get remove index
+        const removeIndex = tweet.replies
+          .map(item => item._id.toString())
+          .indexOf(req.params.reply_id);
+
+        // Splice comment out of array
+        tweet.replies.splice(removeIndex, 1);
+
+        tweet.save().then(tweet => res.json(tweet));
+      })
+      .catch(err => res.status(404).json({ tweetnotfound: "No tweet found" }));
+  }
+);
+
+// @route   RETWEET api/tweets/retweet/:id
+// @desc    Retweet
+// @access  Private
+router.post(
+  "/retweet",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const {
+      user_id,
+      username,
+      firstname,
+      lastname,
+      tweet_content,
+      avatar,
+      hashtags,
+      tweet_id
+    } = req.body;
+    console.log("check values", req.body);
+
+    Tweet.findById(tweet_id)
+      .then(tweet => {
+        // Check to see if comment exists
+        const org_tweet = tweet;
+        console.log(`the orginal tweet${tweet}`);
+
+        const newTweet = new Tweet({
+          user: user_id,
+          tweet_content,
+          firstname,
+          lastname,
+          username,
+          avatar,
+          hashtags,
+          retweeted_status: org_tweet,
+          retweeted: true
+        });
+        newTweet.save().then(tweet => {
+          console.log("the retweeted tweet is", { tweet });
+          res.status(200).json(tweet);
+        });
+
+        tweet.retweets_count += 1;
+        // Save
+        tweet.save().then(console.log("Updated retweet count"));
+      })
+      .catch(err =>
+        res.status(404).json({ tweetnotfound: `No tweet found${err}` })
+      );
   }
 );
 

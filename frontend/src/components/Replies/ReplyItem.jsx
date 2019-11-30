@@ -4,15 +4,15 @@ import PropTypes from "prop-types";
 import { deleteReply } from "../_actions/tweetAction";
 
 class ReplyItem extends Component {
-  onDeleteClick(postId, commentId) {
-    this.props.deleteReply(postId, commentId);
+  onDeleteClick(tweetId, replyId) {
+    this.props.deleteReply(tweetId, replyId);
   }
 
   render() {
     const { reply, tweetId, auth } = this.props;
 
     return (
-      <div className="card card-body mb-3">
+      <div className="card card-body mb-3 ">
         <div className="row">
           <div className="col-md-2">
             <a href="profile.html">
