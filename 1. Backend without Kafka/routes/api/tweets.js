@@ -42,6 +42,40 @@ router.post("/getTweets", (req, res) => {
     .then(tweets => res.status(200).json(tweets))
     .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
 });
+
+// @route POST api/tweets/getReTweets by username
+// @desc Get Tweets
+// @access Public
+router.post("/getReTweets", (req, res) => {
+  console.log("inside getReTweet. Username is..", req.body.username);
+  let username = req.body.username;
+  Tweet.find({ username: username, retweeted: true })
+    .sort({ tweeted_date: -1 })
+    .then(tweets => res.status(200).json(tweets))
+    .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
+});
+
+// @route POST api/tweets/getLikedTweets by username
+// @desc Get Tweets
+// @access Public
+router.post("/getLikedTweets", (req, res) => {
+  console.log("inside getLikedTweet. Username is..", req.body.user_id);
+  let user_id = req.body.user_id;
+  console.log("user id ", user_id);
+  Tweet.find({ "likes.user": user_id })
+    .sort({ tweeted_date: -1 })
+    .then(tweets => {
+      if (!tweets) {
+        console.log("no liked tweets");
+        return res.status(404).json({ msg: "No liked tweets" });
+      } else {
+        console.log("liked tweets are :", tweets);
+        res.json(tweets);
+      }
+    })
+    .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
+});
+
 // @route GET api/tweets/get_tweet/:id
 // @desc Get Tweets by id
 // @access Public
