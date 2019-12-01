@@ -10,6 +10,7 @@ import Pagination from "react-js-pagination"
 import 'bootstrap/dist/css/bootstrap.min.css';
 // require("bootstrap/less/bootstrap.less");
 
+// import Pagination from 'react-bootstrap/Pagination'
 
 class SearchBar extends Component {
   constructor(props) {
@@ -78,10 +79,7 @@ class SearchBar extends Component {
     const indexOfLastTodo = activePage * resultsPerPage;
     const indexOfFirstTodo = indexOfLastTodo - resultsPerPage;
     const currentTodos = peopleResult.slice(indexOfFirstTodo, indexOfLastTodo);
-    console.log('current page',activePage);
-    console.log('results per page',resultsPerPage);
-    console.log('current',currentTodos);
-    
+   
 
     let peopleList = currentTodos.map(function (people, index) {
       return (
@@ -97,7 +95,10 @@ class SearchBar extends Component {
                               <div>FirstName : {people.first_name}</div>
                               <div>LaststName : {people.last_name}</div>
                               <div>Email : {people.email}</div>
+                              <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
 
+                              <div  className="btn btn-success btn-sm" style={{ width: "18%" }} >Follow</div>
+                              </span>
                           </div>
                           
                       </div>
@@ -124,7 +125,7 @@ class SearchBar extends Component {
                                     <div>UserName : {topic.username}</div>
                                     <div>Hashtags :<strong> <h2>#{topic.hashtags[0]}</h2></strong></div>
                                     <div>Date : {topic.tweeted_date}</div>
-      
+                                     
                                 </div>
                                 
                             </div>
@@ -160,9 +161,9 @@ class SearchBar extends Component {
         {topicList}
     </div>  
 </div>
-<div class="button"> 
+<div class="button" width="1000px" > 
     
-<Pagination 
+<Pagination style={{ width:"1000px"}}
           activePage={this.state.activePage}
           itemsCountPerPage={resultsPerPage}
           totalItemsCount={length}
