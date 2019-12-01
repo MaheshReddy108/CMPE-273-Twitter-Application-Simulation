@@ -62,6 +62,7 @@ const users = require("./routes/api/users");
 const tweets = require("./routes/api/tweets");
 const lists = require("./routes/api/lists");
 const message = require("./routes/api/message");
+const bookmark = require("./routes/api/bookmarks");
 
 app.get("/", function(request, response) {
   console.log("Inside Node Home");
@@ -73,6 +74,7 @@ app.use("/api/users", users);
 app.use("/api/tweets", tweets);
 app.use("/api/lists", lists);
 app.use("/api/message", message);
+app.use("/api/bookmark", bookmark);
 
 const port = process.env.PORT || 4500;
 app.listen(port, () => console.log(`Server running on port ${port}`));
