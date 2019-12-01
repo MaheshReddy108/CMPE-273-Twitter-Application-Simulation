@@ -7,6 +7,7 @@ import { Redirect } from "react-router-dom";
 import axios from "axios";
 import ProfileUpdateForm from "./ProfileUpdateForm";
 import Modal from "react-responsive-modal";
+import DeactivateProfile from "./DeactivateProfile";
 //import { loginUser } from "../actions/authActions";
 
 class ProfileDisplay extends Component {
@@ -26,14 +27,22 @@ class ProfileDisplay extends Component {
       state: "",
       zipcode: "",
       open: false,
-      blockScroll: true
+      open1: false,
+      blockScroll: true,
+      blockScroll1: true
     };
   }
   onOpenModal = () => {
     this.setState({ open: true, blockScroll: false });
   };
+  onOpenModal1 = () => {
+    this.setState({ open1: true, blockScroll1: false });
+  };
   onCloseModal = () => {
     this.setState({ open: false });
+  };
+  onCloseModal1 = () => {
+    this.setState({ open1: false });
   };
   componentDidMount() {
     let username = localStorage.getItem("username");
@@ -83,6 +92,7 @@ class ProfileDisplay extends Component {
       username,
       email,
       open,
+      open1,
       create_date,
       follower_count,
       following_count,
@@ -92,7 +102,8 @@ class ProfileDisplay extends Component {
       city,
       state,
       zipcode,
-      blockScroll
+      blockScroll,
+      blockScroll1
     } = this.state;
     return (
       <div>
@@ -141,24 +152,39 @@ class ProfileDisplay extends Component {
                   </tr>
                   <br />
                   <tr>
-                    <Button style={style4} onClick={this.onOpenModal}>
-                      Edit Profile
-                    </Button>
-                    <div className="overflow-auto">
-                      <Modal open={open} onClose={this.onCloseModal} center>
-                        <h4 className="text-center tex-secondary">
-                          Update Your Profile Details
-                        </h4>
-                        <ProfileUpdateForm
-                          first_name={first_name}
-                          last_name={last_name}
-                          description={description}
-                          city={city}
-                          state={state}
-                          zipcode={zipcode}
-                        />
-                      </Modal>
-                    </div>
+                    <td>
+                      <Button style={style4} onClick={this.onOpenModal}>
+                        Edit Profile
+                      </Button>
+                      <div className="overflow-auto">
+                        <Modal open={open} onClose={this.onCloseModal} center>
+                          <h4 className="text-center tex-secondary">
+                            Update Your Profile Details
+                          </h4>
+                          <ProfileUpdateForm
+                            first_name={first_name}
+                            last_name={last_name}
+                            description={description}
+                            city={city}
+                            state={state}
+                            zipcode={zipcode}
+                          />
+                        </Modal>
+                      </div>
+                    </td>
+                    <td>
+                      <Button style={style4} onClick={this.onOpenModal1}>
+                        Deactivate
+                      </Button>
+                      <div className="overflow-auto">
+                        <Modal open={open1} onClose={this.onCloseModal1} center>
+                          <h4 className="text-center tex-secondary">
+                            Do you want to deactivate?
+                          </h4>
+                          <DeactivateProfile username={username} />
+                        </Modal>
+                      </div>
+                    </td>
                   </tr>
                 </td>
               </tr>
