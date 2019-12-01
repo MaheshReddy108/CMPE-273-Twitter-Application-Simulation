@@ -63,7 +63,6 @@ class UserFollowers extends Component {
                   <div className="col-md-8" style={style}>
                     @ {followers.follower_name}
                     <br />
-                    {followers.follower_id}
                   </div>
                   <div className="col-md-4">
                     <br />

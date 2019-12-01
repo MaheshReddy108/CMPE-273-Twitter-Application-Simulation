@@ -10,7 +10,8 @@ const lists = require("../../models/Lists");
 //passport.authenticate("jwt", { session: false }) ,
 
 router.post("/create", (req, res) => {
-  const { l_Name, l_Desc, is_Private, ownerID } = req.body;
+  //const { l_Name, l_Desc, is_Private, ownerID } = req.body;
+  const { l_Name, l_Desc, ownerID } = req.body;
   if (!(l_Name && l_Desc)) {
     console.error("Required Details Missing");
     return res.status(400).json({ message: "Required Details Missing" });
@@ -20,8 +21,8 @@ router.post("/create", (req, res) => {
     const newList = new lists({
       ownerID: ownerID,
       list_Name: l_Name,
-      list_Desc: l_Desc,
-      make_Private: is_Private
+      list_Desc: l_Desc
+      //make_Private: is_Private
     });
     newList.save().then(list => res.status(200).json(list));
   } catch (e) {
@@ -30,7 +31,7 @@ router.post("/create", (req, res) => {
 });
 
 router.post("/add_a_member", (req, res) => {
-  const { user_id, username, list_Name } = req.body;
+  const { username, list_Name } = req.body;
   console.log("inside add_a_member api of backend. username is..", username);
   lists
     .findOne({ list_Name })
@@ -41,7 +42,7 @@ router.post("/add_a_member", (req, res) => {
       }
       console.log("list is....", list);
       const newMember = {
-        user_id: user_id,
+        // user_id: user_id,
         username: username
       };
       list.members.unshift(newMember);
