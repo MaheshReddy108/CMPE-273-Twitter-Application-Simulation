@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import HomeTimeline from "../Timeline/HomeTimeline";
 import SearchBar from "../Explore/SearchBar";
 import ProfileTimeline from "../Profile/ProfileTimeline";
+import ListsTimeline from "../Lists/ListsTimeline";
 
 class SidePanel extends Component {
   constructor(props) {
@@ -171,7 +172,7 @@ class SidePanel extends Component {
                 role="tabpanel"
                 aria-labelledby="v-pills-lists-tab"
               >
-                ...
+                <ListsTimeline />
               </div>
               <div
                 className={`tab-pane fade  ${
