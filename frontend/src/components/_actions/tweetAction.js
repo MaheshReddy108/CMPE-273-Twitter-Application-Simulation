@@ -6,7 +6,8 @@ import {
   GET_TWEET,
   DELETE_TWEET,
   TWEET_LOADING,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  SEARCH_TOPIC
 } from "./types";
 import { rooturl } from "../_config/settings";
 
@@ -183,4 +184,22 @@ export const clearErrors = () => {
   return {
     type: CLEAR_ERRORS
   };
+};
+
+// Search Topics
+export const searchTopic = searchTopic => dispatch => {
+  axios
+    .post(`http://${rooturl}:4500/api/tweets/search_topic`,searchTopic)
+    .then(response => {
+      dispatch({
+        type: SEARCH_TOPIC,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: error.response.data
+      });
+    });
 };

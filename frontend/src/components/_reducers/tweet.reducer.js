@@ -4,13 +4,15 @@ import {
   GET_TWEET,
   DELETE_TWEET,
   TWEET_LOADING,
-  RETWEET
+  RETWEET,
+  SEARCH_TOPIC
 } from "../_actions/types";
 
 const initialState = {
   tweets: [],
   tweet: {},
-  loading: false
+  loading: false,
+  topicResult :[]
 };
 
 // eslint-disable-next-line import/prefer-default-export
@@ -49,6 +51,11 @@ export const tweetReducer = (state = { ...initialState }, action) => {
       return {
         ...state,
         tweets: state.tweets.filter(tweet => tweet._id !== action.payload)
+      };
+      case SEARCH_TOPIC:
+      return {
+        ...state,
+        topicResult: action.payload
       };
     default:
       return { ...state };
