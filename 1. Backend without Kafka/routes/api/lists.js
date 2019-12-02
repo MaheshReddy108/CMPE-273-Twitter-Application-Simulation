@@ -1,19 +1,13 @@
 var express = require("express");
 var router = express.Router();
-//const uuidv4 = require("uuid/v4");
-var passport = require("passport");
-const multer = require("multer");
-const path = require("path");
-const jwt = require("jsonwebtoken");
+const uuidv4 = require("uuid/v4");
 
 const lists = require("../../models/Lists");
-//passport.authenticate("jwt", { session: false }) ,
 
 router.post("/create", (req, res) => {
-  //const { l_Name, l_Desc, is_Private, ownerID } = req.body;
+  console.log("create list of backend");
   const { l_Name, l_Desc, ownerID } = req.body;
   if (!(l_Name && l_Desc)) {
-    console.error("Required Details Missing");
     return res.status(400).json({ message: "Required Details Missing" });
   }
   try {
@@ -22,7 +16,6 @@ router.post("/create", (req, res) => {
       ownerID: ownerID,
       list_Name: l_Name,
       list_Desc: l_Desc
-      //make_Private: is_Private
     });
     newList.save().then(list => res.status(200).json(list));
   } catch (e) {
@@ -37,39 +30,33 @@ router.post("/add_a_member", (req, res) => {
     .findOne({ list_Name })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      // console.log("list is....", list);
+
       const newMember = {
-        // user_id: user_id,
         username: username
       };
       list.members.unshift(newMember);
       list.save().then(list => res.json(list.members));
-      // console.log("After adding the members of the list are", list.members);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
 
 router.post("/get_list", (req, res) => {
   const { list_Name } = req.body;
-  //  console.log("inside get_list api of backend");
+  console.log("inside get_list api of backend");
   lists
     .findOne({ list_Name })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      // console.log("list is....", list);
+
       res.json(list);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
@@ -81,15 +68,12 @@ router.post("/get_members_of_a_list", (req, res) => {
     .findOne({ list_Name })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list is....", list);
-      console.log("members are ", list.members);
+
       res.json(list.members);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
@@ -101,14 +85,12 @@ router.post("/get_subscribers_of_a_list", (req, res) => {
     .find({ list_Name })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      // console.log("list of subscribers....", list.subscribers);
+
       res.json(list.subscribers);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
@@ -120,14 +102,12 @@ router.post("/get_user_owned_lists", (req, res) => {
     .find({ ownerID })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      // console.log("list is....", list);
+
       res.json(list);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
@@ -140,14 +120,12 @@ router.post("/get_member_lists_of_user", (req, res) => {
     .find({ "members.username": username })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      // console.log("list is....", list);
+
       res.json(list);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
@@ -159,28 +137,21 @@ router.post("/subscribe", (req, res) => {
     .findOne({ list_Name, "subscribers.username": { $ne: username } })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      // console.log("list is....", list);
+
       const newsubscriber = {
         user_id: user_id,
         username: username
       };
       list.subscribers.unshift(newsubscriber);
       list.save().then(list => res.json(list.subscribers));
-      console.log(
-        "After adding the subscribers of the list: ",
-        list.subscribers
-      );
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
 
-//getting the lists to which the user has subscribed for
 router.post("/get_subscribed_lists", (req, res) => {
   const { username } = req.body;
   console.log("inside get_subscribed_lists api of backend");
@@ -188,14 +159,12 @@ router.post("/get_subscribed_lists", (req, res) => {
     .find({ "subscribers.username": username })
     .then(list => {
       if (!list) {
-        console.log("no list");
         return res.status(404).json({ msg: "no list are subscribed" });
       }
-      // console.log("list is....", list);
+
       res.json(list);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });

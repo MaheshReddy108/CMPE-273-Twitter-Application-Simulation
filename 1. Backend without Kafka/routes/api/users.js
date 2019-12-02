@@ -1,5 +1,4 @@
 const express = require("express");
-
 const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
@@ -8,17 +7,11 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const User = require("../../models/User");
 var mongooseTypes = require("mongoose").Types;
-
-var passport = require("passport");
-const app = express();
 const validateSignup = require("../../validation/signup");
 const validateLogin = require("../../validation/login");
-
 // const redisHmapMax = 4;
-
 // creating redis client
 // const client = redis.createClient(6379);
-
 // Testing redis connection
 // client.on("connect", function() {
 //   console.log("Connected to Redis...");
@@ -27,17 +20,10 @@ router.get("/test", (req, res) => res.json({ msg: "works" }));
 
 router.post("/register", (req, res) => {
   console.log("Inside register of  backend");
-  console.log("request is....", req.body);
   let { errors, isValid } = validateSignup(req.body);
   if (!isValid) {
-    console.log("errors are.......", errors);
-    //console.log("in json.... ", json(errors));
     return res.status(400).json(errors);
-    //return res.status(500).json(errors);
-  }
-
-  //return res.status(400).json(errors);}
-  else {
+  } else {
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var email = req.body.email;
@@ -50,13 +36,11 @@ router.post("/register", (req, res) => {
     });
     User.findOne({ username: username }).then(user => {
       if (user) {
-        console.log("username exists...........");
         errors.username = "Username already exists";
         return res.status(400).json(errors);
       } else {
         User.findOne({ email: email }).then(user1 => {
           if (user1) {
-            console.log("email exists...........");
             errors.email = "Email already exists";
             return res.status(400).json(errors);
           } else {
@@ -68,7 +52,6 @@ router.post("/register", (req, res) => {
               email: email,
               avatar
             });
-            console.log("User is........", newUser);
             bcrypt.genSalt(10, (err, salt) => {
               bcrypt.hash(newUser.password, salt, (err, hash) => {
                 if (err) throw err;
@@ -76,10 +59,7 @@ router.post("/register", (req, res) => {
                 newUser
                   .save()
                   .then(user => {
-                    console.log(" The user entered is " + user);
-                    //res.send("user entered");
                     res.status(200).json(user);
-                    //return res.json(user);
                   })
                   .catch(err => {
                     console.log("err is ", err);
@@ -96,10 +76,8 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   console.log("inside login of backend");
 
-  console.log("request is..", req.body);
   const { errors, isValid } = validateLogin(req.body);
   if (!isValid) {
-    console.log("errors are.......", errors);
     res.status(400).json(errors);
   } else {
     const { username } = req.body;
@@ -107,7 +85,6 @@ router.post("/login", (req, res) => {
     User.findOne({ username })
       .then(user => {
         if (!user) {
-          console.log("username does not exist");
           errors.username = "Username doesnot exist";
           res.status(400).json(errors);
         } else if (user.active !== "Active") {
@@ -126,8 +103,7 @@ router.post("/login", (req, res) => {
                   username: user.username,
                   avatar: user.avatar
                 };
-                console.log("payload is ", payload);
-                // sign token
+
                 jwt.sign(
                   payload,
                   keys.secretOrKey,
@@ -156,10 +132,8 @@ router.post("/deactivate", (req, res) => {
   console.log("inside deactivate api of backend. username is..", username);
   const userField = {};
   userField.active = "Deactivated";
-  console.log("new status is ", userField.active);
   User.findOneAndUpdate({ username }, { $set: userField }, { new: true }).then(
     user => {
-      console.log("user has been deactivared. updated user is ", user);
       res.json(user);
     }
   );
@@ -171,16 +145,12 @@ router.post("/get_profile", (req, res) => {
   User.findOne({ username })
     .then(user => {
       if (!user) {
-        console.log("no user");
-
         return res.status(404).json({ msg: "no user with this username" });
       }
-      // console.log("profile is....", user);
       user.views += 1;
       user.save().then(user => res.status(200).json(user));
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
@@ -235,20 +205,17 @@ router.post("/get_followers", (req, res) => {
   User.findOne({ username })
     .then(user => {
       if (!user) {
-        console.log("no user");
-
         return res.status(404).json({ msg: "no user with this username" });
       }
-      // console.log("profile is....", user);
       res.json(user.followers);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
+
 router.post("/update_profile", (req, res) => {
-  console.log("request is..", req.body);
+  console.log("inside update profile of backend");
   let {
     username,
     first_name,
@@ -260,7 +227,6 @@ router.post("/update_profile", (req, res) => {
   } = req.body;
   User.findOne({ username }).then(user => {
     if (!user) {
-      console.log("no user");
       return res.status(404).json({ msg: "no user with this username" });
     }
     user.first_name = first_name;
@@ -270,7 +236,7 @@ router.post("/update_profile", (req, res) => {
     user.state = state;
     user.zipcode = zipcode;
     user.save();
-    // console.log("new profile is....", user);
+
     res.status(200).json(user);
   });
 });
@@ -278,10 +244,6 @@ router.post("/update_profile", (req, res) => {
 router.post("/check_follower", (req, res) => {
   const { username, follower_name } = req.body;
   console.log("inside check_follower api of backend. username is..", username);
-  console.log(
-    "inside check_follower api of backend. follower_name is..",
-    follower_name
-  );
   User.findOne({
     username,
     "following.following_name": { $eq: follower_name }
@@ -294,7 +256,6 @@ router.post("/check_follower", (req, res) => {
       }
     })
     .catch(err => {
-      console.log("user does not exist");
       res.status(200).json({ msg: "not exists " });
     });
 });
@@ -311,8 +272,6 @@ router.post("/add_following", (req, res) => {
       const { _id } = user;
       user_id = _id;
       if (!user) {
-        console.log("no user");
-
         return res
           .status(404)
           .json({ msg: "no user with this username or already following" });
@@ -325,11 +284,8 @@ router.post("/add_following", (req, res) => {
         user.save().then(user => res.json(user));
         user.following_count = user.following_count + 1;
         user.save();
-        // console.log("profile is....", user);
         User.findOne({ username: following_name }).then(user => {
           if (!user) {
-            console.log("no user");
-
             return res.status(404).json({ msg: "no user with this username2" });
           }
           const newFollower = {
@@ -339,87 +295,69 @@ router.post("/add_following", (req, res) => {
           user.followers.unshift(newFollower);
           user.follower_count = user.follower_count + 1;
           user.save();
-          // console.log("profile is....", user);
         });
       }
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
+
 router.post("/unfollow", (req, res) => {
   const { following_name, username } = req.body;
-  console.log("req is ", req.body);
-  console.log("following id is..", following_name);
-  console.log("username is..", username);
   User.findOne({ username }).then(user => {
     if (!user) {
-      console.log("no user");
       return res.status(404).json({ msg: "no user with this username" });
     }
     let removeIndex = user.following
       .map(item => item.following_name)
       .indexOf(following_name);
-    console.log("remove index is..", removeIndex);
-
     user.following.splice(removeIndex, 1);
     user.following_count -= 1;
     user.save().then(user => {
-      // console.log("user new profile is ", user);
       res.json(user);
     });
   });
 
   User.findOne({ username: following_name }).then(user => {
     if (!user) {
-      console.log("no user");
       return res.status(404).json({ msg: "no user with this username" });
     }
     let removeIndex = user.followers
       .map(item => item.follower_name)
       .indexOf(username);
-    console.log("remove index is..", removeIndex);
-
     user.followers.splice(removeIndex, 1);
     user.follower_count -= 1;
     user.save().then(user => {
-      //  console.log("user new profile is ", user);
       res.json(user);
     });
   });
 });
+
 router.post("/get_following", (req, res) => {
   const { username } = req.body;
-  console.log("inside get_following api of backend. username is..", username);
+
   User.findOne({ username })
     .then(user => {
       if (!user) {
-        console.log("no user");
-
         return res.status(404).json({ msg: "no user with this username" });
       }
-      // console.log("profile is....", user);
+
       res.json(user.following);
     })
     .catch(err => {
-      console.log("err is.....", err);
       res.status(404).json(err);
     });
 });
 
 router.post("/search_people", (req, res) => {
-  console.log("req for search_people", req.body);
   var name = req.body.searchText;
   id = mongooseTypes.ObjectId();
   User.find({ first_name: new RegExp("^" + name, "i") }, (err, result) => {
     if (err) {
       res.status(404).json({ error: `user not found ${err}` });
     } else {
-      // console.log(result);
       if (result.length > 0) {
-        console.log("id", result[0].id);
-        console.log("name", result[0].first_name);
         res.status(200).json(result);
       } else {
         res.status(404).send({ error: "User not found" });
