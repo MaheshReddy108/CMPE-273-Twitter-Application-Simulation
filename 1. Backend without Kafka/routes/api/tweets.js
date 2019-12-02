@@ -111,8 +111,9 @@ router.post("/create_tweet", (req, res) => {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     avatar: req.body.avatar,
-    hashtags: req.body.hashtags
+    hashtags: req.body.hashtag
   });
+  //newTweet.hashtags.push(req.body.hashtag)
   newTweet.save().then(tweet => res.status(200).json(tweet));
 });
 
