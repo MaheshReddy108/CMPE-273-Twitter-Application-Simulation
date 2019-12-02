@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import TweetItem from "../Feed/TweetItem";
+import { Link } from "react-router-dom";
 
 class DisplayListDetails extends Component {
   constructor(props) {
@@ -49,6 +50,9 @@ class DisplayListDetails extends Component {
         <br />
         <div className="container">
           <div className="row">
+            <Link to="/welcomePage" className="btn btn-light mb-3">
+              Back To Feed
+            </Link>
             <div className="col-md-12">{tweetContent}</div>
           </div>
         </div>

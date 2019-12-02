@@ -176,7 +176,8 @@ router.post("/get_profile", (req, res) => {
         return res.status(404).json({ msg: "no user with this username" });
       }
       // console.log("profile is....", user);
-      res.json(user);
+      user.views += 1;
+      user.save().then(user => res.status(200).json(user));
     })
     .catch(err => {
       console.log("err is.....", err);
@@ -411,7 +412,7 @@ router.post("/search_people", (req, res) => {
   console.log("req for search_people", req.body);
   var name = req.body.searchText;
   id = mongooseTypes.ObjectId();
-  User.find({ first_name: new RegExp('^'+name, "i") }, (err, result) => {
+  User.find({ first_name: new RegExp("^" + name, "i") }, (err, result) => {
     if (err) {
       res.status(404).json({ error: `user not found ${err}` });
     } else {

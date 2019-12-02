@@ -86,6 +86,10 @@ const UserSchema = new Schema({
   bookmarked_tweets: {
     type: Schema.Types.ObjectId,
     ref: "tweets"
+  },
+  views: {
+    type: Number,
+    default: 0
   }
 });
 

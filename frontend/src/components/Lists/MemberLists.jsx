@@ -3,6 +3,7 @@ import axios from "axios";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import { Link } from "react-router-dom";
 
 class MemberLists extends Component {
   constructor(props) {
@@ -38,7 +39,9 @@ class MemberLists extends Component {
               <div className="card card-body mb-3">
                 <div className="row">
                   <div className="col-md-8">
-                    <p style={style1}>{list.list_Name}</p>
+                    <Link to={"/DisplayListDetails/" + list.list_Name}>
+                      <p style={style1}>{list.list_Name}</p>
+                    </Link>
                     <br />
 
                     <td width="2500">{list.list_Desc}</td>
