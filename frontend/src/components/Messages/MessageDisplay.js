@@ -31,7 +31,7 @@ this.handleMessage = this.handleMessage.bind(this);
           var data_send={
               message: this.state.messageText,
               sender_name: localStorage.getItem("username"),
-             receiver_name :this.props.match.params.id
+             receiver_name :this.props.match.params.name
 
           }
 
