@@ -123,7 +123,7 @@ class SidePanel extends Component {
               >
                 Profile
               </a>
-              <a
+              {/* <a
                 className={`nav-link ${
                   activeSection === "v-pills-dashboard" ? "active" : ""
                 } `}
@@ -136,7 +136,7 @@ class SidePanel extends Component {
                 onClick={() => this.onSectionClick("v-pills-dashboard")}
               >
                 Dashboard
-              </a>
+              </a> */}
             </div>
           </div>
           <div className="col-9">
@@ -201,7 +201,7 @@ class SidePanel extends Component {
               >
                 <ProfileTimeline />
               </div>
-              <div
+              {/* <div
                 className={`tab-pane fade  ${
                   activeSection === "v-pills-dashboard" ? " show active" : ""
                 }`}
@@ -210,7 +210,7 @@ class SidePanel extends Component {
                 aria-labelledby="v-pills-dashboard-tab"
               >
                 <Dashboard />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

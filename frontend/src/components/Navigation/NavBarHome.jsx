@@ -23,6 +23,16 @@ class NavBarHome extends Component {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ml-auto">
+              <Nav.Item>
+                <a
+                  href="/dashboard"
+                  className="btn btn-info btn-sm"
+                  alignright="true"
+                >
+                  <span className="glyphicon glyphicon-dashboard"></span>{" "}
+                  Dashboard
+                </a>
+              </Nav.Item>
               <NavDropdown
                 title={`Hi ${username}`}
                 id="collasible-nav-dropdown"

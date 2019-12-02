@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
-import { rooturl } from "../_config/settings";
+import { Link } from "react-router-dom";
 import LikesChart from "./LikesChart";
 import ViewsChart from "./ViewsChart";
 import RetweetsChart from "./RetweetsChart";
@@ -15,6 +14,9 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="container">
+        <Link to="/welcomePage" className="btn btn-light mb-3">
+          Back To Feed
+        </Link>
         <table>
           <tr>
             <td>

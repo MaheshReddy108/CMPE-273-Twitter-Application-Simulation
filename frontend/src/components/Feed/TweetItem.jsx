@@ -63,14 +63,18 @@ class TweetItem extends Component {
       <div className="card card-body mb-3">
         <div className="row">
           <div className="col-md-2">
-            <a href="profile.html">
+            <Link
+              to={{
+                pathname: "/profile/" + tweet.username
+              }}
+            >
               <img
                 className="rounded-circle d-none d-md-block "
                 width={50}
                 src={tweet.avatar}
                 alt="avt"
               />
-            </a>
+            </Link>
             <br />
             <strong className="text-left font-weight-bold">
               {tweet.firstname}
