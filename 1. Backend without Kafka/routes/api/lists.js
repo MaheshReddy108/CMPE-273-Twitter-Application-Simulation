@@ -78,7 +78,7 @@ router.post("/get_members_of_a_list", (req, res) => {
   const { list_Name } = req.body;
   console.log("inside get_members_of_a_list api of backend");
   lists
-    .findOne({ list_Name })
+    .find({ list_Name })
     .then(list => {
       if (!list) {
         console.log("no list");
@@ -97,7 +97,7 @@ router.post("/get_subscribers_of_a_list", (req, res) => {
   const { list_Name } = req.body;
   console.log("inside get_subscribers_of_a_list api of backend");
   lists
-    .findOne({ list_Name })
+    .find({ list_Name })
     .then(list => {
       if (!list) {
         console.log("no list");
@@ -116,7 +116,7 @@ router.post("/get_user_owned_lists", (req, res) => {
   const { ownerID } = req.body;
   console.log("inside get_user_owned_lists api of backend");
   lists
-    .findOne({ ownerID })
+    .find({ ownerID })
     .then(list => {
       if (!list) {
         console.log("no list");
@@ -184,7 +184,7 @@ router.post("/get_subscribed_lists", (req, res) => {
   const { username } = req.body;
   console.log("inside get_subscribed_lists api of backend");
   lists
-    .find({ "subscribers.user_id": username })
+    .find({ "subscribers.username": username })
     .then(list => {
       if (!list) {
         console.log("no list");

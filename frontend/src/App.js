@@ -33,7 +33,7 @@ class App extends Component {
                 component={DisplayListDetails}
               />
               <Route path="/search" component={SearchBar} />
-              <Route path="/MessageDisplay/:id" component={MessageDisplay} />
+              <Route path="/MessageDisplay/:name" component={MessageDisplay} />
               <Route path="/profile/:username" component={PeopleDisplay} />
             </Switch>
           </BrowserRouter>

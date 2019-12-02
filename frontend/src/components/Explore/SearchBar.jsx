@@ -63,9 +63,12 @@ class SearchBar extends Component {
 
   render() {
     const { peopleResult } = this.props.userState;
-    const length = peopleResult.length;
+    var length = peopleResult.length;
     console.log("length", length);
     console.log("peopleresult", peopleResult);
+
+    let message = this.props.errors.error;
+    console.log("Error Message", message);
 
     // const {activePage,resultsPerPage}=this.State
     const activePage = this.state.activePage;
@@ -78,7 +81,16 @@ class SearchBar extends Component {
     let peopleList = currentTodos.map(function(people, index) {
       return (
         <div className="container display-properties-container" key={index}>
-          <Link to={"/profile/" + people.username}>
+          {/*<Link to={"/profile/" + people.username}>*/}
+
+          <Link
+            to={{
+              pathname: "/profile/" + people.username,
+              state: {
+                display_id: people._id
+              }
+            }}
+          >
             <div className="people-content row border">
               {/* <div className="people-content-image col-3">
                           <img className="people-image" src={people.Photos} alt="people-image" />
@@ -88,10 +100,11 @@ class SearchBar extends Component {
                   <h2>
                     <strong>{people.username}</strong>
                   </h2>
-                  <div>Name : {people.first_name} {people.last_name}</div>
+                  <div>
+                    Name : {people.first_name} {people.last_name}
+                  </div>
                   <div>Email : {people.email}</div>
-                  <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
-                  </span>
+                  <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10"></span>
                 </div>
               </div>
             </div>
@@ -168,6 +181,11 @@ class SearchBar extends Component {
           </div>
           <div className="property-listing-content">{peopleList}</div>
           <div className="property-listing-content">{topicList}</div>
+          <div>
+            <h1 style={{ color: "red" }}>
+              <strong>{message}</strong>
+            </h1>
+          </div>
         </div>
         <div class="button" width="1000px">
           <Pagination
