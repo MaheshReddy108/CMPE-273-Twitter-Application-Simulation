@@ -3,6 +3,8 @@ import "mdbreact/dist/css/mdb.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import OwnedLists from "./OwnedLists";
+import SubscribedLists from "./SubscribedLists";
+import MemberLists from "./MemberLists";
 class ListsNavbar extends Component {
   constructor(props) {
     super(props);
@@ -83,6 +85,28 @@ class ListsNavbar extends Component {
             aria-labelledby="pills-owned-tab"
           >
             <OwnedLists />
+          </div>
+          <div
+            className={`tab-pane fade ${
+              this.state.activeSection === "pills-subscribed"
+                ? "show active"
+                : ""
+            }`}
+            id="pills-subscribed"
+            role="tabpanel"
+            aria-labelledby="pills-subscribed-tab"
+          >
+            <SubscribedLists />
+          </div>
+          <div
+            className={`tab-pane fade ${
+              this.state.activeSection === "pills-member" ? "show active" : ""
+            }`}
+            id="pills-member"
+            role="tabpanel"
+            aria-labelledby="pills-member-tab"
+          >
+            <MemberLists />
           </div>
         </div>
       </div>
