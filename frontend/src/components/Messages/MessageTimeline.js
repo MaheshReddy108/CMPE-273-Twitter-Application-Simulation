@@ -48,7 +48,7 @@ class MessageTimeline extends Component {
           <Link to={"/MessageDisplay/" + follower.follower_name}>
             <div className="follower-content row border">
               <div className="follower-content-desc col-9 hidden-xs">
-                <div>
+                <div style={style1}>
                   <h2>
                     <strong>{follower.follower_name}</strong>
                   </h2>
@@ -70,5 +70,8 @@ class MessageTimeline extends Component {
     );
   }
 }
-
+const style1 = {
+  fontFamily: "Gotham Narrow SSm",
+  fontSize: 40
+};
 export default MessageTimeline;

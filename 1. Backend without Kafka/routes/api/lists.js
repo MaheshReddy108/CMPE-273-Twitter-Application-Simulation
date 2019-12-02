@@ -78,13 +78,14 @@ router.post("/get_members_of_a_list", (req, res) => {
   const { list_Name } = req.body;
   console.log("inside get_members_of_a_list api of backend");
   lists
-    .find({ list_Name })
+    .findOne({ list_Name })
     .then(list => {
       if (!list) {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      // console.log("list is....", list);
+      console.log("list is....", list);
+      console.log("members are ", list.members);
       res.json(list.members);
     })
     .catch(err => {
