@@ -97,18 +97,15 @@ class SearchBar extends Component {
                           <img className="people-image" src={people.Photos} alt="people-image" />
                       </div> */}
               <div className="people-content-desc col-9 hidden-xs">
-                <div>
-                  <h2>
-                    <strong>{people.username}</strong>
-                  </h2>
-                  <div>
-                    Name : {people.first_name} {people.last_name}
-                  </div>
-                  <div>Email : {people.email}</div>
-                  <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10"></span>
+                <div style={style1}>
+                  {people.first_name} {people.last_name}
+                  <br />@{people.username}
                 </div>
+
+                <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10"></span>
               </div>
             </div>
+            <br />
           </Link>
         </div>
       );
@@ -224,6 +221,10 @@ const mapStateToProps = state => ({
   errors: state.errorState,
   tweetState: state.tweetState
 });
+const style1 = {
+  fontFamily: "Gotham Narrow SSm",
+  fontSize: 25
+};
 export default connect(mapStateToProps, { searchTopic, searchUser })(SearchBar);
 
 // export default SearchBar;
