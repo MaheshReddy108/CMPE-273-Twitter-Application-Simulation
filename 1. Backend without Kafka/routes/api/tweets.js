@@ -1,7 +1,11 @@
 const express = require("express");
 const passport = require("passport");
-
 const router = express.Router();
+const multer = require('multer');
+const uuidv4 = require('uuid/v4');
+const path = require('path');
+const fs = require('fs');
+var bodyParser = require('body-parser');
 // const passport = require("passport");
 
 // Tweet Model
@@ -20,6 +24,49 @@ router.get("/test", (req, res) =>
     msg: "Tweet works"
   })
 );
+
+router.use(bodyParser.json());
+
+//Storing documents/Images
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, './uploads');
+  }
+  , filename: (req, file, cb) => {
+      cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+//uplaod-file 
+
+router.post('/upload-file', upload.array('photos', 5), (req, res) => {
+  console.log('req.body', req.body);
+  res.end();
+});
+
+//download-file
+
+router.post('/download-file/:file(*)', (req, res) => {
+  console.log('Inside DOwnload File');
+  var file = req.params.file;
+  var filelocation = path.join(__dirname + '/uploads', file);
+  var img = fs.readFileSync(filelocation);
+  var base64img = new Buffer(img).toString('base64');
+  res.writeHead(200, {
+      'Content--type': 'image/jpg'
+  });
+  res.end(base64img);
+});
+
+
+
+
+
+
+
+
 
 // @route GET api/tweets/get_tweets
 // @desc Get Tweets

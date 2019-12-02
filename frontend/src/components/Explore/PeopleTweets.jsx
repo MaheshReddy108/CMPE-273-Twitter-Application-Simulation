@@ -15,6 +15,7 @@ class PeopleTweets extends Component {
       tweets: []
     };
   }
+
   componentDidMount() {
     let username = this.props.data;
     console.log("username pressed is.....", username);
