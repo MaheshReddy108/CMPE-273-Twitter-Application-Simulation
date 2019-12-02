@@ -30,6 +30,8 @@ class ReplyForm extends Component {
 
     const newReply = {
       textContent: this.state.text,
+      firstname: user.first_name,
+      lastname: user.last_name,
       username: user.username,
       avatar: user.avatar
     };

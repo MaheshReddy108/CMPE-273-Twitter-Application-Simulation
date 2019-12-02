@@ -63,10 +63,15 @@ class SearchBar extends Component {
 
   render() {
     const { peopleResult } = this.props.userState;
-    const length = peopleResult.length;
+    var length = peopleResult.length;
     console.log("length", length);
     console.log("peopleresult", peopleResult);
 
+    
+
+    let message = this.props.errors.error
+    console.log("Error Message",message);
+    
     // const {activePage,resultsPerPage}=this.State
     const activePage = this.state.activePage;
     const resultsPerPage = this.state.resultsPerPage;
@@ -88,16 +93,9 @@ class SearchBar extends Component {
                   <h2>
                     <strong>{people.username}</strong>
                   </h2>
-                  <div>FirstName : {people.first_name}</div>
-                  <div>LaststName : {people.last_name}</div>
+                  <div>Name : {people.first_name} {people.last_name}</div>
                   <div>Email : {people.email}</div>
                   <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
-                    <div
-                      className="btn btn-success btn-sm"
-                      style={{ width: "18%" }}
-                    >
-                      Follow
-                    </div>
                   </span>
                 </div>
               </div>
@@ -175,6 +173,7 @@ class SearchBar extends Component {
           </div>
           <div className="property-listing-content">{peopleList}</div>
           <div className="property-listing-content">{topicList}</div>
+          <div><h1 style={{color:"red"}}><strong>{message}</strong></h1></div>
         </div>
         <div class="button" width="1000px">
           <Pagination
