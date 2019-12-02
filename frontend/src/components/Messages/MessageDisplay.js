@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import WelcomePage from "../WelcomePage"
-import swal from 'sweetalert'
+import React, { Component } from "react";
+import { Redirect } from "react-router";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import WelcomePage from "../WelcomePage";
+import swal from "sweetalert";
 
 class MessageDisplay extends Component {
     constructor(props) {
@@ -106,37 +106,43 @@ this.handleMessage = this.handleMessage.bind(this);
                         </div>
                     </Link>
                 </div>
-            )
-        })   
-        return(
-             
-           <div>
+              
+            
+        
+      );
+    });
+    
+    return (
+      <div>
+        <div>{IncomingList}</div>
+        <div>{OutgoingList}</div>
 
-            <div>
-               {IncomingList}
-            </div>
-            <div>
-            {OutgoingList}
-            </div>
-
-            <div className="container mt-5">
-    <div className="form-group row search-tab container search-tab-display-property">
-        <span className="col-lg-4 col-md-12 col-sm-12 col-xs-12 pad-bot-10">
-            <input type="search" className="form-control form-control-lg" placeholder="Type your message" value={this.state.messageText} onChange={this.onChange}></input>
-        </span>
-      
-        <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
-            <a  className="btn btn-success btn-lg" style={{ width: "100%" }} onClick={this.handleMessage}>Send </a>
+        <div className="container mt-5">
+          <div className="form-group row search-tab container search-tab-display-property">
+            <span className="col-lg-4 col-md-12 col-sm-12 col-xs-12 pad-bot-10">
+              <input
+                type="search"
+                className="form-control form-control-lg"
+                placeholder="Type your message"
+                value={this.state.messageText}
+                onChange={this.onChange}
+              ></input>
             </span>
-            </div>
-            </div>
 
-            </div>
-        )
-      }
+            <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
+              <a
+                className="btn btn-success btn-lg"
+                style={{ width: "100%" }}
+                onClick={this.handleMessage}
+              >
+                Send{" "}
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
 
-
-
-    }
-
-    export default MessageDisplay;
+export default MessageDisplay;

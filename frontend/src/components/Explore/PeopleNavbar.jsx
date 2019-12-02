@@ -22,6 +22,7 @@ class PeopleNavbar extends Component {
   };
   componentDidMount() {
     var username = this.props.data;
+    var display_id = this.props.data1;
     console.log(
       "inside component did mount of profile peoplr card.. hii ",
       username
@@ -85,7 +86,7 @@ class PeopleNavbar extends Component {
             role="tabpanel"
             aria-labelledby="pills-tweets-tab"
           >
-            <PeopleLists data={this.props.data} data1={"my name is kanika"} />
+            <PeopleLists data={this.props.data} />
           </div>
         </div>
       </div>
