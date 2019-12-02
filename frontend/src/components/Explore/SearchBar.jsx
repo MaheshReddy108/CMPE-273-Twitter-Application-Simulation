@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { searchUser } from "../_actions/userActions";
 import { searchTopic } from "../_actions/tweetAction";
 import Pagination from "react-js-pagination";
+import Button from "react-bootstrap/Button";
 // import Pagination from "./Pagination";
 // import "bootstrap/less/bootstrap-less";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -160,23 +161,29 @@ class SearchBar extends Component {
             </span>
 
             <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
-              <a
+              {/*<a
                 className="btn btn-primary btn-lg"
                 style={{ width: "100%" }}
                 onClick={this.handlePeople}
               >
                 People
-              </a>
+              </a>*/}
+              <Button style={style4} onClick={this.handlePeople}>
+                People
+              </Button>
             </span>
 
             <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
-              <a
+              {/*} <a
                 className="btn btn-primary btn-lg"
                 style={{ width: "100%" }}
                 onClick={this.handleTopic}
               >
                 Topics
-              </a>
+              </a>*/}
+              <Button style={style4} onClick={this.handleTopic}>
+                Topics
+              </Button>
             </span>
           </div>
           <div className="property-listing-content">{peopleList}</div>
@@ -201,7 +208,17 @@ class SearchBar extends Component {
     );
   }
 }
-
+const style4 = {
+  backgroundColor: "#00acee",
+  color: "white",
+  fontSize: 15,
+  fontFamily: "Gotham Narrow SSm",
+  paddingLeft: 50,
+  paddingRight: 50,
+  paddingTop: 5,
+  paddingBottom: 5,
+  borderRadius: 100
+};
 const mapStateToProps = state => ({
   userState: state.userState,
   errors: state.errorState,
