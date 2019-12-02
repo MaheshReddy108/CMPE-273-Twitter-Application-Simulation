@@ -52,10 +52,12 @@ class MessageTimeline extends Component {
                   <h2>
                     <strong>{follower.follower_name}</strong>
                   </h2>
-                  <div>{follower.follower_id}</div>
+                  {/*<div>{follower.follower_id}</div>*/}
                 </div>
               </div>
+              <br />
             </div>
+            <br />
           </Link>
         </div>
       );
