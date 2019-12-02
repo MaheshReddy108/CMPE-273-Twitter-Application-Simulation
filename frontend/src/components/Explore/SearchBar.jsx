@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { searchUser } from "../_actions/userActions";
 import { searchTopic } from "../_actions/tweetAction";
 import Pagination from "react-js-pagination"
+import axios from 'axios';
 // import Pagination from "./Pagination";
 // import "bootstrap/less/bootstrap-less";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -82,22 +83,22 @@ class SearchBar extends Component {
    
 
     let peopleList = currentTodos.map(function (people, index) {
+
       return (
           <div className="container display-properties-container" key={index}>
+
+
+           
               <Link to={'/people-display/' + people.peopleId}>
                   <div className="people-content row border">
-                      {/* <div className="people-content-image col-3">
-                          <img className="people-image" src={people.Photos} alt="people-image" />
-                      </div> */}
+                      
                       <div className="people-content-desc col-9 hidden-xs">
                           <div>
                               <h2><strong>{people.username}</strong></h2>
-                              <div>FirstName : {people.first_name}</div>
-                              <div>LaststName : {people.last_name}</div>
-                              <div>Email : {people.email}</div>
+                              <div>Name : {people.first_name} {people.last_name}</div>
                               <span className="col-lg-2 col-md-3 col-sm-12 col-xs-12 pad-bot-10">
 
-                              <div  className="btn btn-success btn-sm" style={{ width: "18%" }} >Follow</div>
+            
                               </span>
                           </div>
                           

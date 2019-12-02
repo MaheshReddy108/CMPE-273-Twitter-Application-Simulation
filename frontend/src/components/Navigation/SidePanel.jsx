@@ -3,7 +3,7 @@ import HomeTimeline from "../Timeline/HomeTimeline";
 import SearchBar from "../Explore/SearchBar";
 import ProfileTimeline from "../Profile/ProfileTimeline";
 import ListsTimeline from "../Lists/ListsTimeline";
-
+import MessageTimeline from "../Messages/MessageTimeline";
 class SidePanel extends Component {
   constructor(props) {
     super(props);
@@ -152,7 +152,7 @@ class SidePanel extends Component {
                 role="tabpanel"
                 aria-labelledby="v-pills-messages-tab"
               >
-                ...
+                <MessageTimeline/>
               </div>
               <div
                 className={`tab-pane fade  ${

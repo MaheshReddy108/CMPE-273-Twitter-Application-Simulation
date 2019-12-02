@@ -9,6 +9,7 @@ import Login from "./components/Entry/Login";
 import Register from "./components/Entry/Register";
 import Tweet from "./components/Feed/Tweet";
 import SearchBar from "./components/Explore/SearchBar";
+import MessageDisplay from "./components/Messages/MessageDisplay"
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -24,6 +25,7 @@ class App extends Component {
               <Route path="/welcomePage" component={WelcomePage} />
               <Route path="/tweet/:id" component={Tweet} />
               <Route path="/search" component={SearchBar} />
+              <Route path="/MessageDisplay/:id" component={MessageDisplay} />
             </Switch>
           </BrowserRouter>
         </div>
