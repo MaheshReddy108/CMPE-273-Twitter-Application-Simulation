@@ -8,6 +8,7 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import AddMemberForm from "./AddMemberForm";
 import { Link } from "react-router-dom";
+import { rooturl } from "../_config/settings";
 
 class OwnedLists extends Component {
   constructor(props) {
@@ -30,7 +31,9 @@ class OwnedLists extends Component {
   componentDidMount() {
     let ownerID = localStorage.getItem("user_id");
     axios
-      .post("http://localhost:4500/api/lists/get_user_owned_lists", { ownerID })
+      .post(`http://${rooturl}:4500/api/lists/get_user_owned_lists`, {
+        ownerID
+      })
       .then(response => {
         console.log("reponse of owned lists is..", response.data);
         this.setState({

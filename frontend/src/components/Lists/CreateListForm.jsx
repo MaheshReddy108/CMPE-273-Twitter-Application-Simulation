@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import { rooturl } from "../_config/settings";
 
 class CreateListForm extends Component {
   constructor(props) {
@@ -41,7 +42,7 @@ class CreateListForm extends Component {
     };
     //console.log("data is............", data);
     axios
-      .post("http://localhost:4500/api/lists/create", data)
+      .post(`http://${rooturl}:4500/api/lists/create`, data)
       .then(response => {
         console.log("response of update is....", response.data);
         this.setState = {

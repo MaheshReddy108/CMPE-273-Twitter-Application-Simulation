@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { Link } from "react-router-dom";
+import { rooturl } from "../_config/settings";
 
 class SubscribedLists extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class SubscribedLists extends Component {
   componentDidMount() {
     let username = localStorage.getItem("username");
     axios
-      .post("http://localhost:4500/api/lists/get_subscribed_lists", {
+      .post(`http://${rooturl}:4500/api/lists/get_subscribed_lists`, {
         username
       })
       .then(response => {
