@@ -11,7 +11,7 @@ opts.secretOrKey = keys.secretOrKey;
 module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
-      console.log("Checking authentication");
+      // console.log("Checking authentication");
       console.log(jwt_payload.id);
       User.findById(jwt_payload.id)
         .then(user => {

@@ -78,7 +78,7 @@ router.post("/send_message", (req, res) => {
 
 router.post("/get_messages", (req, res) => {
         const { sender_name, receiver_name } = req.body;
-  console.log("inside get_sent_messages api of backend");
+  console.log("inside get_messages api of backend");
   Message.find({ sender_name, receiver_name })
     .then(message => {
       if (!message) {

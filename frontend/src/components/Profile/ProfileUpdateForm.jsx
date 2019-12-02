@@ -158,6 +158,7 @@ class ProfileUpdateForm extends Component {
               <input
                 onChange={this.handleChange}
                 type="text"
+                // pattern='/(^\d{5}$)|(^\d{5}-\d{4}$)/'
                 name="zipcode"
                 className="form-control"
                 id="inputZipCode"

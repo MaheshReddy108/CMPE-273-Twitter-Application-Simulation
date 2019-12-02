@@ -9,7 +9,8 @@ class TweetTextBox extends Component {
       text: "",
       upload: "",
       textError: "",
-      loading: false
+      loading: false,
+      hashtag: ''
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -18,18 +19,21 @@ class TweetTextBox extends Component {
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
+  
 
   onSubmit = e => {
     e.preventDefault();
     const { user } = this.props.auth;
-
+    var hashtag = this.state.hashtag;
+    var hashtagArr = hashtag.split(',');
     const newTweet = {
       tweet_content: this.state.text,
       user_id: user.id,
       username: user.username,
       firstname: user.first_name,
       lastname: user.last_name,
-      avatar: user.avatar
+      avatar: user.avatar,
+      hashtag: hashtagArr
     };
 
     this.props.addTweet(newTweet);
@@ -55,6 +59,10 @@ class TweetTextBox extends Component {
             {" "}
             Tweet
           </button>
+          <button type="submit" className="btn btn-primary" disabled="true">
+            {" "}
+            Upload
+          </button>
         </div>
       );
     }
@@ -71,6 +79,14 @@ class TweetTextBox extends Component {
                 onChange={this.onChange}
               />
             </div>
+            <textarea 
+                className=""
+                placeholder="Hastags"
+                name="hashtag"
+                value={this.state.hashtag}
+                onChange={this.onChange}
+                rows="1" cols="50"
+              />
             {button}
           </form>
         </div>

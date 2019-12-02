@@ -40,14 +40,14 @@ router.post("/add_a_member", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list is....", list);
+      // console.log("list is....", list);
       const newMember = {
         // user_id: user_id,
         username: username
       };
       list.members.unshift(newMember);
       list.save().then(list => res.json(list.members));
-      console.log("After adding the members of the list are", list.members);
+      // console.log("After adding the members of the list are", list.members);
     })
     .catch(err => {
       console.log("err is.....", err);
@@ -57,7 +57,7 @@ router.post("/add_a_member", (req, res) => {
 
 router.post("/get_list", (req, res) => {
   const { list_Name } = req.body;
-  console.log("inside get_list api of backend");
+  //  console.log("inside get_list api of backend");
   lists
     .findOne({ list_Name })
     .then(list => {
@@ -65,7 +65,7 @@ router.post("/get_list", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list is....", list);
+      // console.log("list is....", list);
       res.json(list);
     })
     .catch(err => {
@@ -84,7 +84,7 @@ router.post("/get_members_of_a_list", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list is....", list);
+      // console.log("list is....", list);
       res.json(list.members);
     })
     .catch(err => {
@@ -103,7 +103,7 @@ router.post("/get_subscribers_of_a_list", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list of subscribers....", list.subscribers);
+      // console.log("list of subscribers....", list.subscribers);
       res.json(list.subscribers);
     })
     .catch(err => {
@@ -122,7 +122,7 @@ router.post("/get_user_owned_lists", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list is....", list);
+      // console.log("list is....", list);
       res.json(list);
     })
     .catch(err => {
@@ -142,7 +142,7 @@ router.post("/get_member_lists_of_user", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list is....", list);
+      // console.log("list is....", list);
       res.json(list);
     })
     .catch(err => {
@@ -161,7 +161,7 @@ router.post("/subscribe", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list with this list name" });
       }
-      console.log("list is....", list);
+      // console.log("list is....", list);
       const newsubscriber = {
         user_id: user_id,
         username: username
@@ -190,7 +190,7 @@ router.post("/get_subscribed_lists", (req, res) => {
         console.log("no list");
         return res.status(404).json({ msg: "no list are subscribed" });
       }
-      console.log("list is....", list);
+      // console.log("list is....", list);
       res.json(list);
     })
     .catch(err => {

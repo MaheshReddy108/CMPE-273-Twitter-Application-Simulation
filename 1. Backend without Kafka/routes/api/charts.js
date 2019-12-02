@@ -19,7 +19,7 @@ router.post(
   (req, res) => {
     let username1 = req.body.username;
     let chartId = req.body.like_chartId;
-    console.log("printing username1", username1);
+    // console.log("printing username1", username1);
     const FILTER_DOCUMENT = { username: username1 };
     const timestamp = Math.floor(Date.now() / 1000);
     let payload = `id=${chartId}&tenant=${CHARTS_TENANT_ID}&timestamp=${timestamp}&expires-in=${EXPIRY_TIME_SECONDS}`;
@@ -36,7 +36,7 @@ router.post(
     const signature = hmac.digest("hex");
     // generate url for iframe
     const url = `${CHARTS_EMBEDDING_BASE_URL}/embed/charts?${payload}&signature=${signature}`;
-    console.log("printing url", url);
+    // console.log("printing url", url);
     res.send(url);
   }
 );
@@ -47,7 +47,7 @@ router.post(
   (req, res) => {
     let username1 = req.body.username;
     let chartId = req.body.view_chartId;
-    console.log("printing username1", username1);
+    // console.log("printing username1", username1);
     const FILTER_DOCUMENT = { username: username1 };
     const timestamp = Math.floor(Date.now() / 1000);
     let payload = `id=${chartId}&tenant=${CHARTS_TENANT_ID}&timestamp=${timestamp}&expires-in=${EXPIRY_TIME_SECONDS}`;
@@ -64,7 +64,7 @@ router.post(
     const signature = hmac.digest("hex");
     // generate url for iframe
     const url = `${CHARTS_EMBEDDING_BASE_URL}/embed/charts?${payload}&signature=${signature}`;
-    console.log("printing url", url);
+    // console.log("printing url", url);
     res.send(url);
   }
 );
@@ -75,7 +75,7 @@ router.post(
   (req, res) => {
     let username1 = req.body.username;
     let chartId = req.body.retweet_chartId;
-    console.log("printing username1", username1);
+    // console.log("printing username1", username1);
     const FILTER_DOCUMENT = { username: username1 };
     const timestamp = Math.floor(Date.now() / 1000);
     let payload = `id=${chartId}&tenant=${CHARTS_TENANT_ID}&timestamp=${timestamp}&expires-in=${EXPIRY_TIME_SECONDS}`;
@@ -92,7 +92,7 @@ router.post(
     const signature = hmac.digest("hex");
     // generate url for iframe
     const url = `${CHARTS_EMBEDDING_BASE_URL}/embed/charts?${payload}&signature=${signature}`;
-    console.log("printing url", url);
+    // console.log("printing url", url);
     res.send(url);
   }
 );
@@ -103,7 +103,7 @@ router.post(
   (req, res) => {
     let username1 = req.body.username;
     let chartId = req.body.tweets_chartId;
-    console.log("printing username1", username1);
+    // console.log("printing username1", username1);
     const FILTER_DOCUMENT = { username: username1 };
     const timestamp = Math.floor(Date.now() / 1000);
     let payload = `id=${chartId}&tenant=${CHARTS_TENANT_ID}&timestamp=${timestamp}&expires-in=${EXPIRY_TIME_SECONDS}`;
@@ -120,7 +120,7 @@ router.post(
     const signature = hmac.digest("hex");
     // generate url for iframe
     const url = `${CHARTS_EMBEDDING_BASE_URL}/embed/charts?${payload}&signature=${signature}`;
-    console.log("printing url", url);
+    // console.log("printing url", url);
     res.send(url);
   }
 );
