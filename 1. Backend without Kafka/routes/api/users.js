@@ -412,7 +412,7 @@ router.post("/search_people", (req, res) => {
   console.log("req for search_people", req.body);
   var name = req.body.searchText;
   id = mongooseTypes.ObjectId();
-  User.find({ first_name: new RegExp("^" + name, "i") }, (err, result) => {
+  User.find({$or:[{ first_name: new RegExp("^" + name, "i") },{last_name:new RegExp("^" + name, "i")},{username:new RegExp("^" + name, "i")}]}, (err, result) => {
     if (err) {
       res.status(404).json({ error: `user not found ${err}` });
     } else {
