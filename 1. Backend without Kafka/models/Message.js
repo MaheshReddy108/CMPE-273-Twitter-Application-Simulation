@@ -5,10 +5,10 @@ const { Schema } = mongoose;
 // Create Schema
 
 const MessageSchema = new Schema({
-  sender_id: {
+  sender_name: {
     type: String,
   },
-  receiver_id: {
+  receiver_name: {
     type: String,
   },
   message: {

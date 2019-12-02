@@ -44,7 +44,7 @@ class MessageTimeline extends Component {
         let followerList = this.state.followersResult.map(function (follower, index) {
             return (
                 <div className="container display-properties-container" key={index}>
-                    <Link to={'/MessageDisplay/' + follower.follower_id}>
+                    <Link to={'/MessageDisplay/' + follower.follower_name}>
                         <div className="follower-content row border">
                             
                             <div className="follower-content-desc col-9 hidden-xs">

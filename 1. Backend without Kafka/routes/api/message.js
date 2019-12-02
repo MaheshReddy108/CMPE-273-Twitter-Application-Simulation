@@ -9,24 +9,24 @@ const jwt = require("jsonwebtoken");
 const Message = require("../../models/Message");
 
 router.post("/send_message", (req, res) => {
-  const { sender_id, receiver_id, message } = req.body;
+  const { sender_name, receiver_name, message } = req.body;
   console.log("inside send_message api of backend.");
-  User.findOne({ _id: sender_id })
+  User.findOne({ username: sender_name })
     .then(user => {
       if (!user) {
         console.log("no user");
         return res.status(404).json({ msg: "no sender with this id" });
       } else {
         console.log("sender user details:", user);
-        User.findOne({ _id: receiver_id }).then(user1 => {
+        User.findOne({ username: receiver_name }).then(user1 => {
           if (!user1) {
             console.log("no receiver found");
             return res.status(404).json({ msg: "no receiver with this id" });
           } else {
             console.log("receiver user details:", user1);
             const newMessage = new Message({
-              sender_id: sender_id,
-              receiver_id: receiver_id,
+              sender_name: sender_name,
+              receiver_name: receiver_name,
               message: message
             });
             newMessage.save().then(messages => res.status(200).json(messages));
@@ -77,9 +77,9 @@ router.post("/send_message", (req, res) => {
   }); */
 
 router.post("/get_messages", (req, res) => {
-        const { sender_id, receiver_id } = req.body;
+        const { sender_name, receiver_name } = req.body;
   console.log("inside get_sent_messages api of backend");
-  Message.find({ sender_id, receiver_id })
+  Message.find({ sender_name, receiver_name })
     .then(message => {
       if (!message) {
         console.log("no message");
@@ -90,7 +90,7 @@ router.post("/get_messages", (req, res) => {
       console.log("message is....", message);
       const all_msgs = [];
       all_msgs.push(message);
-      Message.find({ sender_id: receiver_id, receiver_id: sender_id }).then(
+      Message.find({ sender_name: receiver_name, receiver_name: sender_name }).then(
         msg1 => {
           if (!msg1) {
             console.log("no message");

@@ -12,7 +12,9 @@ class MessageDisplay extends Component {
       this.state = {
          IncomingMessages : [],
          OutgoingMessages:[],
-         messageText:''
+         messageText:'',
+         SenderName:localStorage.getItem("username"),
+         Receivername: this.props.match.params.name
       };
 //Bind the handlers to this className
 this.onChange = this.onChange.bind(this);
@@ -28,8 +30,8 @@ this.handleMessage = this.handleMessage.bind(this);
       handleMessage(text){
           var data_send={
               message: this.state.messageText,
-              sender_id:"5dcde47b914b4b8ea83a0072",
-             receiver_id :this.props.match.params.id
+              sender_name: localStorage.getItem("username"),
+             receiver_name :this.props.match.params.id
 
           }
 
@@ -50,13 +52,13 @@ this.handleMessage = this.handleMessage.bind(this);
         
 
        var data_get = {
-           sender_id:"5dcde47b914b4b8ea83a0072",
-           receiver_id :this.props.match.params.id
+           sender_name:localStorage.getItem("username"),
+           receiver_name :this.props.match.params.name
        }
         axios.defaults.withCredentials = true;
         axios.post('http://localhost:4500/api/message/get_messages', data_get)
         .then(response=>{
-            this.setState({IncomingMessages:response.data[0],OutgoingMessages:response.data[1]})
+            this.setState({IncomingMessages:response.data[1],OutgoingMessages:response.data[0]})
         }).catch((err) =>{
             if(err){
                 this.setState({
@@ -78,7 +80,7 @@ this.handleMessage = this.handleMessage.bind(this);
                             
                             <div className="container py-3 mt-3" >
                                 <div >
-                                    <h7 style={{ color:"black"}}><strong>Manish</strong></h7>
+                                    <h7 style={{ color:"black"}}><strong>{message.sender_name}</strong></h7>
                                     {/* <div>{message.receiver_id}</div> */}
                                     <div><h3>{message.message}</h3></div>
                                </div>
@@ -96,7 +98,7 @@ this.handleMessage = this.handleMessage.bind(this);
                             
                             <div className="text-right">
                                 <div >
-                                    <h7 style={{ color:"black"}}><strong>Kanika</strong></h7>
+                                    <h7 style={{ color:"black"}}><strong>{message.sender_name}</strong></h7>
                                     {/* <div>{message.receiver_id}</div> */}
                                     <div className="text-right"><h3>{message.message}</h3></div>
                                </div>
