@@ -12,12 +12,15 @@ class PeopleDisplay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ""
+      username: "",
+      display_id: ""
     };
   }
   componentDidMount() {
     var username = this.props.match.params.username;
-    this.setState({ username: username });
+    //const { display_id } = this.props.location.state;
+    //console.log("the id of this user clicked is.....", display_id);
+    //this.setState({ username: username, display_id: display_id });
   }
   render() {
     let redirectVar = null;
@@ -25,6 +28,7 @@ class PeopleDisplay extends Component {
       redirectVar = <Redirect to="/" />;
     }
     let username = this.props.match.params.username;
+    let display_id = this.props.location.state;
     return (
       <div className="container">
         {redirectVar}
@@ -34,7 +38,7 @@ class PeopleDisplay extends Component {
         <br />
         <PeopleProfileCard data={username} />
         <br />
-        <PeopleNavbar data={username} />
+        <PeopleNavbar data={username} data1={display_id} />
       </div>
     );
   }
