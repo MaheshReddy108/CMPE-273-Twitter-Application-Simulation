@@ -8,6 +8,7 @@ import LandingPage from "./components/Entry/LandingPage";
 import Login from "./components/Entry/Login";
 import Register from "./components/Entry/Register";
 import Tweet from "./components/Feed/Tweet";
+import DisplayListDetails from "./components/Lists/DisplayListDetails";
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -22,6 +23,10 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/welcomePage" component={WelcomePage} />
               <Route path="/tweet/:id" component={Tweet} />
+              <Route
+                path="/DisplayListDetails/:list_Name"
+                component={DisplayListDetails}
+              />
             </Switch>
           </BrowserRouter>
         </div>

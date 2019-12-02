@@ -133,10 +133,10 @@ router.post("/get_user_owned_lists", (req, res) => {
 
 // to get the lists in which the user is a member.
 router.post("/get_member_lists_of_user", (req, res) => {
-  const { user_id } = req.body;
+  const { username } = req.body;
   console.log("inside get_member_lists_of_user api of backend");
   lists
-    .find({ "members.user_id": user_id })
+    .find({ "members.username": username })
     .then(list => {
       if (!list) {
         console.log("no list");
@@ -181,10 +181,10 @@ router.post("/subscribe", (req, res) => {
 
 //getting the lists to which the user has subscribed for
 router.post("/get_subscribed_lists", (req, res) => {
-  const { user_id } = req.body;
+  const { username } = req.body;
   console.log("inside get_subscribed_lists api of backend");
   lists
-    .find({ "subscribers.user_id": user_id })
+    .find({ "subscribers.user_id": username })
     .then(list => {
       if (!list) {
         console.log("no list");
