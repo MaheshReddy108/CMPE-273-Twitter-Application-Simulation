@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
+import { rooturl } from "../_config/settings";
 
 class UserFollowing extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class UserFollowing extends Component {
   componentDidMount() {
     let username = localStorage.getItem("username");
     axios
-      .post("http://localhost:4500/api/users/get_following", { username })
+      .post(`http://${rooturl}:4500/api/users/get_following`, { username })
       .then(response => {
         console.log("response is.", response.data);
         this.setState({
@@ -37,7 +38,7 @@ class UserFollowing extends Component {
       username: localStorage.getItem("username")
     };
     //console.log(data);
-    var url = "http://localhost:4500/api/users/unfollow";
+    var url = `http://${rooturl}:4500/api/users/unfollow`;
     axios
       .post(url, data)
       .then(function(response) {

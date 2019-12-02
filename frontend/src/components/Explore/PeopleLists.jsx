@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
+import { rooturl } from "../_config/settings";
 
 import { Link } from "react-router-dom";
 
@@ -26,7 +27,7 @@ class OwnedLists extends Component {
       list_Name: e.target.id
     };
     console.log(data);
-    var url = "http://localhost:4500/api/lists/subscribe";
+    var url = `http://${rooturl}:4500/api/lists/subscribe`;
     axios
       .post(url, data)
       .then(function(response) {
@@ -40,7 +41,7 @@ class OwnedLists extends Component {
   componentDidMount() {
     let username = this.props.data;
     axios
-      .post("http://localhost:4500/api/users/get_profile", {
+      .post(`http://${rooturl}:4500/api/users/get_profile`, {
         username
       })
       .then(response => {
@@ -48,7 +49,7 @@ class OwnedLists extends Component {
         let ownerID = response.data._id;
 
         axios
-          .post("http://localhost:4500/api/lists/get_user_owned_lists", {
+          .post(`http://${rooturl}:4500/api/lists/get_user_owned_lists`, {
             ownerID
           })
           .then(response => {

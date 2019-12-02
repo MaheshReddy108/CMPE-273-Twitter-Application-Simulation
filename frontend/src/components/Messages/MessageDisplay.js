@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import WelcomePage from "../WelcomePage";
 import swal from "sweetalert";
+import { rooturl } from "../_config/settings";
 
 class MessageDisplay extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class MessageDisplay extends Component {
     };
 
     axios
-      .post("http://localhost:4500/api/message/send_message", data_send)
+      .post(`http://${rooturl}:4500/api/message/send_message`, data_send)
       .then(response => {
         if (response.status == 200) {
           this.setState({ loading: "true" });
@@ -49,7 +50,7 @@ class MessageDisplay extends Component {
     };
     axios.defaults.withCredentials = true;
     axios
-      .post("http://localhost:4500/api/message/get_messages", data_get)
+      .post(`http://${rooturl}:4500/api/message/get_messages`, data_get)
       .then(response => {
         this.setState({
           IncomingMessages: response.data[1],
