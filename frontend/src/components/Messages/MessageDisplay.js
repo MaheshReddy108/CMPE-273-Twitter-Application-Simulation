@@ -114,6 +114,18 @@ this.handleMessage = this.handleMessage.bind(this);
     
     return (
       <div>
+          
+       <div className=" mt-5 ">
+
+   
+         <Link to="/welcomePage" className="btn btn-light mb-3">
+                Back To Feed
+              </Link>
+              </div>
+              <div className="align-text-bottom">
+              {/* <h3>Inbox</h3> */}
+              </div>
+              {/* <br></br> */}
         <div>{IncomingList}</div>
         <div>{OutgoingList}</div>
 
