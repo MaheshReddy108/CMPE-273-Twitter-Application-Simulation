@@ -9,3 +9,4 @@ export const CLEAR_ERRORS = "CLEAR_ERRORS";
 export const RETWEET = "RETWEET";
 export const SEARCH_USER = "SEARCH_USER";
 export const SEARCH_TOPIC = "SEARCH_TOPIC";
+export const GET_BOOKMARKS = "GET_BOOKMARKS";

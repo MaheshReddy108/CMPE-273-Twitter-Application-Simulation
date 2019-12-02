@@ -7,7 +7,8 @@ import {
   DELETE_TWEET,
   TWEET_LOADING,
   CLEAR_ERRORS,
-  SEARCH_TOPIC
+  SEARCH_TOPIC,
+  GET_BOOKMARKS
 } from "./types";
 import { rooturl } from "../_config/settings";
 
@@ -192,7 +193,7 @@ export const clearErrors = () => {
 // Search Topics
 export const searchTopic = searchTopic => dispatch => {
   axios
-    .post(`http://${rooturl}:4500/api/tweets/search_topic`,searchTopic)
+    .post(`http://${rooturl}:4500/api/tweets/search_topic`, searchTopic)
     .then(response => {
       dispatch({
         type: SEARCH_TOPIC,
@@ -205,4 +206,37 @@ export const searchTopic = searchTopic => dispatch => {
         payload: error.response.data
       });
     });
+};
+
+// Bookmark
+export const bookmark = id => dispatch => {
+  axios
+    .post(`http://${rooturl}:4500/api/bookmark/create_bookmark/${id}`)
+    .then(res => dispatch(getTweets()))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Get Bookmarks
+export const getBookmarks = data => dispatch => {
+  console.log("inside getbookmarks action");
+  dispatch(setTweetLoading());
+  axios
+    .post(`http://${rooturl}:4500/api/bookmark/view_bookmarks`, data)
+    .then(res =>
+      dispatch({
+        type: GET_BOOKMARKS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_BOOKMARKS,
+        payload: null
+      })
+    );
 };

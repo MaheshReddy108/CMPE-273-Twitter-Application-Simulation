@@ -69,7 +69,7 @@ router.post("/getLikedTweets", (req, res) => {
         console.log("no liked tweets");
         return res.status(404).json({ msg: "No liked tweets" });
       } else {
-        console.log("liked tweets are :", tweets);
+        // console.log("liked tweets are :", tweets);
         res.json(tweets);
       }
     })
@@ -111,8 +111,9 @@ router.post("/create_tweet", (req, res) => {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     avatar: req.body.avatar,
-    hashtags: req.body.hashtags
+    hashtags: req.body.hashtag
   });
+  //newTweet.hashtags.push(req.body.hashtag)
   newTweet.save().then(tweet => res.status(200).json(tweet));
 });
 
@@ -147,7 +148,7 @@ router.delete(
 router.post("/search_topic", (req, res) => {
   console.log("req for search_topic", req.body);
   topic = req.body.searchText;
-  Tweet.find({ hashtags: new RegExp('^'+topic, "i") }, (err, result) => {
+  Tweet.find({ hashtags: new RegExp("^" + topic, "i") }, (err, result) => {
     if (err) {
       res.status(404).json({ error: `Tweet not found ${err}` });
     } else {

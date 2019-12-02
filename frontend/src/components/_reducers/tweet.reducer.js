@@ -5,14 +5,16 @@ import {
   DELETE_TWEET,
   TWEET_LOADING,
   RETWEET,
-  SEARCH_TOPIC
+  SEARCH_TOPIC,
+  GET_BOOKMARKS
 } from "../_actions/types";
 
 const initialState = {
   tweets: [],
   tweet: {},
+  bms: [],
   loading: false,
-  topicResult :[]
+  topicResult: []
 };
 
 // eslint-disable-next-line import/prefer-default-export
@@ -52,10 +54,16 @@ export const tweetReducer = (state = { ...initialState }, action) => {
         ...state,
         tweets: state.tweets.filter(tweet => tweet._id !== action.payload)
       };
-      case SEARCH_TOPIC:
+    case SEARCH_TOPIC:
       return {
         ...state,
         topicResult: action.payload
+      };
+    case GET_BOOKMARKS:
+      return {
+        ...state,
+        bms: action.payload,
+        loading: false
       };
     default:
       return { ...state };
