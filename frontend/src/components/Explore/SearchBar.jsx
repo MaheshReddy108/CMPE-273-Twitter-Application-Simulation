@@ -63,10 +63,15 @@ class SearchBar extends Component {
 
   render() {
     const { peopleResult } = this.props.userState;
-    const length = peopleResult.length;
+    var length = peopleResult.length;
     console.log("length", length);
     console.log("peopleresult", peopleResult);
 
+    
+
+    let message = this.props.errors.error
+    console.log("Error Message",message);
+    
     // const {activePage,resultsPerPage}=this.State
     const activePage = this.state.activePage;
     const resultsPerPage = this.state.resultsPerPage;
@@ -168,6 +173,7 @@ class SearchBar extends Component {
           </div>
           <div className="property-listing-content">{peopleList}</div>
           <div className="property-listing-content">{topicList}</div>
+          <div><h1 style={{color:"red"}}><strong>{message}</strong></h1></div>
         </div>
         <div class="button" width="1000px">
           <Pagination

@@ -18,7 +18,7 @@ class MessageTimeline extends Component {
         
 
        var data = {
-           username :"Kanika"
+           username :localStorage.getItem("username")
        }
         axios.defaults.withCredentials = true;
         axios.post('http://localhost:4500/api/users/get_followers', data)

@@ -149,8 +149,13 @@ router.post("/search_topic", (req, res) => {
       res.status(404).json({ error: `Tweet not found ${err}` });
     } else {
       console.log(result);
-
+      if(result.length>0){
+         
       res.status(200).json(result);
+      }
+      else {
+        res.status(404).send({error:"Topic Not found"})
+      }
     }
   });
 });

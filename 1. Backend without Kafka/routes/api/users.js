@@ -417,9 +417,14 @@ router.post("/search_people", (req, res) => {
       res.status(404).json({ error: `user not found ${err}` });
     } else {
       // console.log(result);
+      if(result.length>0){
       console.log("id", result[0].id);
       console.log("name", result[0].first_name);
       res.status(200).json(result);
+        }
+        else{
+          res.status(404).send({error:"User not found"})
+        }
     }
   });
 });
