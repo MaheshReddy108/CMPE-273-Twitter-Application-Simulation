@@ -61,8 +61,11 @@ export const addTweet = newTweet => dispatch => {
 export const getTweet = id => dispatch => {
   console.log("inside gettweet action");
   dispatch(setTweetLoading());
+  const data = {
+    tweet_id: id
+  };
   axios
-    .get(`http://${rooturl}:4500/api/tweets/get_tweet/${id}`)
+    .post(`http://${rooturl}:4500/api/tweets/get_tweet`, data)
     .then(res =>
       dispatch({
         type: GET_TWEET,

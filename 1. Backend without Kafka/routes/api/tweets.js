@@ -45,13 +45,16 @@ router.post("/getTweets", (req, res) => {
 // @route GET api/tweets/get_tweet/:id
 // @desc Get Tweets by id
 // @access Public
-router.get("/get_tweet/:id", (req, res) => {
-  console.log("Inside get tweet route");
-  Tweet.findById(req.params.id)
+router.post("/get_tweet", (req, res) => {
+  console.log(`Inside get tweet route${req.body.tweet_id}`);
+
+  Tweet.findById(req.body.tweet_id)
     .then(tweet => {
       // console.log("the tweet is" + tweet);
-      res.status(200).json(tweet);
-      // tweet.view_count += 1;
+      tweet.view_count += 1;
+      tweet.save().then(tweet => res.status(200).json(tweet));
+      console.log("tweet_views", tweet.view_count);
+      // res.status(200).json(tweet);
     })
     .catch(err =>
       res.status(404).json({ error: `No tweet found with that id ${err}` })
@@ -211,6 +214,8 @@ router.post(
       .then(tweet => {
         const newReply = {
           text: req.body.textContent,
+          firstname: req.body.firstname,
+          lastname: req.body.lastname,
           username: req.body.username,
           avatar: req.body.avatar,
           user: req.user.id

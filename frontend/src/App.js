@@ -8,6 +8,7 @@ import LandingPage from "./components/Entry/LandingPage";
 import Login from "./components/Entry/Login";
 import Register from "./components/Entry/Register";
 import Tweet from "./components/Feed/Tweet";
+import Dashboard from "./components/Dashboards/Dashboard";
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
@@ -22,6 +23,7 @@ class App extends Component {
               <Route path="/register" component={Register} />
               <Route path="/welcomePage" component={WelcomePage} />
               <Route path="/tweet/:id" component={Tweet} />
+              <Route path="/dashboard" component={Dashboard} />
             </Switch>
           </BrowserRouter>
         </div>
