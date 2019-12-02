@@ -69,7 +69,7 @@ router.post("/getLikedTweets", (req, res) => {
         console.log("no liked tweets");
         return res.status(404).json({ msg: "No liked tweets" });
       } else {
-        console.log("liked tweets are :", tweets);
+        // console.log("liked tweets are :", tweets);
         res.json(tweets);
       }
     })
@@ -147,7 +147,7 @@ router.delete(
 router.post("/search_topic", (req, res) => {
   console.log("req for search_topic", req.body);
   topic = req.body.searchText;
-  Tweet.find({ hashtags: new RegExp('^'+topic, "i") }, (err, result) => {
+  Tweet.find({ hashtags: new RegExp("^" + topic, "i") }, (err, result) => {
     if (err) {
       res.status(404).json({ error: `Tweet not found ${err}` });
     } else {

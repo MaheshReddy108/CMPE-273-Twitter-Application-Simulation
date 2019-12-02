@@ -10,7 +10,8 @@ import {
   getTweets,
   deleteTweet,
   addLike,
-  removeLike
+  removeLike,
+  bookmark
 } from "../_actions/tweetAction";
 
 class TweetItem extends Component {
@@ -41,6 +42,10 @@ class TweetItem extends Component {
 
   onUnlikeClick(id) {
     this.props.removeLike(id);
+  }
+
+  onBookmark(id) {
+    this.props.bookmark(id);
   }
 
   findUserLike(likes) {
@@ -169,6 +174,14 @@ class TweetItem extends Component {
                   Replies
                 </Link>
 
+                <button
+                  onClick={this.onBookmark.bind(this, tweet._id)}
+                  type="button"
+                  className="btn btn-light mr-1"
+                >
+                  <i className="text-secondary fas fa-bookmark" />
+                </button>
+
                 {tweet.user === auth.user.id ? (
                   <button
                     onClick={this.onDeleteClick.bind(this, tweet._id)}
@@ -201,5 +214,6 @@ export default connect(mapStateToProps, {
   getTweets,
   deleteTweet,
   addLike,
-  removeLike
+  removeLike,
+  bookmark
 })(TweetItem);
