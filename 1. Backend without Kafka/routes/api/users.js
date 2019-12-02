@@ -176,7 +176,8 @@ router.post("/get_profile", (req, res) => {
         return res.status(404).json({ msg: "no user with this username" });
       }
       // console.log("profile is....", user);
-      res.json(user);
+      user.views += 1;
+      user.save().then(user => res.status(200).json(user));
     })
     .catch(err => {
       console.log("err is.....", err);
@@ -273,6 +274,31 @@ router.post("/update_profile", (req, res) => {
     res.status(200).json(user);
   });
 });
+
+router.post("/check_follower", (req, res) => {
+  const { username, follower_name } = req.body;
+  console.log("inside check_follower api of backend. username is..", username);
+  console.log(
+    "inside check_follower api of backend. follower_name is..",
+    follower_name
+  );
+  User.findOne({
+    username,
+    "following.following_name": { $eq: follower_name }
+  })
+    .then(user => {
+      if (user) {
+        res.status(200).json({ msg: "exists" });
+      } else {
+        res.status(200).json({ msg: "not exists " });
+      }
+    })
+    .catch(err => {
+      console.log("user does not exist");
+      res.status(200).json({ msg: "not exists " });
+    });
+});
+
 router.post("/add_following", (req, res) => {
   const { username, following_id, following_name } = req.body;
   var user_id = "";
@@ -287,7 +313,9 @@ router.post("/add_following", (req, res) => {
       if (!user) {
         console.log("no user");
 
-        return res.status(404).json({ msg: "no user with this username" });
+        return res
+          .status(404)
+          .json({ msg: "no user with this username or already following" });
       } else {
         const newFollowing = {
           following_id: following_id,
@@ -382,9 +410,9 @@ router.post("/get_following", (req, res) => {
 
 router.post("/search_people", (req, res) => {
   console.log("req for search_people", req.body);
-  var name = req.body.first_name;
+  var name = req.body.searchText;
   id = mongooseTypes.ObjectId();
-  User.find({ first_name: new RegExp(name, "i") }, (err, result) => {
+  User.find({ first_name: new RegExp("^" + name, "i") }, (err, result) => {
     if (err) {
       res.status(404).json({ error: `user not found ${err}` });
     } else {

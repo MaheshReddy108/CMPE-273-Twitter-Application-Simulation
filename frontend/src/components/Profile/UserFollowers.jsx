@@ -9,7 +9,30 @@ class UserFollowers extends Component {
       username: "",
       followers: []
     };
+    this.addFollower = this.addFollower.bind(this);
   }
+
+  addFollower = followers => {
+    //console.log("followers are..", followers);
+    let username = localStorage.getItem("username");
+    let following_id = followers.follower_id;
+    let following_name = followers.follower_name;
+    let data = {
+      username: username,
+      following_id: following_id,
+      following_name: following_name
+    };
+    //console.log("data is..", data);
+    var url = "http://localhost:4500/api/users/add_following";
+    axios
+      .post(url, data)
+      .then(function(response) {
+        console.log("response from add_following is..", response);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
   componentDidMount() {
     let username = localStorage.getItem("username");
     axios
@@ -39,10 +62,17 @@ class UserFollowers extends Component {
                 <div className="row">
                   <div className="col-md-8" style={style}>
                     @ {followers.follower_name}
+                    <br />
                   </div>
                   <div className="col-md-4">
                     <br />
-                    <Button style={style1}>Follow</Button>
+
+                    <Button
+                      style={style1}
+                      onClick={() => this.addFollower(followers)}
+                    >
+                      Follow
+                    </Button>
                   </div>
                 </div>
               </div>

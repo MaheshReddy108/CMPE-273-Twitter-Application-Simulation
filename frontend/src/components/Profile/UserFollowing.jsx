@@ -9,7 +9,7 @@ class UserFollowing extends Component {
       username: "",
       following: []
     };
-    //this.handleUnfollow = this.handleUnfollow.bind(this);
+    this.handleUnfollow = this.handleUnfollow.bind(this);
   }
   componentDidMount() {
     let username = localStorage.getItem("username");
@@ -60,7 +60,6 @@ class UserFollowing extends Component {
                 <div className="row">
                   <div className="col-md-8" style={style}>
                     @ {following.following_name} <br />
-                    {following._id}
                   </div>
                   <div className="col-md-4">
                     <br />
