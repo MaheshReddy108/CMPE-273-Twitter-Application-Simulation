@@ -78,7 +78,7 @@ router.post("/get_members_of_a_list", (req, res) => {
   const { list_Name } = req.body;
   console.log("inside get_members_of_a_list api of backend");
   lists
-    .findOne({ list_Name })
+    .find({ list_Name })
     .then(list => {
       if (!list) {
         console.log("no list");
@@ -97,7 +97,7 @@ router.post("/get_subscribers_of_a_list", (req, res) => {
   const { list_Name } = req.body;
   console.log("inside get_subscribers_of_a_list api of backend");
   lists
-    .findOne({ list_Name })
+    .find({ list_Name })
     .then(list => {
       if (!list) {
         console.log("no list");
