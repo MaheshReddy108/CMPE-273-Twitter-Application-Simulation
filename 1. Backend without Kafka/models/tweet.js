@@ -33,6 +33,12 @@ const TweetSchema = new Schema({
       text: {
         type: String
       },
+      firstname: {
+        type: String
+      },
+      lastname: {
+        type: String
+      },
       username: {
         type: String
       },
@@ -109,7 +115,8 @@ const TweetSchema = new Schema({
     type: Boolean
   },
   view_count: {
-    type: Number
+    type: Number,
+    default: 0
   }
 });
 

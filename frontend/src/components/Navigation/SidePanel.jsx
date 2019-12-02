@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import HomeTimeline from "../Timeline/HomeTimeline";
 import SearchBar from "../Explore/SearchBar";
 import ProfileTimeline from "../Profile/ProfileTimeline";
+import Dashboard from "../Dashboards/Dashboard";
+
 import ListsTimeline from "../Lists/ListsTimeline";
 import MessageTimeline from "../Messages/MessageTimeline";
 class SidePanel extends Component {
@@ -120,6 +122,20 @@ class SidePanel extends Component {
               >
                 Profile
               </a>
+              <a
+                className={`nav-link ${
+                  activeSection === "v-pills-dashboard" ? "active" : ""
+                } `}
+                id="v-pills-dashboard-tab"
+                data-toggle="pill"
+                href="#v-pills-dashboard"
+                role="tab"
+                aria-controls="v-pills-dashboard"
+                aria-selected="false"
+                onClick={() => this.onSectionClick("v-pills-dashboard")}
+              >
+                Dashboard
+              </a>
             </div>
           </div>
           <div className="col-9">
@@ -152,7 +168,7 @@ class SidePanel extends Component {
                 role="tabpanel"
                 aria-labelledby="v-pills-messages-tab"
               >
-                <MessageTimeline/>
+                <MessageTimeline />
               </div>
               <div
                 className={`tab-pane fade  ${
@@ -183,6 +199,16 @@ class SidePanel extends Component {
                 aria-labelledby="v-pills-profile-tab"
               >
                 <ProfileTimeline />
+              </div>
+              <div
+                className={`tab-pane fade  ${
+                  activeSection === "v-pills-dashboard" ? " show active" : ""
+                }`}
+                id="v-pills-dashboard"
+                role="tabpanel"
+                aria-labelledby="v-pills-dashboard-tab"
+              >
+                <Dashboard />
               </div>
             </div>
           </div>
