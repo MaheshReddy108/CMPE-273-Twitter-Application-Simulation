@@ -5,6 +5,7 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { rooturl } from "../_config/settings";
 
 class PeopleProfileCard extends Component {
   constructor() {
@@ -33,7 +34,7 @@ class PeopleProfileCard extends Component {
     );
 
     axios
-      .post("http://localhost:4500/api/users/get_profile", {
+      .post(`http://${rooturl}:4500/api/users/get_profile`, {
         username
       })
       .then(response => {
@@ -55,7 +56,7 @@ class PeopleProfileCard extends Component {
         });
       });
     axios
-      .post("http://localhost:4500/api/tweets/getTweets", { username })
+      .post(`http://${rooturl}:4500/api/tweets/getTweets`, { username })
       .then(response => {
         this.setState({
           tweet_count: response.data.length
@@ -71,7 +72,7 @@ class PeopleProfileCard extends Component {
       following_name: following_name
     };
     console.log("data is..", data);
-    var url = "http://localhost:4500/api/users/add_following";
+    var url = `http://${rooturl}:4500/api/users/add_following`;
     axios
       .post(url, data)
       .then(function(response) {

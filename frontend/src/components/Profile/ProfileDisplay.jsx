@@ -9,6 +9,7 @@ import ProfileUpdateForm from "./ProfileUpdateForm";
 import Modal from "react-responsive-modal";
 import DeactivateProfile from "./DeactivateProfile";
 //import { loginUser } from "../actions/authActions";
+import { rooturl } from "../_config/settings";
 
 class ProfileDisplay extends Component {
   constructor() {
@@ -47,7 +48,7 @@ class ProfileDisplay extends Component {
   componentDidMount() {
     let username = localStorage.getItem("username");
     axios
-      .post("http://localhost:4500/api/users/get_profile", { username })
+      .post(`http://${rooturl}:4500/api/users/get_profile`, { username })
       .then(response => {
         console.log("PROFILE IS................", response.data);
         let date = response.data.date;
@@ -68,7 +69,7 @@ class ProfileDisplay extends Component {
       });
 
     axios
-      .post("http://localhost:4500/api/tweets/getTweets", { username })
+      .post(`http://${rooturl}:4500/api/tweets/getTweets`, { username })
       .then(response => {
         this.setState({
           tweet_count: response.data.length

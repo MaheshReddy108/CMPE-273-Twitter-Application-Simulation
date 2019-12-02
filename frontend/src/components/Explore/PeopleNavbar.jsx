@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import PeopleTweets from "./PeopleTweets";
 import PeopleLists from "./PeopleLists";
+
 class PeopleNavbar extends Component {
   constructor(props) {
     super(props);
