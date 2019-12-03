@@ -68,8 +68,9 @@ function handle_request(msg, callback) {
             });
           }
         });
-        break;
       }
+      break;
   }
 }
+
 exports.handle_request = handle_request;
