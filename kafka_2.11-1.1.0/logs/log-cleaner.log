@@ -1,5 +1,0 @@
-[2019-12-02 17:21:18,232] INFO Starting the log cleaner (kafka.log.LogCleaner)
-[2019-12-02 17:21:18,339] INFO [kafka-log-cleaner-thread-0]: Starting (kafka.log.LogCleaner)
-[2019-12-02 17:22:25,511] INFO The cleaning for partition users-0 is aborted and paused (kafka.log.LogCleaner)
-[2019-12-02 17:22:25,513] INFO Compaction for partition users-0 is resumed (kafka.log.LogCleaner)
-[2019-12-02 17:22:25,513] INFO The cleaning for partition users-0 is aborted (kafka.log.LogCleaner)
