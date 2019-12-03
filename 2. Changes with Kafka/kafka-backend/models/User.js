@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 const UserSchema = new Schema({
   username: {
     type: String,
@@ -81,6 +82,14 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  bookmarked_tweets: {
+    type: Schema.Types.ObjectId,
+    ref: "tweets"
+  },
+  views: {
+    type: Number,
+    default: 0
   }
 });
 

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 // Create Schema
 
@@ -14,6 +15,12 @@ const TweetSchema = new Schema({
   username: {
     type: String
   },
+  firstname: {
+    type: String
+  },
+  lastname: {
+    type: String
+  },
   avatar: {
     type: String
   },
@@ -24,6 +31,12 @@ const TweetSchema = new Schema({
         ref: "users"
       },
       text: {
+        type: String
+      },
+      firstname: {
+        type: String
+      },
+      lastname: {
         type: String
       },
       username: {
@@ -38,18 +51,74 @@ const TweetSchema = new Schema({
       }
     }
   ],
+  replies_count: {
+    type: Number,
+    default: 0
+  },
   likes: [
     {
       user: {
         type: Schema.Types.ObjectId,
         ref: "users"
+      },
+      username: {
+        type: String
       }
     }
   ],
-  date: {
+  likes_count: {
+    type: Number,
+    default: 0
+  },
+  tweeted_date: {
     type: Date,
     default: Date.now
+  },
+  hashtags: {
+    type: Array
+  },
+  imageList: {
+    type: Array
+  },
+  retweeted_status: {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "users"
+    },
+    username: {
+      type: String
+    },
+    firstname: {
+      type: String
+    },
+    lastname: {
+      type: String
+    },
+    avatar: {
+      type: String
+    },
+    tweet_content: {
+      type: String
+    },
+    hashtags: {
+      type: Array
+    },
+    imageList: {
+      type: Array
+    }
+  },
+  retweets_count: {
+    type: Number,
+    default: 0
+  },
+  retweeted: {
+    type: Boolean
+  },
+  view_count: {
+    type: Number,
+    default: 0
   }
 });
 
+// eslint-disable-next-line no-multi-assign
 module.exports = Tweet = mongoose.model("tweets", TweetSchema);

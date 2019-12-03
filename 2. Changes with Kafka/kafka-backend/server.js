@@ -12,11 +12,11 @@ var passport = require("passport");
 var schema = mongoose.Schema;
 var app = express();
 const bodyParser = require("body-parser");
-var Register = require("./services/register.js");
-var Login = require("./services/login.js");
+var Users = require("./services/users.js");
+/*var Login = require("./services/login.js");
 var Deactivate = require("./services/deactivate.js");
 var Get_Profile = require("./services/get_profile.js");
-var Get_Profile_Redis = require("./services/get_profile_redis.js");
+var Get_Profile_Redis = require("./services/get_profile_redis.js");*/
 //var Get_Tweets = require("./services/get_tweets.js");
 //var Get_Tweet_Id = require("./services/get_tweet/:id.js");
 //var Create_Tweet = require("./services/create_tweet.js");
@@ -58,11 +58,11 @@ function handleTopicRequest(topic_name, fname) {
     });
   });
 }
-handleTopicRequest("register", Register);
-handleTopicRequest("login", Login);
+handleTopicRequest("users", Users);
+/*handleTopicRequest("login", Login);
 handleTopicRequest("deactivate", Deactivate);
 handleTopicRequest("get_profile", Get_Profile);
 handleTopicRequest("get_profile_redis", Get_Profile_Redis);
 //handleTopicRequest("get_tweets", Get_Tweets);
 //handleTopicRequest("get_tweet/:id", Get_Tweet_Id);
-//handleTopicRequest("create_tweet", Create_Tweet);
+//handleTopicRequest("create_tweet", Create_Tweet);*/

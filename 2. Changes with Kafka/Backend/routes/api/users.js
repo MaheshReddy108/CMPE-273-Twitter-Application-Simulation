@@ -13,6 +13,7 @@ const redisHmapMax = 4;
 const app = express();
 // creating redis client
 var client = redis.createClient(6379);
+const TOPIC = "users";
 
 // Testing redis connection
 client.on("connect", function() {
@@ -28,12 +29,16 @@ router.use(function(req, res, next) {
   next();
 });
 
-router.get("/test", (req, res) => res.json({ msg: "works" }));
+//router.get("/test", (req, res) => res.json({ msg: "works" }));
 
 router.post("/register", (req, res) => {
   console.log("Inside register of  backend");
   console.log("request is....", req.body);
-  kafka.make_request("register", req.body, function(err, results) {
+  var reqMsg = {
+    api: "post/register",
+    reqBody: req.body
+  };
+  kafka.make_request(TOPIC, reqMsg, function(err, results) {
     console.log("in result");
     console.log(results);
 
@@ -49,7 +54,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-router.post("/login", (req, res) => {
+/*router.post("/login", (req, res) => {
   console.log("inside login of backend");
   console.log("request is..", req.body);
   kafka.make_request("login", req.body, function(err, results) {
@@ -127,5 +132,5 @@ router.post("/get_profile_redis", (req, res) => {
       } else res.status(400).json(results);
     }
   });
-});
+});*/
 module.exports = router;
