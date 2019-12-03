@@ -3,6 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const validateSignup = require("../validation/signup");
 const app = express();
+var mongooseTypes = require("mongoose").Types;
 
 function handle_request(msg, callback) {
   switch (msg.api) {
@@ -68,8 +69,46 @@ function handle_request(msg, callback) {
             });
           }
         });
-        break;
       }
+        break;
+
+    case "post/search_people":
+        console.log("Inside search people of kafka backend");
+        console.log("msg is....", msg);
+       
+        var name = msg.reqBody.searchText;
+        id = mongooseTypes.ObjectId();
+        User.find(
+          {
+            $or: [
+              { first_name: new RegExp("^" + name, "i") },
+              { last_name: new RegExp("^" + name, "i") },
+              { username: new RegExp("^" + name, "i") }
+            ]
+          },
+          (err, result) => {
+            if (err) {
+              callback(null, err)
+              console.log("err is ", err)
+            } else {
+              if (result.length > 0) {
+                data = {
+                  success: true,
+                  user: result
+                };
+                callback(null, data);
+              } else {
+                callback(null, err);
+                console.log("err is ", err)
+              }
+            }
+          }
+        );
+
+
+        break;
+
+      
   }
 }
 exports.handle_request = handle_request;
