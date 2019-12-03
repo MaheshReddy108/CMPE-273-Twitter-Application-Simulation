@@ -15,9 +15,6 @@ const app = express();
 var client = redis.createClient(6379);
 const TOPIC = "users";
 
-
-
-
 // Testing redis connection
 client.on("connect", function() {
   console.log("Connected to Redis...");
@@ -57,10 +54,14 @@ router.post("/register", (req, res) => {
   });
 });
 
-/*router.post("/login", (req, res) => {
+router.post("/login", (req, res) => {
   console.log("inside login of backend");
   console.log("request is..", req.body);
-  kafka.make_request("login", req.body, function(err, results) {
+  var reqMsg = {
+    api: "post/login",
+    reqBody: req.body
+  };
+  kafka.make_request(TOPIC, reqMsg, function(err, results) {
     console.log("in result");
     console.log(results);
 
@@ -76,9 +77,10 @@ router.post("/register", (req, res) => {
   });
 });
 
-router.post("/deactivate", (req, res) => {
+/*router.post("/deactivate", (req, res) => {
+  console.log("inside deactivate api of backend. ");
   var username = req.body.username;
-  console.log("inside deactivate api of backend. username is..", username);
+  
   kafka.make_request("deactivate", req.body, function(err, results) {
     console.log("in result");
     console.log(results);

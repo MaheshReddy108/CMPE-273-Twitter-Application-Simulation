@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const validateSignup = require("../validation/signup");
+const validateLogin = require("../validation/login");
 const app = express();
 
 function handle_request(msg, callback) {
@@ -68,6 +69,67 @@ function handle_request(msg, callback) {
             });
           }
         });
+      }
+      break;
+    case "post/login":
+      console.log("inside login of kafka backend");
+      const { errors, isValid } = validateLogin(msg.reqBody);
+      if (!isValid) {
+        callback(null, errors);
+      } else {
+        let username = msg.reqBody.username;
+        let password = msg.reqBody.password;
+        User.findOne({ username })
+          .then(user => {
+            if (!user) {
+              errors = {};
+              errors.username = "Username does not exist";
+              callback(null, errors);
+            } else {
+              if (user.active != "Active") {
+                errors = {};
+                errors.username = "Username has been deactivated";
+                callback(null, errors);
+              } else {
+                bcrypt
+                  .compare(password, user.password)
+                  .then(isMatch => {
+                    if (isMatch) {
+                      console.log("match found");
+                      //res.json({ msg: "match found" });
+
+                      let payload = {
+                        id: user.id,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
+                        username: user.username,
+                        avatar: user.avatar
+                      };
+                      console.log("payload is ", payload);
+                      //sign token
+                      jwt.sign(
+                        payload,
+                        keys.secretOrKey,
+                        { expiresIn: 216000 },
+                        (err, token) => {
+                          data = {
+                            success: true,
+                            token: "Bearer " + token
+                          };
+                          callback(null, data);
+                        }
+                      );
+                    } else {
+                      errors = {};
+                      errors.password = "Password Incorrect";
+                      callback(null, errors);
+                    }
+                  })
+                  .catch(err => console.log("err is ", err));
+              }
+            }
+          })
+          .catch(err => console.log("err is ", err));
       }
       break;
   }
