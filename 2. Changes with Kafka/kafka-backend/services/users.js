@@ -2,7 +2,9 @@ const express = require("express");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const validateSignup = require("../validation/signup");
+const validateLogin = require("../validation/login");
 const app = express();
+var mongooseTypes = require("mongoose").Types;
 
 function handle_request(msg, callback) {
   switch (msg.api) {
@@ -69,6 +71,102 @@ function handle_request(msg, callback) {
           }
         });
       }
+      break;
+    case "post/login":
+      console.log("inside login of kafka backend");
+      const { errors, isValid } = validateLogin(msg.reqBody);
+      if (!isValid) {
+        callback(null, errors);
+      } else {
+        let username = msg.reqBody.username;
+        let password = msg.reqBody.password;
+        User.findOne({ username })
+          .then(user => {
+            if (!user) {
+              errors = {};
+              errors.username = "Username does not exist";
+              callback(null, errors);
+            } else {
+              if (user.active != "Active") {
+                errors = {};
+                errors.username = "Username has been deactivated";
+                callback(null, errors);
+              } else {
+                bcrypt
+                  .compare(password, user.password)
+                  .then(isMatch => {
+                    if (isMatch) {
+                      console.log("match found");
+                      //res.json({ msg: "match found" });
+
+                      let payload = {
+                        id: user.id,
+                        first_name: user.first_name,
+                        last_name: user.last_name,
+                        username: user.username,
+                        avatar: user.avatar
+                      };
+                      console.log("payload is ", payload);
+                      //sign token
+                      jwt.sign(
+                        payload,
+                        keys.secretOrKey,
+                        { expiresIn: 216000 },
+                        (err, token) => {
+                          data = {
+                            success: true,
+                            token: "Bearer " + token
+                          };
+                          callback(null, data);
+                        }
+                      );
+                    } else {
+                      errors = {};
+                      errors.password = "Password Incorrect";
+                      callback(null, errors);
+                    }
+                  })
+                  .catch(err => console.log("err is ", err));
+              }
+            }
+          })
+          .catch(err => console.log("err is ", err));
+      }
+      break;
+
+    case "post/search_people":
+      console.log("Inside search people of kafka backend");
+      console.log("msg is....", msg);
+
+      var name = msg.reqBody.searchText;
+      id = mongooseTypes.ObjectId();
+      User.find(
+        {
+          $or: [
+            { first_name: new RegExp("^" + name, "i") },
+            { last_name: new RegExp("^" + name, "i") },
+            { username: new RegExp("^" + name, "i") }
+          ]
+        },
+        (err, result) => {
+          if (err) {
+            callback(null, err);
+            console.log("err is ", err);
+          } else {
+            if (result.length > 0) {
+              data = {
+                success: true,
+                user: result
+              };
+              callback(null, data);
+            } else {
+              callback(null, err);
+              console.log("err is ", err);
+            }
+          }
+        }
+      );
+
       break;
   }
 }
