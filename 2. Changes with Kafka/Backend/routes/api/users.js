@@ -15,6 +15,9 @@ const app = express();
 var client = redis.createClient(6379);
 const TOPIC = "users";
 
+
+
+
 // Testing redis connection
 client.on("connect", function() {
   console.log("Connected to Redis...");
