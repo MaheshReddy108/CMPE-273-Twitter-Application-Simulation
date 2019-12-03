@@ -353,17 +353,26 @@ router.post("/get_following", (req, res) => {
 router.post("/search_people", (req, res) => {
   var name = req.body.searchText;
   id = mongooseTypes.ObjectId();
-  User.find({$or:[{ first_name: new RegExp("^" + name, "i") },{last_name:new RegExp("^" + name, "i")},{username:new RegExp("^" + name, "i")}]}, (err, result) => {
-    if (err) {
-      res.status(404).json({ error: `user not found ${err}` });
-    } else {
-      if (result.length > 0) {
-        res.status(200).json(result);
+  User.find(
+    {
+      $or: [
+        { first_name: new RegExp("^" + name, "i") },
+        { last_name: new RegExp("^" + name, "i") },
+        { username: new RegExp("^" + name, "i") }
+      ]
+    },
+    (err, result) => {
+      if (err) {
+        res.status(404).json({ error: `user not found ${err}` });
       } else {
-        res.status(404).send({ error: "User not found" });
+        if (result.length > 0) {
+          res.status(200).json(result);
+        } else {
+          res.status(404).send({ error: "User not found" });
+        }
       }
     }
-  });
+  );
 });
 
 module.exports = router;

@@ -1,0 +1,8 @@
+[2019-12-02 18:01:54,179] INFO [GroupMetadataManager brokerId=0] Removed 0 expired offsets in 0 milliseconds. (kafka.coordinator.group.GroupMetadataManager)
+[2019-12-02 18:11:11,008] WARN Client session timed out, have not heard from server in 431797ms for sessionid 0x16ec958731d0000 (org.apache.zookeeper.ClientCnxn)
+[2019-12-02 18:11:11,077] INFO Client session timed out, have not heard from server in 431797ms for sessionid 0x16ec958731d0000, closing socket connection and attempting reconnect (org.apache.zookeeper.ClientCnxn)
+[2019-12-02 18:11:11,214] INFO Opening socket connection to server localhost/127.0.0.1:2181. Will not attempt to authenticate using SASL (unknown error) (org.apache.zookeeper.ClientCnxn)
+[2019-12-02 18:11:11,215] INFO Socket connection established to localhost/127.0.0.1:2181, initiating session (org.apache.zookeeper.ClientCnxn)
+[2019-12-02 18:11:11,218] INFO Session establishment complete on server localhost/127.0.0.1:2181, sessionid = 0x16ec958731d0000, negotiated timeout = 6000 (org.apache.zookeeper.ClientCnxn)
+[2019-12-02 18:19:03,794] INFO [GroupMetadataManager brokerId=0] Removed 0 expired offsets in 1 milliseconds. (kafka.coordinator.group.GroupMetadataManager)
+[2019-12-02 18:26:05,248] INFO Updated PartitionLeaderEpoch. New: {epoch:0, offset:0}, Current: {epoch:-1, offset:-1} for Partition: response_topic-0. Cache now contains 0 entries. (kafka.server.epoch.LeaderEpochFileCache)
