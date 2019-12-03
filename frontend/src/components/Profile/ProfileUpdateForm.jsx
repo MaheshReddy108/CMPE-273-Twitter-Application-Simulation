@@ -11,7 +11,8 @@ class ProfileUpdateForm extends Component {
     super(props);
     this.state = {
       auth: "False",
-      msg: ""
+      msg: "",
+      value:''
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,6 +29,7 @@ class ProfileUpdateForm extends Component {
     });
   }
   handleChange(e) {
+    
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -140,6 +142,58 @@ class ProfileUpdateForm extends Component {
             </div>
             <div className="col-md-4 ">
               <label htmlFor="inputState">State</label>
+              <select value={this.state.value} onChange={this.handleChange}>
+                <option value="Alabama-AL">Alabama -AL</option>
+                <option value="Alaska-Ak">Alaska -AK</option>
+                <option value="Arkansas - AR">Arkansas -AR</option>
+                <option value="California - CA">California - CA</option>
+                <option value="Colorado - CO">Colorado - CO</option>
+                <option value="Connecticut - CT">Connecticut - CT</option>
+                <option value="Delaware - DE">Delaware - DE</option>
+                <option value="Florida - FL">Florida - FL</option>
+                <option value="Georgia - GA">Georgia - GA</option>
+                <option value="Hawaii - HI">Hawaii - HI</option>
+                <option value="Idaho - ID">Idaho - ID</option>
+                <option value="Illinois - IL">Illinois - IL</option>
+                <option value="Indiana - IN">Indiana - IN</option>
+                <option value="Iowa - IA">Iowa - IA</option>
+                <option value="Kansas - KS">Kansas - KS</option>
+                <option value="Kentucky - KY">Kentucky - KY</option>
+                <option value="Louisiana - LA">Louisiana - LA</option>
+                <option value="Maine - ME">Maine - ME</option>
+                <option value="Maryland - MD">Maryland - MD</option>
+                <option value="Massachusetts - MA">Massachusetts - MA</option>
+                <option value="Michigan - MI">Michigan - MI</option>
+                <option value="Minnesota - MN">Minnesota - MN</option>
+                <option value="Mississippi - MS">Mississippi - MS</option>
+                <option value="Missouri - MO">Missouri - MO</option>
+                <option value="Montana - MT">Montana - MT</option>
+                <option value="Nebraska - NE">Nebraska - NE</option>
+                <option value="Nevada - NV">Nevada - NV</option>
+                <option value="New Hampshire - NH">New Hampshire - NH</option>
+                <option value="New Jersey - NJ">New Jersey - NJ</option>
+                <option value="New Mexico - NM">New Mexico - NM</option>
+                <option value="New York - NY">New York - NY</option>
+                <option value="North Carolina - NC">North Carolina - NC</option>
+                <option value="North Dakota - ND">North Dakota - ND</option>
+                <option value="Ohio - OH">Ohio - OH</option>
+                <option value="Oklahoma - OK">Oklahoma - OK</option>
+                <option value="Oregon - OR">Oregon - OR</option>
+                <option value="Pennsylvania - PA">Pennsylvania - PA</option>
+                <option value="Rhode Island - RI">Rhode Island - RI</option>
+                <option value="South Carolina - SC">South Carolina - SC</option>
+                <option value="South Dakota - SD">South Dakota - SD</option>
+                <option value="Tennessee - TN">Tennessee - TN</option>
+                <option value="Texas - TX">Texas - TX</option>
+                <option value="TUtah - UT">TUtah - UT</option>
+                <option value="Vermont - VT">Vermont - VT</option>
+                <option value="Virginia - VA">Virginia - VA</option>
+                <option value="Washington - WA">Washington - WA</option>
+                <option value="West Virginia - WV">West Virginia - WV</option>
+
+                
+
+              </select>
               <input
                 onChange={this.handleChange}
                 type="text"
@@ -161,10 +215,11 @@ class ProfileUpdateForm extends Component {
                 className="form-control"
                 id="inputZipCode"
                 placeholder="ZipCode"
+                required pattern='/^[0-9{5}(?:-[0-9]{4})?$/'
                 defaultValue={zipcode}
                 required
               />
-              <div className="invalid-feedback">ZipCode is Required.</div>
+              <div className="invalid-feedback" hidden={}>ZipCode is Required.</div>
             </div>
           </div>
 
