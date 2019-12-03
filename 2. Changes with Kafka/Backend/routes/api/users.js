@@ -8,17 +8,18 @@ var keys = require("../../config/keys");
 var passport = require("passport");
 var jwt = require("jsonwebtoken");
 var kafka = require("../../kafka/client");
-const redis = require("redis");
+var mongooseTypes = require("mongoose").Types;
+// const redis = require("redis");
 const redisHmapMax = 4;
 const app = express();
 // creating redis client
-var client = redis.createClient(6379);
+// var client = redis.createClient(6379);
 const TOPIC = "users";
 
 // Testing redis connection
-client.on("connect", function() {
-  console.log("Connected to Redis...");
-});
+// client.on("connect", function() {
+//   console.log("Connected to Redis...");
+// });
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
@@ -54,6 +55,28 @@ router.post("/register", (req, res) => {
   });
 });
 
+router.post("/search_people", (req, res) => {
+  console.log("Inside search people of  backend");
+  console.log("request is....", req.body);
+  var reqMsg = {
+    api: "post/search_people",
+    reqBody: req.body
+  };
+  kafka.make_request(TOPIC, reqMsg, function(err, results) {
+    console.log("in result");
+    console.log(results);
+
+    if (err) {
+      console.log("Inside err");
+      res.status(400).json(errors);
+    } else {
+      console.log("Inside else");
+      if (results.success) {
+        res.end(JSON.stringify(results));
+      } else res.status(400).json(results);
+    }
+  });
+});
 router.post("/login", (req, res) => {
   console.log("inside login of backend");
   console.log("request is..", req.body);
