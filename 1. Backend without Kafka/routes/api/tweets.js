@@ -1,11 +1,12 @@
 const express = require("express");
 const passport = require("passport");
+
 const router = express.Router();
-const multer = require('multer');
-const uuidv4 = require('uuid/v4');
-const path = require('path');
-const fs = require('fs');
-var bodyParser = require('body-parser');
+const multer = require("multer");
+const uuidv4 = require("uuid/v4");
+const path = require("path");
+const fs = require("fs");
+const bodyParser = require("body-parser");
 // const passport = require("passport");
 
 // Tweet Model
@@ -27,46 +28,38 @@ router.get("/test", (req, res) =>
 
 router.use(bodyParser.json());
 
-//Storing documents/Images
+// Storing documents/Images
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-      cb(null, './uploads');
-  }
-  , filename: (req, file, cb) => {
-      cb(null, file.originalname);
+    cb(null, "./uploads");
   },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
 });
 
 const upload = multer({ storage });
 
-//uplaod-file 
+// uplaod-file
 
-router.post('/upload-file', upload.array('photos', 5), (req, res) => {
-  console.log('req.body', req.body);
+router.post("/upload-file", upload.array("photos", 5), (req, res) => {
+  console.log("req.body", req.body);
   res.end();
 });
 
-//download-file
+// download-file
 
-router.post('/download-file/:file(*)', (req, res) => {
-  console.log('Inside DOwnload File');
+router.post("/download-file/:file(*)", (req, res) => {
+  console.log("Inside DOwnload File");
   var file = req.params.file;
-  var filelocation = path.join(__dirname + '/uploads', file);
+  var filelocation = path.join(__dirname + "/uploads", file);
   var img = fs.readFileSync(filelocation);
-  var base64img = new Buffer(img).toString('base64');
+  var base64img = new Buffer(img).toString("base64");
   res.writeHead(200, {
-      'Content--type': 'image/jpg'
+    "Content--type": "image/jpg"
   });
   res.end(base64img);
 });
-
-
-
-
-
-
-
-
 
 // @route GET api/tweets/get_tweets
 // @desc Get Tweets
@@ -83,7 +76,7 @@ router.get("/get_tweets", (req, res) => {
 // @access Public
 router.post("/getTweets", (req, res) => {
   // console.log("inside getTweet. Username is..", req.body.username);
-  let username = req.body.username;
+  const { username } = req.body;
   Tweet.find({ username: username })
     .sort({ tweeted_date: -1 })
     .then(tweets => res.status(200).json(tweets))
@@ -115,10 +108,9 @@ router.post("/getLikedTweets", (req, res) => {
       if (!tweets) {
         console.log("no liked tweets");
         return res.status(404).json({ msg: "No liked tweets" });
-      } else {
-        // console.log("liked tweets are :", tweets);
-        res.json(tweets);
       }
+      // console.log("liked tweets are :", tweets);
+      res.json(tweets);
     })
     .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
 });
@@ -160,7 +152,7 @@ router.post("/create_tweet", (req, res) => {
     avatar: req.body.avatar,
     hashtags: req.body.hashtag
   });
-  //newTweet.hashtags.push(req.body.hashtag)
+  // newTweet.hashtags.push(req.body.hashtag)
   newTweet.save().then(tweet => res.status(200).json(tweet));
 });
 
@@ -200,12 +192,10 @@ router.post("/search_topic", (req, res) => {
       res.status(404).json({ error: `Tweet not found ${err}` });
     } else {
       console.log(result);
-      if(result.length>0){
-         
-      res.status(200).json(result);
-      }
-      else {
-        res.status(404).send({error:"Topic Not found"})
+      if (result.length > 0) {
+        res.status(200).json(result);
+      } else {
+        res.status(404).send({ error: "Topic Not found" });
       }
     }
   });

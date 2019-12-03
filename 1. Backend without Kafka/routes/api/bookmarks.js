@@ -1,7 +1,7 @@
-let express = require("express");
+const express = require("express");
 
-let router = express.Router();
-let passport = require("passport");
+const router = express.Router();
+const passport = require("passport");
 const multer = require("multer");
 const path = require("path");
 const jwt = require("jsonwebtoken");
@@ -13,7 +13,7 @@ router.post(
   "/create_bookmark/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("inside create bookmark request");
+    // console.log("inside create bookmark request");
     User.findOne({ user: req.user.id }).then(user => {
       const user_id = req.user.id;
       const tweet_id = req.params.id;
