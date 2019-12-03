@@ -1,6 +1,7 @@
 var connection = new require("./kafka/Connection");
 var mongoose = require("mongoose");
 const Users = require("./services/users");
+const Tweets = require("./services/tweets");
 
 const db = require("./config/keys").mongoURI;
 mongoose
@@ -38,3 +39,4 @@ function handleTopicRequest(topic_name, fname) {
   });
 }
 handleTopicRequest("users", Users);
+handleTopicRequest("tweets", Tweets);
