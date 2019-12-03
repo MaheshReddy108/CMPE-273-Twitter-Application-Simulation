@@ -11,7 +11,7 @@ const TOPIC = "tweets";
 // const passport = require("passport");
 
 // Tweet Model
-const Tweet = require("../../models/Tweet");
+const Tweet = require("../../models/tweet");
 // User Model
 
 // Validation

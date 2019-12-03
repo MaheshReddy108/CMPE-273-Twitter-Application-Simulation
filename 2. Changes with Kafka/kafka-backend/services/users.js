@@ -12,7 +12,7 @@ function handle_request(msg, callback) {
       console.log("Inside register of kafka backend");
       console.log("msg is....", msg);
 
-      let { errors, isValid } = validateSignup(msg.reqBody);
+      var { errors, isValid } = validateSignup(msg.reqBody);
       if (!isValid) {
         callback(null, errors);
       } else {
@@ -74,7 +74,7 @@ function handle_request(msg, callback) {
       break;
     case "post/login":
       console.log("inside login of kafka backend");
-      const { errors, isValid } = validateLogin(msg.reqBody);
+      var { errors, isValid } = validateLogin(msg.reqBody);
       if (!isValid) {
         callback(null, errors);
       } else {
