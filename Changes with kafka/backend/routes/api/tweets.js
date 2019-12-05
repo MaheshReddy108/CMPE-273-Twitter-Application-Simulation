@@ -97,6 +97,50 @@ router.post("/getReTweets", (req, res) => {
     .catch(err => res.status(404).json({ error: `No Tweets found ${err}` }));
 });
 
+
+
+router.post("/get_tweets_redis", (req, res) => {
+  const { username } = req.body;
+  console.log("inside get_tweets api of backend. username is..", username);
+
+  client.hget("get_tweets", username, (err, reply) => {
+    if (err) {
+      console.log(err);
+      res.status(422).send(err);
+    } else {
+      client.hlen("get_tweets", (err, length) => {
+        if (length >= redisHmapMax) {
+          client.hkeys("get_tweets", (err, keys) => {
+            console.log(keys[0]);
+            client.hdel("get_profile", keys[0]);
+          });
+        }
+      });
+      if (reply) {
+        res.status(200).send(JSON.parse(reply));
+      } else {
+        User.findOne({ username })
+          .then(user => {
+            if (!user) {
+              console.log("no user");
+
+              return res
+                .status(404)
+                .json({ msg: "no user with this username" });
+            }
+            console.log("tweets is....", user);
+            res.json(user);
+            client.hset("get_tweets", username, JSON.stringify(user));
+          })
+          .catch(err => {
+            console.log("err is.....", err);
+            res.status(404).json(err);
+          });
+      }
+    }
+  });
+});
+
 // @route POST api/tweets/getLikedTweets by username
 // @desc Get Tweets
 // @access Public
